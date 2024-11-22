@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EnderSteel implements ModInitializer {
-	public static final String MOD_ID = "ender-steel";
+	public static final String MOD_ID = "endersteel";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override

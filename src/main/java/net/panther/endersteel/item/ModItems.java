@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 
 public class ModItems {
-    public static final Item ENDER_STEEL = registerItem("endersteel",
+    public static final Item ENDER_SCRAP = registerItem("ender_scrap",
             new Item(new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item){
@@ -20,7 +20,7 @@ public class ModItems {
     }
 
     private static void itemGroupIngredients(FabricItemGroupEntries entries){
-        entries.add(ENDER_STEEL);
+        entries.add(ENDER_SCRAP);
     }
 
     public static void registerModItems(){

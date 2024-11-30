@@ -10,9 +10,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
+import net.panther.endersteel.block.ModBlocks;
 
 public class ModItems {
     public static final Item ENDER_SCRAP = registerItem("ender_scrap",
+            new Item(new FabricItemSettings()));
+    public static final Item ENDER_STEEL = registerItem("ender_steel",
             new Item(new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item){
@@ -21,6 +24,9 @@ public class ModItems {
 
     private static void itemGroupIngredients(FabricItemGroupEntries entries){
         entries.add(ENDER_SCRAP);
+        entries.add(ENDER_STEEL);
+
+        entries.add(ModBlocks.ENDER_STEEL_BLOCK);
     }
 
     public static void registerModItems(){

@@ -2,6 +2,7 @@ package net.panther.endersteel;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.panther.endersteel.block.ModBlocks;
 import net.panther.endersteel.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,5 +16,6 @@ public class EnderSteel implements ModInitializer {
 		LOGGER.info("Wazzup Danger");
 
 		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }

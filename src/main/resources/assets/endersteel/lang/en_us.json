@@ -1,4 +1,6 @@
 {
   "item.endersteel.ender_scrap": "Ender Scrap",
-  "item.endersteel.ender_steel": "Ender Steel"
+  "item.endersteel.ender_steel": "Ender Steel",
+
+  "block.endersteel.ender_steel_block": "Ender Steel Block"
 }

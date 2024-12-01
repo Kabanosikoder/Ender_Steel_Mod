@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.6,
+  "group": "ender_steel_group",
+  "ingredient": {
+    "item": "endersteel:ender_scrap"
+  },
+  "result": "endersteel:ender_steel_ingot"
+}

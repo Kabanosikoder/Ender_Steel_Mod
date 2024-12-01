@@ -16,10 +16,10 @@ public class ModItemGroup {
     public static final ItemGroup ENDER_STEEL_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(EnderSteel.MOD_ID, "ender_steel_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.ender_steel_group"))
-                    .icon(() -> new ItemStack(ModItems.ENDER_STEEL)).entries((displayContext, entries) -> {
+                    .icon(() -> new ItemStack(ModItems.ENDER_STEEL_INGOT)).entries((displayContext, entries) -> {
                         // adds entries to the Item Group in the creative mode tab
                         // Items:
-                        entries.add(ModItems.ENDER_STEEL);
+                        entries.add(ModItems.ENDER_STEEL_INGOT);
                         entries.add(ModItems.ENDER_SCRAP);
 
                         // Blocks

@@ -15,7 +15,7 @@ import net.panther.endersteel.block.ModBlocks;
 public class ModItems {
     public static final Item ENDER_SCRAP = registerItem("ender_scrap",
             new Item(new FabricItemSettings()));
-    public static final Item ENDER_STEEL = registerItem("ender_steel",
+    public static final Item ENDER_STEEL_INGOT = registerItem("ender_steel_ingot",
             new Item(new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item){
@@ -24,7 +24,7 @@ public class ModItems {
 
     private static void itemGroupIngredients(FabricItemGroupEntries entries){
         entries.add(ENDER_SCRAP);
-        entries.add(ENDER_STEEL);
+        entries.add(ENDER_STEEL_INGOT);
 
         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
     }

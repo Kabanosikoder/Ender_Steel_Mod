@@ -2,5 +2,11 @@
   "item.endersteel.ender_scrap": "Ender Scrap",
   "item.endersteel.ender_steel_ingot": "Ender Steel",
 
+  "item.endersteel.ender_steel_sword": "Ender Steel Sword",
+  "item.endersteel.ender_steel_pickaxe": "Ender Steel Pickaxe",
+  "item.endersteel.ender_steel_axe": "Ender Steel Axe",
+  "item.endersteel.ender_steel_hoe": "Ender Steel Hoe",
+  "item.endersteel.ender_steel_shovel": "Ender Steel Shovel",
+
   "block.endersteel.ender_steel_block": "Ender Steel Block"
 }

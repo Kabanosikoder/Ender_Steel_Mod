@@ -22,6 +22,12 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_INGOT);
                         entries.add(ModItems.ENDER_SCRAP);
 
+                        entries.add(ModItems.ENDER_STEEL_SWORD);
+                        entries.add(ModItems.ENDER_STEEL_PICKAXE);
+                        entries.add(ModItems.ENDER_STEEL_AXE);
+                        entries.add(ModItems.ENDER_STEEL_HOE);
+                        entries.add(ModItems.ENDER_STEEL_SHOVEL);
+
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
 

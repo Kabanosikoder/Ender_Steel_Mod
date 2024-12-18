@@ -3,9 +3,7 @@ package net.panther.endersteel.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -21,6 +19,19 @@ public class ModItems {
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EnderSteel.MOD_ID, name), item);
     }
+
+    public static final Item ENDER_STEEL_SWORD = registerItem("ender_steel_sword",
+            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, 1f, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_PICKAXE = registerItem("ender_steel_pickaxe",
+            new PickaxeItem(EndSteelToolMaterial.ENDER_STEEL, 1, 2f, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_AXE = registerItem("ender_steel_axe",
+            new AxeItem(EndSteelToolMaterial.ENDER_STEEL, 6, -2f, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_HOE = registerItem("ender_steel_hoe",
+            new HoeItem(EndSteelToolMaterial.ENDER_STEEL, 0, 0f, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
+            new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 0, 0f, new FabricItemSettings()));
+
+
 
     private static void itemGroupIngredients(FabricItemGroupEntries entries){
         entries.add(ENDER_SCRAP);

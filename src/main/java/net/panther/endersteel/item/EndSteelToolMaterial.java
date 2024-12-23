@@ -10,6 +10,7 @@ import net.minecraft.util.Lazy;
 import java.util.function.Supplier;
 
 public enum EndSteelToolMaterial implements ToolMaterial {
+
     ENDER_STEEL(5, 2532, 10.45F, 4.5F, 17, () -> Ingredient.ofItems(ModItems.ENDER_STEEL_INGOT));
 
     private final int miningLevel;

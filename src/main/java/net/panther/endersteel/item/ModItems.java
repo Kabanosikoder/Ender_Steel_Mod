@@ -19,17 +19,17 @@ public class ModItems {
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EnderSteel.MOD_ID, name), item);
     }
-
+    // attack speed 0f = 4 attack speed, use - to lower attack speed
     public static final Item ENDER_STEEL_SWORD = registerItem("ender_steel_sword",
-            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, 1f, new FabricItemSettings()));
+            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, -2.4f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_PICKAXE = registerItem("ender_steel_pickaxe",
-            new PickaxeItem(EndSteelToolMaterial.ENDER_STEEL, 1, 2f, new FabricItemSettings()));
+            new PickaxeItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_AXE = registerItem("ender_steel_axe",
-            new AxeItem(EndSteelToolMaterial.ENDER_STEEL, 6, -2f, new FabricItemSettings()));
-    public static final Item ENDER_STEEL_HOE = registerItem("ender_steel_hoe",
-            new HoeItem(EndSteelToolMaterial.ENDER_STEEL, 0, 0f, new FabricItemSettings()));
+            new AxeItem(EndSteelToolMaterial.ENDER_STEEL, 6, -3f, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_SCYTHE = registerItem("ender_steel_scythe",
+            new HoeItem(EndSteelToolMaterial.ENDER_STEEL, 5, -2.65f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
-            new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 0, 0f, new FabricItemSettings()));
+            new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
 
 
 

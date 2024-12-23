@@ -9,8 +9,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.block.ModBlocks;
-import net.panther.endersteel.EnderSteel;
-import net.panther.endersteel.block.ModBlocks;
 
 public class ModItemGroup {
     public static final ItemGroup ENDER_STEEL_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -25,7 +23,7 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_SWORD);
                         entries.add(ModItems.ENDER_STEEL_PICKAXE);
                         entries.add(ModItems.ENDER_STEEL_AXE);
-                        entries.add(ModItems.ENDER_STEEL_HOE);
+                        entries.add(ModItems.ENDER_STEEL_SCYTHE);
                         entries.add(ModItems.ENDER_STEEL_SHOVEL);
 
                         // Blocks

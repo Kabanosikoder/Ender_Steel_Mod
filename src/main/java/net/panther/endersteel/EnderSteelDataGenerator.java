@@ -11,8 +11,8 @@ public class EnderSteelDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ModBlockTagProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
-		pack.addProvider(ModLootTableGen::new);
+		pack.addProvider(ModBlockLootTableGenerator::new);
 		pack.addProvider(ModModelProvider::new);
-		pack.addProvider(ModRecipeGen::new);
+		pack.addProvider(ModRecipeGenerator::new);
 	}
 }

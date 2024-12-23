@@ -1,15 +1,15 @@
 {
 	"schemaVersion": 1,
 	"id": "endersteel",
-	"version": "${version}",
+	"version": "0.0.1",
 	"name": "Ender Steel Mod",
-	"description": "Adds new material, tools and armor to the game. Ender Steel!",
+	"description": "Adds new material, tools and armor to the game with some very epic abilities",
 	"authors": [
 		"Panther3618"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Kabanosikoder",
+		"sources": ""
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/endersteel/icon.png",

@@ -14,7 +14,7 @@ public class EnderSteel implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Wazzup Danger, this mod is my first!");
+		LOGGER.info("EnderSteel, this mod is my first!");
 		ModItemGroup.registerItemGroups();
 
 		ModItems.registerModItems();

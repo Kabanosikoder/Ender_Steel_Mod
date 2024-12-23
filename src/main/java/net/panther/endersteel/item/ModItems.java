@@ -31,6 +31,14 @@ public class ModItems {
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
 
+    public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",
+            new ArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_CHESTPLATE = registerItem("ender_steel_chestplate",
+            new ArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_LEGGINGS = registerItem("ender_steel_leggings",
+            new ArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
+            new ArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
 
     private static void itemGroupIngredients(FabricItemGroupEntries entries){

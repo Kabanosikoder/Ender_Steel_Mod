@@ -26,6 +26,11 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_SCYTHE);
                         entries.add(ModItems.ENDER_STEEL_SHOVEL);
 
+                        entries.add(ModItems.ENDER_STEEL_HELMET);
+                        entries.add(ModItems.ENDER_STEEL_CHESTPLATE);
+                        entries.add(ModItems.ENDER_STEEL_LEGGINGS);
+                        entries.add(ModItems.ENDER_STEEL_BOOTS);
+
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
 

@@ -38,7 +38,7 @@ public class EnderSteelStareBlock extends Block {
         OpenState(String name) {
             this.name = name;
         }
-
+        
         @Override
         public String asString() {
             return this.name;
@@ -67,11 +67,10 @@ public class EnderSteelStareBlock extends Block {
                     EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
                     EnderSteelStareBlock.OpenState nextState;
 
-                    // Progress to FULLY_OPEN
                     switch (currentState) {
                         case CLOSED -> nextState = OpenState.PARTLY_OPEN;
                         case PARTLY_OPEN -> nextState = OpenState.FULLY_OPEN;
-                        default -> nextState = currentState; // Stay at FULLY_OPEN
+                        default -> nextState = currentState; // Stay at FULLY_OPEN whilst being looked at
                     }
 
                     if (currentState != nextState) {
@@ -94,7 +93,6 @@ public class EnderSteelStareBlock extends Block {
                         break;
                     }
                 }
-
                 if (!isBeingLookedAt) {
                     toRemove.add(blockPos);
                 }
@@ -103,13 +101,12 @@ public class EnderSteelStareBlock extends Block {
             for (BlockPos blockPos : toRemove) {
                 blocksBeingLookedAt.remove(blockPos);
 
-                // Set the block directly to CLOSED state
+                // Set the block directly to CLOSED state once the player looks away
                 for (ServerPlayerEntity player : players) {
                     BlockState blockState = player.getWorld().getBlockState(blockPos);
                     if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                         EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
 
-                        // Directly set the next state to CLOSED
                         if (currentState != EnderSteelStareBlock.OpenState.CLOSED) {
                             player.getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, EnderSteelStareBlock.OpenState.CLOSED));
                         }
@@ -117,7 +114,6 @@ public class EnderSteelStareBlock extends Block {
                 }
             }
         }
-
 
         private static BlockHitResult rayTrace(ServerPlayerEntity player) {
             float reachDistance = player.getAbilities().creativeMode ? 5.0f : 4.5f;

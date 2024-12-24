@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "endersteel:block/ender_steel_block_closed"
-  }
-}

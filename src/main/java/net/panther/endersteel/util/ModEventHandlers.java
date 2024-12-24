@@ -95,10 +95,10 @@ public class ModEventHandlers {
             if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                 EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
 
-                EnderSteelStareBlock.OpenState nextState = EnderSteelStareBlock.OpenState.CLOSED; // Always go to CLOSED
+                EnderSteelStareBlock.OpenState nextState = EnderSteelStareBlock.OpenState.CLOSED;
                 if (currentState != nextState) {
                     players.iterator().next().getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
-                    blockTickDelays.put(blockPos, 5); // Set delay for 5 ticks
+                    blockTickDelays.put(blockPos, 5);
                 }
             }
         }

@@ -3,6 +3,8 @@ package net.panther.endersteel;
 import net.fabricmc.api.ModInitializer;
 
 import net.panther.endersteel.block.ModBlocks;
+import net.panther.endersteel.effect.ModEffects;
+import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.item.ModItemGroup;
 import net.panther.endersteel.item.ModItems;
 import net.panther.endersteel.util.ModEventHandlers;
@@ -15,14 +17,15 @@ public class EnderSteel implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("EnderSteel, this mod is my first!");
 		ModItemGroup.registerItemGroups();
 
+		ModEffects.registerEffects();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+		ModEnchantments.registerModEnchantments();
 
 		ModEventHandlers.registerEventHandlers();
 
-
+		LOGGER.info("Initializing " + MOD_ID);
 	}
 }

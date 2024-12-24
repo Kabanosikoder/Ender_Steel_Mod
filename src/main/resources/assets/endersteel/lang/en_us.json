@@ -15,5 +15,15 @@
   "item.endersteel.ender_steel_leggings": "Ender Steel Leggings",
   "item.endersteel.ender_steel_boots": "Ender Steel Boots",
 
-  "block.endersteel.ender_steel_block": "Ender Steel Block"
+  "block.endersteel.ender_steel_block": "Ender Steel Block",
+
+  "item.endersteel.armor.set_bonus": "Full Set Bonus: Evasion",
+  "item.endersteel.armor.teleport_ability": "Dodge up to 5 hits (2 minute cooldown)",
+
+  "item.endersteel.sword.stored_pearls": "Stored Pearls: %d/%d",
+  "item.endersteel.sword.store_instruction": "Right-click with Ender Pearl to store",
+  "item.endersteel.sword.teleport_chance": "10% chance to teleport enemies",
+
+  "enchantment.endersteel.gazing_void": "Gazing Void",
+  "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target"
 }

@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.panther.endersteel.block.ModBlocks;
 import net.panther.endersteel.item.ModItemGroup;
 import net.panther.endersteel.item.ModItems;
+import net.panther.endersteel.util.ModEventHandlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,5 +20,9 @@ public class EnderSteel implements ModInitializer {
 
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+
+		ModEventHandlers.registerEventHandlers();
+
+
 	}
 }

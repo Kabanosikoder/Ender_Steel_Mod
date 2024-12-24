@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "open_state=closed": { "model": "endersteel:block/ender_steel_block_closed" },
+    "open_state=partly_open": { "model": "endersteel:block/ender_steel_block_partly_open" },
+    "open_state=fully_open": { "model": "endersteel:block/ender_steel_block_fully_open" }
+  }
+}

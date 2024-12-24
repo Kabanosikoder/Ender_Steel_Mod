@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "endersteel:ender_steel_helmet",
+    "endersteel:ender_steel_chestplate",
+    "endersteel:ender_steel_leggings",
+    "endersteel:ender_steel_boots"
+  ]
+}

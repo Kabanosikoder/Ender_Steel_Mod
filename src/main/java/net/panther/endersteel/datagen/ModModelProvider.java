@@ -28,5 +28,10 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.ENDER_STEEL_AXE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ENDER_STEEL_SCYTHE, Models.GENERATED);
         itemModelGenerator.register(ModItems.ENDER_STEEL_SHOVEL, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.ENDER_STEEL_HELMET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ENDER_STEEL_CHESTPLATE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ENDER_STEEL_LEGGINGS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ENDER_STEEL_BOOTS, Models.GENERATED);
     }
 }

@@ -21,13 +21,13 @@ public class ModItems {
     }
     // attack speed 0f = 4 attack speed, use - to lower attack speed
     public static final Item ENDER_STEEL_SWORD = registerItem("ender_steel_sword",
-            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, -2.4f, new FabricItemSettings()));
+            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, -2.5f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_PICKAXE = registerItem("ender_steel_pickaxe",
             new PickaxeItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_AXE = registerItem("ender_steel_axe",
-            new AxeItem(EndSteelToolMaterial.ENDER_STEEL, 6, -3f, new FabricItemSettings()));
+            new AxeItem(EndSteelToolMaterial.ENDER_STEEL, 6, -3.2f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_SCYTHE = registerItem("ender_steel_scythe",
-            new HoeItem(EndSteelToolMaterial.ENDER_STEEL, 5, -2.65f, new FabricItemSettings()));
+            new SwordItem(EndSteelToolMaterial.ENDER_STEEL, 5, -2.7f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
 

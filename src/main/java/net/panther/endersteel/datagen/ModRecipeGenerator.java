@@ -18,5 +18,15 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
 
     @Override
     public void generate(Consumer<RecipeJsonProvider> exporter) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.ENDER_SCRAP)
+                .pattern("NPN")
+                .pattern("PEP")
+                .pattern("NPN")
+                .input('E', Items.ENDER_EYE)
+                .input('N',Items.NETHERITE_SCRAP)
+                .input('P',Items.ENDER_EYE)
+                .criterion(hasItem(Items.ENDER_EYE), conditionsFromItem(Items.ENDER_EYE))
+                .criterion(hasItem(Items.NETHERITE_SCRAP), conditionsFromItem(Items.NETHERITE_SCRAP))
+                .offerTo(exporter, new Identifier(getRecipeName(ModItems.ENDER_SCRAP) + "_"));
     }
 }

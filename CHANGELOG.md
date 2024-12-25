@@ -40,6 +40,10 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 - Ender Steel Block
 - Custom status effects and enchantments
 - Visual and audio feedback for all abilities
+- Added Bagel food item
+  - Restores 2 hunger bars with 0.8 saturation
+  - Crafted with 4 wheat in a circle and wheat seeds in the middle
+  - Recipe yields 2 bagels
 
 ### Technical
 - Built for Minecraft 1.20.1

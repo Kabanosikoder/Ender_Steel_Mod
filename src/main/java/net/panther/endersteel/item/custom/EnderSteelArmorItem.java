@@ -1,6 +1,7 @@
 package net.panther.endersteel.item.custom;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,16 @@ public class EnderSteelArmorItem extends ArmorItem {
     }
 
     @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, world, entity, slot, selected);
+        
+        // Initialize charges if not set
+        if (!stack.getOrCreateNbt().contains(CHARGES_KEY)) {
+            setCharges(stack, MAX_CHARGES - 1);  // Set to 4 charges initially
+        }
+    }
+
+    @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("item.endersteel.armor.set_bonus").formatted(Formatting.DARK_PURPLE));
         tooltip.add(Text.translatable("item.endersteel.armor.teleport_ability").formatted(Formatting.BLUE));
@@ -28,7 +39,7 @@ public class EnderSteelArmorItem extends ArmorItem {
 
     public int getCharges(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.contains(CHARGES_KEY) ? nbt.getInt(CHARGES_KEY) : MAX_CHARGES;
+        return nbt.contains(CHARGES_KEY) ? nbt.getInt(CHARGES_KEY) : MAX_CHARGES - 1;  // Return 4 if not set
     }
 
     public void setCharges(ItemStack stack, int charges) {

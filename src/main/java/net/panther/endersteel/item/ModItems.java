@@ -9,6 +9,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.block.ModBlocks;
+import net.panther.endersteel.item.custom.BagelItem;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.item.custom.EnderSteelScytheItem;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
@@ -43,9 +44,13 @@ public class ModItems {
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
+    public static final Item BAGEL = registerItem("bagel",
+            new BagelItem(new FabricItemSettings()));
+
     private static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(ENDER_SCRAP);
         entries.add(ENDER_STEEL_INGOT);
+        entries.add(BAGEL);
 
         entries.add(ENDER_STEEL_SWORD);
         entries.add(ENDER_STEEL_PICKAXE);

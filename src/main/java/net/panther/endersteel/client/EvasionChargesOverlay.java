@@ -34,7 +34,6 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         int screenWidth = client.getWindow().getScaledWidth();
         int screenHeight = client.getWindow().getScaledHeight();
 
-        // Position the bar above the armor bar
         int startX = screenWidth / 2 - (MAX_CHARGES * TEXTURE_SIZE) / 2;
         int startY = screenHeight - 59;
 

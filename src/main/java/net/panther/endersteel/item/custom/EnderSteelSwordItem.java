@@ -26,7 +26,7 @@ public class EnderSteelSwordItem extends SwordItem {
     private static final String PEARL_COUNT_KEY = "PearlCount";
     private static final String TELEPORT_STREAK_KEY = "TeleportStreak";
     private static final int MAX_PEARLS = 10;
-    private static final float BASE_TELEPORT_CHANCE = 0.10f;
+    private static final float BASE_TELEPORT_CHANCE = 0.15f;
     private static final float STREAK_BONUS = 0.025f; // 2.5% increase per successful teleport
 
     public EnderSteelSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {

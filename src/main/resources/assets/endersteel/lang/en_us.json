@@ -1,5 +1,5 @@
 {
-  "itemgroup.ender_steel_group" : "Ender Steel Mod",
+  "itemgroup.ender_steel_group": "Ender Steel Mod",
 
   "item.endersteel.ender_scrap": "Ender Scrap",
   "item.endersteel.ender_steel_ingot": "Ender Steel",
@@ -25,5 +25,8 @@
   "item.endersteel.sword.teleport_chance": "10% chance to teleport enemies",
 
   "enchantment.endersteel.gazing_void": "Gazing Void",
-  "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target"
+  "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target",
+
+  "effect.endersteel.gazing_void": "Gazing Void",
+  "effect.endersteel.gazing_void.description": "Your vision is revoked by the void"
 }

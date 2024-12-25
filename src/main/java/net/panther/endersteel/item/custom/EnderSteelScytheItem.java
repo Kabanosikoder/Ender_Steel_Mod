@@ -24,7 +24,7 @@ import java.util.List;
 
 public class EnderSteelScytheItem extends SwordItem {
     private static final String VOID_GAZE_ACTIVE_KEY = "VoidGazeActive";
-    private static final int ABILITY_COOLDOWN = 200; // 10 seconds in ticks
+    private static final int ABILITY_COOLDOWN = 300; // 15 seconds in ticks
 
     public EnderSteelScytheItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -66,7 +66,7 @@ public class EnderSteelScytheItem extends SwordItem {
             // Apply custom void gaze effect for the overlay
             target.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 100, 0));
             
-            // Play effect sound
+            // Effect sound
             target.getWorld().playSound(null, target.getX(), target.getY(), target.getZ(),
                     SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.PLAYERS, 1.0F, 0.5F);
             

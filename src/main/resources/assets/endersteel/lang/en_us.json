@@ -5,6 +5,9 @@
   "item.endersteel.ender_steel_ingot": "Ender Steel Ingot",
 
   "item.endersteel.ender_steel_sword": "Ender Steel Sword",
+  "item.endersteel.ender_steel_sword.pearl_stored": "Stored Pearls: %d/%d",
+  "item.endersteel.ender_steel_sword.pearls_stored": "Stored %d/%d pearls",
+
   "item.endersteel.ender_steel_pickaxe": "Ender Steel Pickaxe",
   "item.endersteel.ender_steel_axe": "Ender Steel Axe",
   "item.endersteel.ender_steel_scythe": "Ender Steel Scythe",
@@ -20,15 +23,18 @@
   "item.endersteel.armor.set_bonus": "Full Set Bonus: Evasion",
   "item.endersteel.armor.teleport_ability": "Dodge up to 5 hits (2 minute cooldown)",
 
-  "item.endersteel.sword.stored_pearls": "Stored Pearls: %d/%d",
   "item.endersteel.sword.store_instruction": "Right-click with Ender Pearl to store",
   "item.endersteel.sword.teleport_chance": "Chance to teleport and damage enemies on hit",
   "item.endersteel.sword.enders_edge": "Ender's Edge: Teleports enemies within 5 blocks",
 
   "enchantment.endersteel.gazing_void": "Gazing Void",
   "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target",
-  "enchantment.endersteel.enders_edge": "Ender's Edge",
-  "enchantment.endersteel.enders_edge.desc": "Has a 50% chance to teleport hit enemies within a 5-block radius. Can still store ender pearls for the base ability.",
+
+  "enchantment.endersteel.ender_strike": "Ender Strike",
+  "enchantment.endersteel.ender_strike.desc": "50% chance to teleport hit enemies within a 5-block radius",
+  "enchantment.endersteel.ender_streak": "Ender Streak",
+  "enchantment.endersteel.ender_streak.desc": "Current Streak: %d",
+  "enchantment.endersteel.ender_streak.bonus": "Bonus Damage: x%s",
 
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void"

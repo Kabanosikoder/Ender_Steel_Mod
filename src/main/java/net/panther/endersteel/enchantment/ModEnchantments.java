@@ -13,13 +13,19 @@ public class ModEnchantments {
             new GazingVoidEnchantment()
     );
 
-    public static final Enchantment ENDERS_EDGE = Registry.register(
+    public static final Enchantment ENDER_STRIKE = Registry.register(
             Registries.ENCHANTMENT,
-            new Identifier(EnderSteel.MOD_ID, "enders_edge"),
-            new EndersEdgeEnchantment()
+            new Identifier(EnderSteel.MOD_ID, "ender_strike"),
+            new EnderStrikeEnchantment()
+    );
+
+    public static final Enchantment ENDER_STREAK = Registry.register(
+            Registries.ENCHANTMENT,
+            new Identifier(EnderSteel.MOD_ID, "ender_streak"),
+            new EnderStreakEnchantment()
     );
 
     public static void registerModEnchantments() {
-        EnderSteel.LOGGER.info("Registering Enchantments for " + EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering enchantments for " + EnderSteel.MOD_ID);
     }
 }

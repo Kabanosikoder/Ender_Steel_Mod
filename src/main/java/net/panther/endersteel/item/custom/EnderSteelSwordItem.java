@@ -4,7 +4,8 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -18,116 +19,63 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.panther.endersteel.enchantment.ModEnchantments;
+import net.panther.endersteel.util.TeleportUtil;
 
 import java.util.List;
 import java.util.Random;
 
 public class EnderSteelSwordItem extends SwordItem {
-    private static final String STORED_PEARLS_KEY = "StoredPearls";
-    private static final String TELEPORT_STREAK_KEY = "TeleportStreak";
     private static final int MAX_STORED_PEARLS = 10;
-    private final Random random = new Random();
+    private static final String STREAK_KEY = "teleport_streak";
+    private static final Random random = new Random();
 
     public EnderSteelSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!attacker.getWorld().isClient && target.isAlive()) {
-            int storedPearls = getStoredPearls(stack);
-            if (storedPearls > 0) {
-                // Check for Ender's Edge enchantment
-                if (EnchantmentHelper.getLevel(ModEnchantments.ENDERS_EDGE, stack) > 0) {
-                    if (random.nextDouble() < 0.5) { // 50% chance
-                        if (teleportEntity(target, attacker.getWorld())) {
-                            playTeleportEffects(target);
-                            setStoredPearls(stack, storedPearls - 1);
-                        }
-                    }
-                } else {
-                    // Original behavior with stored pearls
-                    int streak = getStreak(stack);
-                    double chance = 0.1 + (streak * 0.025); // Base 10% + 2.5% per streak
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        int storedPearls = getStoredPearls(stack);
+        int currentStreak = getStreak(stack);
 
-                    if (random.nextDouble() < chance) {
-                        if (teleportEntity(target, attacker.getWorld())) {
-                            playTeleportEffects(target);
-                            
-                            // Consume pearl and update streak
-                            setStoredPearls(stack, storedPearls - 1);
-                            setStreak(stack, streak + 1);
-                            
-                            // Apply bonus damage
-                            target.damage(target.getDamageSources().magic(), 2.5f);
-                        }
-                    } else {
-                        setStreak(stack, 0);
-                    }
-                }
-            }
+        // Always show current streak if it exists
+        if (currentStreak > 0) {
+            tooltip.add(Text.literal("Current Streak: " + currentStreak).formatted(Formatting.LIGHT_PURPLE));
         }
-        return super.postHit(stack, target, attacker);
-    }
 
-    private boolean teleportEntity(LivingEntity entity, World world) {
-        double radius = 5.0;
-        double theta = random.nextDouble() * 2 * Math.PI;
-        
-        double dx = radius * Math.cos(theta);
-        double dz = radius * Math.sin(theta);
-        
-        double newX = entity.getX() + dx;
-        double newZ = entity.getZ() + dz;
-        double newY = entity.getY();
-        
-        entity.teleport(newX, newY, newZ);
-        return true;
-    }
-
-    private void playTeleportEffects(Entity entity) {
-        if (entity.getWorld() instanceof ServerWorld serverWorld) {
-            serverWorld.spawnParticles(
-                ParticleTypes.PORTAL,
-                entity.getX(), entity.getY() + 0.5, entity.getZ(),
-                50, // particle count
-                0.5, 0.5, 0.5, // spread
-                0.1 // speed
-            );
-            
-            serverWorld.playSound(
-                null,
-                entity.getX(), entity.getY(), entity.getZ(),
-                SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-                SoundCategory.PLAYERS,
-                1.0F, 1.0F
-            );
+        // Show bonus damage if we have a streak
+        if (currentStreak > 0) {
+            float bonusDamage = 1.0f + (currentStreak * 0.5f);
+            tooltip.add(Text.literal("Bonus Damage: x" + String.format("%.1f", bonusDamage))
+                    .formatted(Formatting.LIGHT_PURPLE));
         }
+
+        // Show stored pearls
+        tooltip.add(Text.translatable("item.endersteel.ender_steel_sword.pearl_stored", storedPearls, MAX_STORED_PEARLS)
+                .formatted(Formatting.LIGHT_PURPLE));
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
+        ItemStack offhandStack = player.getOffHandStack();
         
-        // Allow pearl storage regardless of enchantments
-        ItemStack offhand = player.getOffHandStack();
-        if (offhand.getItem().toString().contains("ender_pearl")) {
-            int currentPearls = getStoredPearls(stack);
+        if (offhandStack.getItem() == net.minecraft.item.Items.ENDER_PEARL) {
+            int storedPearls = getStoredPearls(stack);
             
-            if (currentPearls < MAX_STORED_PEARLS) {
-                if (!player.getAbilities().creativeMode) {
-                    offhand.decrement(1);
+            if (storedPearls < MAX_STORED_PEARLS) {
+                if (!player.isCreative()) {
+                    offhandStack.decrement(1);
                 }
+                setStoredPearls(stack, storedPearls + 1);
                 
-                setStoredPearls(stack, currentPearls + 1);
-                world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.PLAYERS,
-                        0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-                
+                if (!world.isClient) {
+                    player.sendMessage(Text.translatable("item.endersteel.ender_steel_sword.pearls_stored", 
+                            storedPearls + 1, MAX_STORED_PEARLS).formatted(Formatting.DARK_PURPLE), true);
+                }
                 return TypedActionResult.success(stack);
             }
         }
@@ -136,38 +84,80 @@ public class EnderSteelSwordItem extends SwordItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        int storedPearls = getStoredPearls(stack);
-        tooltip.add(Text.translatable("item.endersteel.sword.stored_pearls", storedPearls, MAX_STORED_PEARLS)
-                .formatted(Formatting.AQUA));
-
-        if (EnchantmentHelper.getLevel(ModEnchantments.ENDERS_EDGE, stack) > 0) {
-            tooltip.add(Text.translatable("item.endersteel.sword.enders_edge").formatted(Formatting.DARK_PURPLE));
-        } else {
-            tooltip.add(Text.translatable("item.endersteel.sword.store_instruction")
-                    .formatted(Formatting.GRAY));
-            tooltip.add(Text.translatable("item.endersteel.sword.teleport_chance")
-                    .formatted(Formatting.DARK_PURPLE));
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (!attacker.getWorld().isClient && target.isAlive()) {
+            int storedPearls = getStoredPearls(stack);
+            if (storedPearls > 0) {
+                // Check for Ender Strike enchantment
+                if (EnchantmentHelper.getLevel(ModEnchantments.ENDER_STRIKE, stack) > 0) {
+                    if (random.nextFloat() < 0.5f) {  // 50% chance
+                        if (teleportEntity(target, target.getWorld())) {
+                            setStoredPearls(stack, storedPearls - 1);
+                        }
+                    }
+                } else if (EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack) > 0) {
+                    // Ender Streak enchantment logic
+                    int streakLevel = EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack);
+                    int currentStreak = getStreak(stack);
+                    
+                    // Base chance 10% + 2.5% per streak, increased by enchantment level
+                    double chance = (0.1 + (currentStreak * 0.025)) * (1 + (streakLevel * 0.2));
+                    
+                    if (random.nextDouble() < chance) {
+                        if (teleportEntity(target, target.getWorld())) {
+                            setStoredPearls(stack, storedPearls - 1);
+                            setStreak(stack, currentStreak + 1);
+                            
+                            // Bonus damage based on streak and enchantment level
+                            float bonusDamage = 1.0f + (currentStreak * 0.5f * streakLevel);
+                            target.damage(target.getDamageSources().magic(), bonusDamage);
+                        }
+                    } else {
+                        // Reset streak on failed teleport
+                        setStreak(stack, 0);
+                    }
+                }
+            }
         }
+        return super.postHit(stack, target, attacker);
     }
 
-    private static int getStoredPearls(ItemStack stack) {
+    private int getStoredPearls(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(STORED_PEARLS_KEY);
+        return nbt.getInt("stored_pearls");
     }
 
-    private static void setStoredPearls(ItemStack stack, int count) {
+    private void setStoredPearls(ItemStack stack, int count) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(STORED_PEARLS_KEY, count);
+        nbt.putInt("stored_pearls", count);
     }
 
-    private static int getStreak(ItemStack stack) {
+    private int getStreak(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(TELEPORT_STREAK_KEY);
+        return nbt.getInt(STREAK_KEY);
     }
 
-    private static void setStreak(ItemStack stack, int streak) {
+    private void setStreak(ItemStack stack, int streak) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(TELEPORT_STREAK_KEY, streak);
+        nbt.putInt(STREAK_KEY, streak);
+    }
+
+    private boolean teleportEntity(LivingEntity entity, World world) {
+        if (world.isClient) return false;
+        return TeleportUtil.teleportRandomly(entity, 5.0);
+    }
+
+    private void playTeleportEffects(Entity entity) {
+        TeleportUtil.playTeleportEffects(entity);
+    }
+
+    private float getAttackSpeed() {
+        // Base attack speed is -2.4f for swords
+        return 4.0f + this.getAttackSpeedModifier();  // 4.0 is the base player attack speed
+    }
+
+    private float getAttackSpeedModifier() {
+        // This should match the attack speed modifier you set in the constructor
+        return -2.4f;  // Standard sword attack speed
     }
 }

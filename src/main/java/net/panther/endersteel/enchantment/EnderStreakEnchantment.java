@@ -6,8 +6,8 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
 
-public class EndersEdgeEnchantment extends Enchantment {
-    public EndersEdgeEnchantment() {
+public class EnderStreakEnchantment extends Enchantment {
+    public EnderStreakEnchantment() {
         super(Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
@@ -18,16 +18,37 @@ public class EndersEdgeEnchantment extends Enchantment {
 
     @Override
     public int getMaxPower(int level) {
-        return 50;
+        return super.getMinPower(level) + 50;
     }
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return 3;
     }
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
         return stack.getItem() instanceof EnderSteelSwordItem;
     }
+
+    @Override
+    public boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != ModEnchantments.ENDER_STRIKE;
+    }
+
+    @Override
+    public boolean isTreasure() {
+        return true;  // This will hide it from the enchantment table
+    }
+
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return false;  // This will hide it from villager trades
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return false;  // This will hide it from random loot
+    }
+
 }

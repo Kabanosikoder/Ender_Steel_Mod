@@ -2,7 +2,7 @@
   "itemgroup.ender_steel_group": "Ender Steel Mod",
 
   "item.endersteel.ender_scrap": "Ender Scrap",
-  "item.endersteel.ender_steel_ingot": "Ender Steel",
+  "item.endersteel.ender_steel_ingot": "Ender Steel Ingot",
 
   "item.endersteel.ender_steel_sword": "Ender Steel Sword",
   "item.endersteel.ender_steel_pickaxe": "Ender Steel Pickaxe",
@@ -22,10 +22,13 @@
 
   "item.endersteel.sword.stored_pearls": "Stored Pearls: %d/%d",
   "item.endersteel.sword.store_instruction": "Right-click with Ender Pearl to store",
-  "item.endersteel.sword.teleport_chance": "10% chance to teleport enemies",
+  "item.endersteel.sword.teleport_chance": "Chance to teleport and damage enemies on hit",
+  "item.endersteel.sword.enders_edge": "Ender's Edge: Teleports enemies within 5 blocks",
 
   "enchantment.endersteel.gazing_void": "Gazing Void",
   "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target",
+  "enchantment.endersteel.enders_edge": "Ender's Edge",
+  "enchantment.endersteel.enders_edge.desc": "Has a 50% chance to teleport hit enemies within a 5-block radius. Can still store ender pearls for the base ability.",
 
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void"

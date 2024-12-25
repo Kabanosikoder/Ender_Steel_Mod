@@ -2,6 +2,32 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
+## [1.0.1] - 2024-12-25
+
+### Added
+- New Ender's Edge enchantment for Ender Steel Sword
+  - 50% chance to teleport enemies within 5 blocks
+  - Works alongside the pearl storage system
+  - Uses stored pearls for teleportation
+- Safe teleportation system
+  - Prevents entities from teleporting into walls
+  - Ensures solid ground beneath teleport location
+  - Requires 2 blocks of air space for entity height
+
+### Changed
+- Updated Ender Steel Sword mechanics
+  - Pearl storage now works with Ender's Edge enchantment
+  - Tooltip always shows stored pearl count
+  - Improved teleportation effects and particles
+- Enhanced tooltips and descriptions
+  - More detailed enchantment descriptions
+  - Clearer ability explanations
+
+### Fixed
+- Teleportation safety checks
+  - Entities no longer teleport into unsafe locations
+  - Failed teleports don't consume pearls
+
 ## [1.0.0] - 2024-12-25
 
 ### Added

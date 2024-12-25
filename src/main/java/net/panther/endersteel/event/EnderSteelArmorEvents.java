@@ -1,129 +1,131 @@
 package net.panther.endersteel.event;
 
-import net.minecraft.entity.damage.DamageSource;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.panther.endersteel.item.ModItems;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.HashMap;
-import java.util.Map;
+import net.minecraft.util.math.Vec3d;
+import net.panther.endersteel.item.custom.EnderSteelArmorItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EnderSteelArmorEvents {
-    private static final Map<String, Integer> playerEvasionCharges = new HashMap<>();
-    private static final Map<String, Long> playerEvasionCooldowns = new HashMap<>();
-    private static final int MAX_EVASION_CHARGES = 5;
-    private static final long COOLDOWN_DURATION = 120000; // 2 minutes in milliseconds
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnderSteelArmorEvents.class);
+    private static final String EVASION_CHARGES_KEY = "evasion_charges";
+    private static final String EVASION_COOLDOWN_KEY = "evasion_cooldown";
+    private static final int MAX_CHARGES = 5;
+    private static final int CHARGE_COOLDOWN_TICKS = 2400; // 2 minutes
+    private static final Random random = Random.create();
 
     public static void register() {
-        // Register any necessary event listeners here
+        LOGGER.info("Registering Ender Steel Armor Events");
+        
+        ServerTickEvents.START_SERVER_TICK.register(server -> {
+            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                if (isWearingFullEnderSteelArmor(player)) {
+                    updateCharges(player);
+                }
+            }
+        });
+
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            PlayerEntity player = handler.getPlayer();
+            if (isWearingFullEnderSteelArmor(player)) {
+                ItemStack chestplate = player.getInventory().getArmorStack(2);
+                NbtCompound nbt = chestplate.getOrCreateNbt();
+                if (!nbt.contains(EVASION_CHARGES_KEY)) {
+                    nbt.putInt(EVASION_CHARGES_KEY, MAX_CHARGES);
+                    LOGGER.info("Initialized evasion charges for player: " + player.getName().getString());
+                }
+            }
+        });
     }
 
-    public static void handlePlayerDamage(PlayerEntity player, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!(player instanceof ServerPlayerEntity)) return;
-        ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+    public static boolean handleDamage(PlayerEntity player) {
+        LOGGER.info("Handling damage for player: " + player.getName().getString());
+        
+        if (!(player instanceof ServerPlayerEntity)) {
+            LOGGER.info("Not a server player, skipping");
+            return false;
+        }
+        
+        if (!isWearingFullEnderSteelArmor(player)) {
+            LOGGER.info("Not wearing full armor, skipping");
+            return false;
+        }
+        
+        if (!tryUseCharge(player)) {
+            LOGGER.info("No charges available");
+            return false;
+        }
 
-        String playerId = player.getName().getString();
-        if (isWearingFullEnderSteelArmor(player)) {
-            // Initialize evasion charges if not present
-            playerEvasionCharges.putIfAbsent(playerId, MAX_EVASION_CHARGES);
+        LOGGER.info("Teleporting player");
+        teleportRandomly(player);
+        player.sendMessage(Text.literal("Evasion! ").formatted(Formatting.DARK_PURPLE), true);
+        return true;
+    }
+
+    private static void updateCharges(PlayerEntity player) {
+        ItemStack chestplate = player.getInventory().getArmorStack(2);
+        if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
+            NbtCompound nbt = chestplate.getOrCreateNbt();
             
-            // Check if we have charges and not on cooldown
-            if (playerEvasionCharges.get(playerId) > 0) {
-                // Dodge the hit
-                cir.cancel();
-                
-                // Decrease charges
-                int remainingCharges = playerEvasionCharges.get(playerId) - 1;
-                playerEvasionCharges.put(playerId, remainingCharges);
-
-                // Teleport the player
-                teleportRandomly(serverPlayer);
-                
-                // Play effect and send message
-                player.sendMessage(Text.literal("Evasion! ").formatted(Formatting.DARK_PURPLE)
-                    .append(Text.literal(remainingCharges + " charges remaining").formatted(Formatting.GRAY)), true);
-                
-                // If we're out of charges, start cooldown
-                if (remainingCharges == 0) {
-                    playerEvasionCooldowns.put(playerId, System.currentTimeMillis());
-                }
-            } else {
-                // Check if cooldown is over
-                Long cooldownStart = playerEvasionCooldowns.get(playerId);
-                if (cooldownStart != null) {
-                    long timeElapsed = System.currentTimeMillis() - cooldownStart;
-                    if (timeElapsed >= COOLDOWN_DURATION) {
-                        // Reset charges
-                        playerEvasionCharges.put(playerId, MAX_EVASION_CHARGES);
-                        playerEvasionCooldowns.remove(playerId);
-                        player.sendMessage(Text.literal("Evasion recharged! ").formatted(Formatting.DARK_PURPLE)
-                            .append(Text.literal(MAX_EVASION_CHARGES + " charges available").formatted(Formatting.GRAY)), true);
-                    } else {
-                        // Show remaining cooldown if hit while on cooldown
-                        long remainingSeconds = (COOLDOWN_DURATION - timeElapsed) / 1000;
-                        if (remainingSeconds > 0) {
-                            player.sendMessage(Text.literal("Evasion on cooldown: ").formatted(Formatting.RED)
-                                .append(Text.literal(remainingSeconds + "s").formatted(Formatting.GRAY)), true);
-                        }
-                    }
+            int cooldown = nbt.getInt(EVASION_COOLDOWN_KEY);
+            if (cooldown > 0) {
+                nbt.putInt(EVASION_COOLDOWN_KEY, cooldown - 1);
+                if (cooldown == 1) {
+                    nbt.putInt(EVASION_CHARGES_KEY, MAX_CHARGES);
+                    player.sendMessage(Text.literal("Evasion charges restored!").formatted(Formatting.DARK_PURPLE), true);
                 }
             }
         }
     }
 
-    private static void teleportRandomly(ServerPlayerEntity player) {
-        World world = player.getWorld();
-        double originalX = player.getX();
-        double originalY = player.getY();
-        double originalZ = player.getZ();
-        Random random = world.getRandom();
-
-        for(int i = 0; i < 16; ++i) {
-            double targetX = player.getX() + (random.nextDouble() - 0.5D) * 16.0D;
-            double targetY = MathHelper.clamp(player.getY() + (double)(random.nextInt(16) - 8), 
-                world.getBottomY(), world.getBottomY() + ((world.getTopY() - world.getBottomY()) / 2));
-            double targetZ = player.getZ() + (random.nextDouble() - 0.5D) * 16.0D;
-
-            if (player.hasVehicle()) {
-                player.stopRiding();
-            }
-
-            if (player.teleport(targetX, targetY, targetZ, true)) {
-                world.playSound(null, originalX, originalY, originalZ, 
-                    SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                break;
+    private static boolean tryUseCharge(PlayerEntity player) {
+        ItemStack chestplate = player.getInventory().getArmorStack(2);
+        if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
+            NbtCompound nbt = chestplate.getOrCreateNbt();
+            int charges = nbt.getInt(EVASION_CHARGES_KEY);
+            
+            if (charges > 0) {
+                nbt.putInt(EVASION_CHARGES_KEY, charges - 1);
+                if (charges - 1 == 0) {
+                    nbt.putInt(EVASION_COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS);
+                }
+                return true;
             }
         }
+        return false;
+    }
+
+    private static void teleportRandomly(PlayerEntity player) {
+        double radius = 5.0;
+        double theta = random.nextDouble() * 2 * Math.PI;
+        
+        Vec3d pos = player.getPos();
+        double newX = pos.x + radius * Math.cos(theta);
+        double newZ = pos.z + radius * Math.sin(theta);
+        
+        player.teleport(newX, pos.y, newZ);
+        player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), 
+                                  net.minecraft.sound.SoundEvents.ENTITY_ENDERMAN_TELEPORT, 
+                                  net.minecraft.sound.SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 
     private static boolean isWearingFullEnderSteelArmor(PlayerEntity player) {
-        Iterable<ItemStack> armorPieces = player.getArmorItems();
-        boolean hasHelmet = false;
-        boolean hasChestplate = false;
-        boolean hasLeggings = false;
-        boolean hasBoots = false;
-
-        for (ItemStack armorPiece : armorPieces) {
-            if (armorPiece.isOf(ModItems.ENDER_STEEL_HELMET)) {
-                hasHelmet = true;
-            } else if (armorPiece.isOf(ModItems.ENDER_STEEL_CHESTPLATE)) {
-                hasChestplate = true;
-            } else if (armorPiece.isOf(ModItems.ENDER_STEEL_LEGGINGS)) {
-                hasLeggings = true;
-            } else if (armorPiece.isOf(ModItems.ENDER_STEEL_BOOTS)) {
-                hasBoots = true;
+        for (ItemStack stack : player.getArmorItems()) {
+            if (stack.isEmpty() || !(stack.getItem() instanceof EnderSteelArmorItem)) {
+                return false;
             }
         }
-
-        return hasHelmet && hasChestplate && hasLeggings && hasBoots;
+        return true;
     }
 }

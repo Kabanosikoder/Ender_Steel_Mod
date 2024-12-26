@@ -2,7 +2,7 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
-## [1.0.3] - 2024-12-26
+## [1.1.0] - 2024-12-26
 
 ### Changed
 - Modified Ender Steel Armor evasion ability
@@ -10,12 +10,9 @@ All notable changes to the Ender Steel Mod will be documented in this file.
   - When charges reach zero, enters 2-minute cooldown
   - After cooldown, all 5 charges are restored at once
   - Does not activate when blocking with shield
-  - More balanced with chance-based activation
 - Adjusted Ender Steel Block behavior
-  - Added quarter-second delay between state transitions
-  - Smoother opening and closing animations
-  - More predictable block state changes
 - Added bagel to Ender Steel creative tab
+- Ender Strike renamed to Void Strike for ++coolness factor
 
 ## [1.0.2] - 2024-12-26
 
@@ -32,7 +29,7 @@ All notable changes to the Ender Steel Mod will be documented in this file.
   - Cannot be combined with Ender Strike
 
 ### Changed
-- Renamed "Ender's Edge" to "Ender Strike" for consistency
+- Renamed "Ender's Edge" to "Ender Strike" for obvious reasons
 - Rebalanced Ender Strike enchantment
   - Now a single-level enchantment
   - Maintains 50% chance to teleport enemies
@@ -42,8 +39,8 @@ All notable changes to the Ender Steel Mod will be documented in this file.
   - Current bonus damage
   - Stored pearl count
 
-### Technical
-- Improved enchantment compatibility system
+### Extra
+- Improved enchantments
 - Enhanced damage calculation for streak system
 - Added persistent streak tracking using NBT data
 
@@ -73,10 +70,10 @@ All notable changes to the Ender Steel Mod will be documented in this file.
   - Entities no longer teleport into unsafe locations (such as walls or 69 blocks underground)
   - Failed teleports don't consume pearls anymore
 
-## [1.0.0] - 2024-12-25
+## [1.0.0] - 2024-12-23
 
 ### Added
-- Initial release of the Ender Steel Mod
+- Initial build of the Ender Steel Mod
 - Ender Steel Armor Set with dodge ability
 - Ender Steel Sword with pearl storage system
 - Ender Steel Scythe with Gazing Void enchantment
@@ -88,8 +85,3 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 - Added Bagel food item
   - Restores 2 hunger bars with 0.8 saturation
   - Crafted with 4 wheat in a circle and wheat seeds in the middle
-  - Recipe yields 2 bagels
-
-### Technical
-- Built for Minecraft 1.20.1
-- Requires Fabric Loader and Fabric API

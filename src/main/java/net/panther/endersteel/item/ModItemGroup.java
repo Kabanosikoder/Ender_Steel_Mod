@@ -19,7 +19,7 @@ public class ModItemGroup {
     public static final ItemGroup ENDER_STEEL_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(EnderSteel.MOD_ID, "ender_steel_group"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.ender_steel_group"))
-                    .icon(() -> new ItemStack(ModItems.ENDER_STEEL_SCYTHE)).entries((displayContext, entries) -> {
+                    .icon(() -> new ItemStack(ModItems.ENDER_STEEL_INGOT)).entries((displayContext, entries) -> {
 
                         // Items:
                         entries.add(ModItems.ENDER_STEEL_INGOT);

@@ -32,11 +32,11 @@
   "enchantment.endersteel.gazing_void": "Gazing Void",
   "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target",
 
-  "enchantment.endersteel.ender_strike": "Ender Strike",
-  "enchantment.endersteel.ender_strike.desc": "50% chance to teleport hit enemies within a 5-block radius",
   "enchantment.endersteel.ender_streak": "Ender Streak",
   "enchantment.endersteel.ender_streak.desc": "Current Streak: %d",
   "enchantment.endersteel.ender_streak.bonus": "Bonus Damage: x%s",
+  "enchantment.endersteel.void_strike": "Void Strike",
+  "enchantment.endersteel.void_strike.desc": "50% chance to teleport hit enemies within a 5-block radius",
 
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void"

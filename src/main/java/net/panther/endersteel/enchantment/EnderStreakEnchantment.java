@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.enchantment.Enchantments;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
 
 public class EnderStreakEnchantment extends Enchantment {
@@ -32,10 +33,7 @@ public class EnderStreakEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canAccept(Enchantment other) {
-        return super.canAccept(other) && other != ModEnchantments.ENDER_STRIKE;
-
-
+    protected boolean canAccept(Enchantment other) {
+        return other != Enchantments.SHARPNESS;
     }
 }
-

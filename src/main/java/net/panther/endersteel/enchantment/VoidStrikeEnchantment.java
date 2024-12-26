@@ -6,8 +6,8 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
 
-public class EnderStrikeEnchantment extends Enchantment {
-    public EnderStrikeEnchantment() {
+public class VoidStrikeEnchantment extends Enchantment {
+    public VoidStrikeEnchantment() {
         super(Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
@@ -35,6 +35,4 @@ public class EnderStrikeEnchantment extends Enchantment {
     public boolean canAccept(Enchantment other) {
         return super.canAccept(other) && other != ModEnchantments.ENDER_STREAK;
     }
-
-
 }

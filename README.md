@@ -1,51 +1,61 @@
 # Ender Steel Mod
 
-A Minecraft mod that adds Ender-infused steel equipment with unique abilities.
+A Minecraft mod that adds Ender infused equipment with unique abilities and enchantments.
 
 ## Features
 
-### Ender Steel Sword
-- Store up to 10 Ender Pearls by right-clicking with pearls in offhand
-- Base ability: Chance to teleport and damage enemies on hit (uses stored pearls)
-- Streak system: Successful teleports increase next teleport chance
-- Enchantment: Ender's Edge
-  - 50% chance to teleport enemies within 5 blocks
-  - Uses stored pearls
-  - Safe teleportation system prevents teleporting into walls
+### Items
+- **Ender Steel Ingot**: Crafted from Ender Scrap and used to create all Ender Steel equipment
+- **Ender Scrap**: Base material created by combining Ender Pearls with Netherite Scrap
+- **Ender Steel Block**: It stares back at you
+- **Bagel**: A mysterious food item that is surprisingly caloric
 
-### Ender Steel Scythe
-- Applies Gazing Void effect on hit
-- Right-click to activate, next hit applies the effect
-- Gazing Void effect: Blinds and immobilizes targets
+### Equipment
+- **Ender Steel Armor Set**:
+  - Full set of armor (Helmet, Chestplate, Leggings, Boots)
+  - Special Ability: 40% chance to evade attacks
+  - Evasion uses charges that recharge after 2 minutes
+  - Better than Netherite
 
-### Ender Steel Block
-- Interactive block that responds to player gaze
-- Three states: closed, partly open, and fully open
-- Changes state based on player's line of sight
+- **Ender Steel Tools**:
+  - Complete tool set including Sword, Pickaxe, Axe, Shovel, and Scythe
 
-### Armor Set
-- Full set provides dodge ability
-- Chance to avoid damage
-- Visual effects on successful dodge
+### Enchantments
+- **Void Strike**:
+  - Sword enchantment (Max Level: 1)
+  - Deals 2 bonus magic damage to enemies and has a 50% to tp on hit
+  - Incompatible with Sharpness
+  
+- **Ender Streak**:
+  - Sword enchantment (Max Level: 3)
+  - Builds up a damage multiplier streak as you hit enemies
+  - Incompatible with Sharpness
+  - Higher levels increase the streak bonus
 
-## Installation
+### Blocks
+- **Ender Steel Block**:
+  - Used for the Scythe crafting recipe
+  - It can see you
 
-1. Install Fabric loader for Minecraft 1.20.1
-2. Download and install Fabric API
-3. Place the mod JAR file in your mods folder
+## Crafting
 
-## Usage
+### Base Materials
+- Ender Scrap: 1 Ender Pearl + 1 Iron Ingot = 2 Ender Scrap
+- Ender Steel Ingot: Can be obtained through smelting Ender Scrap
+- Ender Steel Block: 9 Ender Steel Ingots in a 3x3 pattern
 
-### Crafting
-- Craft Ender Steel equipment using Ender Scrap and other materials
-- Enchant the Ender Steel Sword with Ender's Edge for enhanced teleportation
-
-### Sword Usage
-1. Store Ender Pearls by right-clicking with pearls in your offhand
-2. Attack enemies to trigger teleportation effects
-3. Watch the tooltip for current pearl count and abilities
+### Equipment
+All equipment follows standard Minecraft crafting patterns with Ender Steel Ingots, except:
+- Scythe: Requires 2 Ender Steel Ingots, 1 Ender Steel Block, and 2 Sticks in a unique pattern
 
 ## Dependencies
 - Minecraft 1.20.1
 - Fabric Loader
 - Fabric API
+
+## Credits
+- Created by Panther aka Kabanosikoder
+- Coded by Panther
+- Scythe art by Crispodispo
+- Bagel art by RealOlive
+

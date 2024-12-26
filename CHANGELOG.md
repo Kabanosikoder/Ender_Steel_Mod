@@ -57,7 +57,7 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 - Safe teleportation system
   - Prevents entities from teleporting into walls
   - Ensures solid ground beneath teleport location
-  - Requires 2 blocks of air space for entity height
+  - Requires 2 blocks of airspace for entity height
 
 ### Changed
 - Updated Ender Steel Sword mechanics

@@ -13,11 +13,8 @@ public class ModEnchantments {
             new GazingVoidEnchantment()
     );
 
-    public static final Enchantment ENDER_STRIKE = Registry.register(
-            Registries.ENCHANTMENT,
-            new Identifier(EnderSteel.MOD_ID, "ender_strike"),
-            new EnderStrikeEnchantment()
-    );
+    public static final Enchantment VOID_STRIKE = register("void_strike",
+            new VoidStrikeEnchantment());
 
     public static final Enchantment ENDER_STREAK = Registry.register(
             Registries.ENCHANTMENT,
@@ -27,5 +24,13 @@ public class ModEnchantments {
 
     public static void registerModEnchantments() {
         EnderSteel.LOGGER.info("Registering enchantments for " + EnderSteel.MOD_ID);
+    }
+
+    private static Enchantment register(String name, Enchantment enchantment) {
+        return Registry.register(
+                Registries.ENCHANTMENT,
+                new Identifier(EnderSteel.MOD_ID, name),
+                enchantment
+        );
     }
 }

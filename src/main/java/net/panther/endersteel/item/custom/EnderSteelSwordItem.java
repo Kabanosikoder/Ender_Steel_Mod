@@ -82,11 +82,26 @@ public class EnderSteelSwordItem extends SwordItem {
         if (!attacker.getWorld().isClient && target.isAlive()) {
             int storedPearls = getStoredPearls(stack);
             if (storedPearls > 0) {
-                // Check for Ender Strike enchantment
-                if (EnchantmentHelper.getLevel(ModEnchantments.ENDER_STRIKE, stack) > 0) {
-                    if (random.nextFloat() < 0.5f) {  // 50% chance
-                        if (teleportEntity(target, target.getWorld())) {
-                            setStoredPearls(stack, storedPearls - 1);
+                if (EnchantmentHelper.getLevel(ModEnchantments.VOID_STRIKE, stack) > 0) {
+                    if (attacker instanceof PlayerEntity player) {
+                        if (random.nextFloat() < 0.5f) {  // 50% chance
+                            // Find nearby entities within 5 blocks
+                            List<Entity> nearbyEntities = target.getWorld().getOtherEntities(target, 
+                                target.getBoundingBox().expand(5.0), 
+                                entity -> entity instanceof LivingEntity && entity != attacker);
+                            
+                            // Teleport all nearby entities
+                            for (Entity entity : nearbyEntities) {
+                                if (entity instanceof LivingEntity livingEntity && teleportEntity(livingEntity, livingEntity.getWorld())) {
+                                    setStoredPearls(stack, storedPearls - 1);
+                                    if (storedPearls <= 0) break;
+                                }
+                            }
+                            
+                            // Also teleport the hit target
+                            if (storedPearls > 0 && teleportEntity(target, target.getWorld())) {
+                                setStoredPearls(stack, storedPearls - 1);
+                            }
                         }
                     }
                 } else if (EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack) > 0) {

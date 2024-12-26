@@ -39,7 +39,7 @@ public class ModItemGroup {
                         entries.add(ModItems.BAGEL); // funny bagel
 
                         // Enchantments
-                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STRIKE, 1)));
+                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.VOID_STRIKE, 1)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 1)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 2)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 3)));

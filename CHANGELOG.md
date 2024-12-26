@@ -2,6 +2,47 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
+## [1.0.3] - 2024-12-26
+
+### Changed
+- Modified Ender Steel Armor evasion ability
+  - Added 25% chance to trigger evasion when hit
+  - Uses one charge per successful evasion
+  - Has 5 total charges
+  - When charges reach zero, enters 2-minute cooldown
+  - After cooldown, all 5 charges are restored at once
+  - More balanced with chance-based activation
+
+## [1.0.2] - 2024-12-26
+
+### Added
+- New Ender Streak enchantment for Ender Steel Sword
+  - Max Level III
+  - 15% chance to trigger bonus damage based on streak
+  - Damage increases with streak and enchantment level:
+    - Level I: +0.5 damage per streak
+    - Level II: +1.0 damage per streak
+    - Level III: +1.5 damage per streak
+  - Streak persists until death or switching items
+  - Uses stored pearls for activation
+  - Cannot be combined with Ender Strike
+
+### Changed
+- Renamed "Ender's Edge" to "Ender Strike" for consistency
+- Rebalanced Ender Strike enchantment
+  - Now a single-level enchantment
+  - Maintains 50% chance to teleport enemies
+  - Cannot be combined with Ender Streak
+- Updated tooltips to show:
+  - Current streak counter
+  - Current bonus damage
+  - Stored pearl count
+
+### Technical
+- Improved enchantment compatibility system
+- Enhanced damage calculation for streak system
+- Added persistent streak tracking using NBT data
+
 ## [1.0.1] - 2024-12-25
 
 ### Added
@@ -18,15 +59,15 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 - Updated Ender Steel Sword mechanics
   - Pearl storage now works with Ender's Edge enchantment
   - Tooltip always shows stored pearl count
-  - Improved teleportation effects and particles
+  - Improved teleportation effects and particles (dragons breath particles now for extra coolness)
 - Enhanced tooltips and descriptions
   - More detailed enchantment descriptions
   - Clearer ability explanations
 
 ### Fixed
 - Teleportation safety checks
-  - Entities no longer teleport into unsafe locations
-  - Failed teleports don't consume pearls
+  - Entities no longer teleport into unsafe locations (such as walls or 69 blocks underground)
+  - Failed teleports don't consume pearls anymore
 
 ## [1.0.0] - 2024-12-25
 
@@ -48,6 +89,3 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 ### Technical
 - Built for Minecraft 1.20.1
 - Requires Fabric Loader and Fabric API
-- Implemented custom rendering for status effects
-- Added NBT data handling for pearl storage
-- Created custom armor event system for dodge ability

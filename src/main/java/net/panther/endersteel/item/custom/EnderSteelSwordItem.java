@@ -4,17 +4,11 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -30,6 +24,7 @@ public class EnderSteelSwordItem extends SwordItem {
     private static final int MAX_STORED_PEARLS = 10;
     private static final String STREAK_KEY = "teleport_streak";
     private static final Random random = new Random();
+    private static final float STREAK_BASE_CHANCE = 0.15f; // 15% base chance
 
     public EnderSteelSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -48,8 +43,8 @@ public class EnderSteelSwordItem extends SwordItem {
 
         // Show bonus damage if we have a streak
         if (currentStreak > 0) {
-            float bonusDamage = 1.0f + (currentStreak * 0.5f);
-            tooltip.add(Text.literal("Bonus Damage: x" + String.format("%.1f", bonusDamage))
+            float bonusDamage = currentStreak * 0.5f;
+            tooltip.add(Text.literal("Bonus Damage: +" + String.format("%.1f", bonusDamage))
                     .formatted(Formatting.LIGHT_PURPLE));
         }
 
@@ -79,7 +74,6 @@ public class EnderSteelSwordItem extends SwordItem {
                 return TypedActionResult.success(stack);
             }
         }
-        
         return TypedActionResult.pass(stack);
     }
 
@@ -100,21 +94,16 @@ public class EnderSteelSwordItem extends SwordItem {
                     int streakLevel = EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack);
                     int currentStreak = getStreak(stack);
                     
-                    // Base chance 10% + 2.5% per streak, increased by enchantment level
-                    double chance = (0.1 + (currentStreak * 0.025)) * (1 + (streakLevel * 0.2));
-                    
-                    if (random.nextDouble() < chance) {
-                        if (teleportEntity(target, target.getWorld())) {
-                            setStoredPearls(stack, storedPearls - 1);
-                            setStreak(stack, currentStreak + 1);
-                            
-                            // Bonus damage based on streak and enchantment level
-                            float bonusDamage = 1.0f + (currentStreak * 0.5f * streakLevel);
+                    // 15% chance to trigger streak bonus damage
+                    if (random.nextFloat() < STREAK_BASE_CHANCE) {
+                        setStoredPearls(stack, storedPearls - 1);
+                        setStreak(stack, currentStreak + 1);
+                        
+                        // Bonus damage based on streak, enhanced by enchantment level
+                        float bonusDamage = currentStreak * 0.5f * streakLevel;
+                        if (bonusDamage > 0) {
                             target.damage(target.getDamageSources().magic(), bonusDamage);
                         }
-                    } else {
-                        // Reset streak on failed teleport
-                        setStreak(stack, 0);
                     }
                 }
             }
@@ -147,17 +136,11 @@ public class EnderSteelSwordItem extends SwordItem {
         return TeleportUtil.teleportRandomly(entity, 5.0);
     }
 
-    private void playTeleportEffects(Entity entity) {
-        TeleportUtil.playTeleportEffects(entity);
-    }
-
     private float getAttackSpeed() {
-        // Base attack speed is -2.4f for swords
-        return 4.0f + this.getAttackSpeedModifier();  // 4.0 is the base player attack speed
+        return 4.0f + this.getAttackSpeedModifier();
     }
 
     private float getAttackSpeedModifier() {
-        // This should match the attack speed modifier you set in the constructor
-        return -2.4f;  // Standard sword attack speed
+        return -2.4f;
     }
 }

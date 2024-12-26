@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class EnderSteelArmorEvents {
@@ -27,6 +28,8 @@ public class EnderSteelArmorEvents {
     private static final String EVASION_COOLDOWN_KEY = "evasion_cooldown";
     private static final int MAX_CHARGES = 5;
     private static final int CHARGE_COOLDOWN_TICKS = 480; // 24 seconds per charge, total 120 seconds
+    private static final float EVASION_CHANCE = 0.25f; // 25% chance to evade
+    private static final Random random = new Random();
     
     private static final Set<RegistryKey<DamageType>> UNDODGEABLE_DAMAGE = new HashSet<>();
     static {
@@ -73,21 +76,16 @@ public class EnderSteelArmorEvents {
         if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem armorItem) {
             int currentCharges = armorItem.getCharges(chestplate);
             
-            if (currentCharges < MAX_CHARGES) {
+            if (currentCharges == 0) {
                 NbtCompound nbt = chestplate.getOrCreateNbt();
                 int cooldown = nbt.getInt(EVASION_COOLDOWN_KEY);
                 if (cooldown > 0) {
                     nbt.putInt(EVASION_COOLDOWN_KEY, cooldown - 1);
                     if (cooldown == 1) {
-                        // Add one charge and start cooldown for next charge if needed
-                        armorItem.setCharges(chestplate, currentCharges + 1);
+                        // Fully recharge when cooldown completes
+                        armorItem.setCharges(chestplate, MAX_CHARGES);
                         
-                        // Only start new cooldown if we're not at max charges
-                        if (currentCharges + 1 < MAX_CHARGES) {
-                            nbt.putInt(EVASION_COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS);
-                        }
-                        
-                        float pitch = 0.4f + ((currentCharges + 1) * 0.8f); // Pitch increases with each charge
+                        float pitch = 1.5f; // High pitch for full recharge
                         player.getWorld().playSound(
                             null, 
                             player.getX(), 
@@ -99,9 +97,9 @@ public class EnderSteelArmorEvents {
                             pitch
                         );
                     }
-                } else if (cooldown == 0 && currentCharges == 0) {
-                    // Start cooldown for first charge if we have no charges
-                    nbt.putInt(EVASION_COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS);
+                } else if (cooldown == 0) {
+                    // Start cooldown when charges hit 0
+                    nbt.putInt(EVASION_COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS * MAX_CHARGES);
                 }
             }
         }
@@ -120,6 +118,11 @@ public class EnderSteelArmorEvents {
         if (UNDODGEABLE_DAMAGE.contains(source.getTypeRegistryEntry().getKey().orElse(null))) {
             return false;
         }
+
+        // 25% chance to try evading
+        if (random.nextFloat() >= EVASION_CHANCE) {
+            return false;
+        }
         
         if (!tryUseCharge(player)) {
             return false;
@@ -131,8 +134,9 @@ public class EnderSteelArmorEvents {
     private static boolean tryUseCharge(PlayerEntity player) {
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem armorItem) {
-            if (armorItem.hasCharges(chestplate)) {
-                armorItem.consumeCharge(chestplate);
+            int currentCharges = armorItem.getCharges(chestplate);
+            if (currentCharges > 0) {
+                armorItem.setCharges(chestplate, currentCharges - 1);
                 return true;
             }
         }

@@ -14,7 +14,8 @@ import java.util.Set;
 
 public class ModEventHandlers {
     private static final Set<BlockPos> blocksBeingLookedAt = new HashSet<>();
-    private static final Map<BlockPos, Integer> blockTickDelays = new HashMap<>(); // Map to track tick delays for blocks
+    private static final Map<BlockPos, Integer> blockTickDelays = new HashMap<>();
+    private static final int UPDATE_DELAY_TICKS = 15; // Quarter of a second (15 ticks) between updates
 
     public static void registerEventHandlers() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
@@ -50,10 +51,10 @@ public class ModEventHandlers {
                     default -> nextState = EnderSteelStareBlock.OpenState.FULLY_OPEN; // Stay at FULLY_OPEN
                 }
 
-                // Update blockstate if it needs to change
-                if (currentState != nextState) {
+                // Only update if state is changing
+                if (nextState != currentState) {
                     player.getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
-                    blockTickDelays.put(blockPos, 5); // Set delay for 5 ticks
+                    blockTickDelays.put(blockPos, UPDATE_DELAY_TICKS); // Set delay for next update
                 }
             }
         }
@@ -98,7 +99,7 @@ public class ModEventHandlers {
                 EnderSteelStareBlock.OpenState nextState = EnderSteelStareBlock.OpenState.CLOSED;
                 if (currentState != nextState) {
                     players.iterator().next().getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
-                    blockTickDelays.put(blockPos, 5);
+                    blockTickDelays.put(blockPos, UPDATE_DELAY_TICKS);
                 }
             }
         }

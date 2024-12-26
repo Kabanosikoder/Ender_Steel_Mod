@@ -6,12 +6,16 @@ All notable changes to the Ender Steel Mod will be documented in this file.
 
 ### Changed
 - Modified Ender Steel Armor evasion ability
-  - Added 25% chance to trigger evasion when hit
-  - Uses one charge per successful evasion
-  - Has 5 total charges
+  - Added 40% chance to trigger evasion when hit
   - When charges reach zero, enters 2-minute cooldown
   - After cooldown, all 5 charges are restored at once
+  - Does not activate when blocking with shield
   - More balanced with chance-based activation
+- Adjusted Ender Steel Block behavior
+  - Added quarter-second delay between state transitions
+  - Smoother opening and closing animations
+  - More predictable block state changes
+- Added bagel to Ender Steel creative tab
 
 ## [1.0.2] - 2024-12-26
 

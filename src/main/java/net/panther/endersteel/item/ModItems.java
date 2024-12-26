@@ -44,8 +44,7 @@ public class ModItems {
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
-    public static final Item BAGEL = registerItem("bagel",
-            new BagelItem(new FabricItemSettings()));
+    public static final Item BAGEL = registerItem("bagel", new BagelItem(new FabricItemSettings()));
 
     private static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(ENDER_SCRAP);

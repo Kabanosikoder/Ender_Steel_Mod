@@ -17,7 +17,7 @@ public class ModBlocks {
 
     public static final Block ENDER_STEEL_BLOCK = registerBlock("ender_steel_block",
             new EnderSteelStareBlock(FabricBlockSettings.create().mapColor(MapColor.TERRACOTTA_BLUE).strength(6f).requiresTool()
-                    .luminance(state -> state.get(EnderSteelStareBlock.OPEN_STATE) == EnderSteelStareBlock.OpenState.FULLY_OPEN ? 15 : 0)));
+                    .luminance(state -> state.get(EnderSteelStareBlock.OPEN_STATE) == EnderSteelStareBlock.OpenState.FULLY_OPEN ? 7 : 0)));
 
     private static Block registerBlock(String name, Block block){
         registerBlockItem(name, block);

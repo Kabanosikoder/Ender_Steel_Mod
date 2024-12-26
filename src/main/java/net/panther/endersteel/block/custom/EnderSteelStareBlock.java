@@ -14,6 +14,9 @@ import net.panther.endersteel.EnderSteel;
 import java.util.HashSet;
 import java.util.Set;
 
+// THIS BLOCK IS VERY """EYE""" OPENING AHAHAHAH GET IT?
+// DO YOU FCUKING GET IT? IM GOING CRAZY BECAUSE OF THIS ONE BLOCK
+
 public class EnderSteelStareBlock extends Block {
     public static final EnumProperty<OpenState> OPEN_STATE = EnumProperty.of("open_state", OpenState.class);
 

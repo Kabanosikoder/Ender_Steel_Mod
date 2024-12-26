@@ -28,7 +28,7 @@ public class EnderSteelArmorEvents {
     private static final String EVASION_COOLDOWN_KEY = "evasion_cooldown";
     private static final int MAX_CHARGES = 5;
     private static final int CHARGE_COOLDOWN_TICKS = 480; // 24 seconds per charge, total 120 seconds
-    private static final float EVASION_CHANCE = 0.25f; // 25% chance to evade
+    private static final float EVASION_CHANCE = 0.40f; // 40% chance to evade
     private static final Random random = new Random();
     
     private static final Set<RegistryKey<DamageType>> UNDODGEABLE_DAMAGE = new HashSet<>();
@@ -119,7 +119,12 @@ public class EnderSteelArmorEvents {
             return false;
         }
 
-        // 25% chance to try evading
+        // Don't activate if player is blocking with shield
+        if (player.isBlocking()) {
+            return false;
+        }
+
+        // 40% chance to try evading
         if (random.nextFloat() >= EVASION_CHANCE) {
             return false;
         }

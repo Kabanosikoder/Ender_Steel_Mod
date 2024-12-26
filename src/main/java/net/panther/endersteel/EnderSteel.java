@@ -3,6 +3,7 @@ package net.panther.endersteel;
 import net.fabricmc.api.ModInitializer;
 import net.panther.endersteel.block.ModBlocks;
 import net.panther.endersteel.block.custom.EnderSteelStareBlock;
+import net.panther.endersteel.effect.ModEffects;
 import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.event.EnderSteelArmorEvents;
 import net.panther.endersteel.item.ModItemGroup;
@@ -22,6 +23,7 @@ public class EnderSteel implements ModInitializer {
 		ModEnchantments.registerModEnchantments();
 		EnderSteelArmorEvents.register();
 		EnderSteelStareBlock.LookAtBlockHandler.register();
+		ModEffects.registerEffects();
 
 		LOGGER.info("Initialized " + MOD_ID);
 	}

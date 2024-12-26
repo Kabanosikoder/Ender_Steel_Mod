@@ -14,7 +14,9 @@ import java.util.List;
 
 public class EnderSteelArmorItem extends ArmorItem {
     private static final String CHARGES_KEY = "evasion_charges";
+    private static final String COOLDOWN_KEY = "evasion_cooldown";
     private static final int MAX_CHARGES = 5;
+    private static final int CHARGE_COOLDOWN_TICKS = 480;
 
     public EnderSteelArmorItem(ArmorMaterial material, Type type, Settings settings) {
         super(material, type, settings);
@@ -26,7 +28,7 @@ public class EnderSteelArmorItem extends ArmorItem {
         
         // Initialize charges if not set
         if (!stack.getOrCreateNbt().contains(CHARGES_KEY)) {
-            setCharges(stack, MAX_CHARGES - 1);  // Set to 4 charges initially
+            setCharges(stack, MAX_CHARGES);  // Initialize to max charges
         }
     }
 
@@ -39,7 +41,7 @@ public class EnderSteelArmorItem extends ArmorItem {
 
     public int getCharges(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.contains(CHARGES_KEY) ? nbt.getInt(CHARGES_KEY) : MAX_CHARGES - 1;  // Return 4 if not set
+        return nbt.contains(CHARGES_KEY) ? nbt.getInt(CHARGES_KEY) : 0;  // Return 0 if not set
     }
 
     public void setCharges(ItemStack stack, int charges) {
@@ -55,6 +57,11 @@ public class EnderSteelArmorItem extends ArmorItem {
         int currentCharges = getCharges(stack);
         if (currentCharges > 0) {
             setCharges(stack, currentCharges - 1);
+            // Start cooldown if we just used our last charge
+            if (currentCharges == 1) {
+                NbtCompound nbt = stack.getOrCreateNbt();
+                nbt.putInt(COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS);
+            }
         }
     }
 

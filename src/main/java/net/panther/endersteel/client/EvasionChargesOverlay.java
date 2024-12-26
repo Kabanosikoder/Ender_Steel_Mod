@@ -13,9 +13,8 @@ import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 public class EvasionChargesOverlay implements HudRenderCallback {
     private static final Identifier CHARGE_EMPTY = new Identifier(EnderSteel.MOD_ID, "textures/item/ender_steel_armor_empty.png");
     private static final Identifier CHARGE_FULL = new Identifier(EnderSteel.MOD_ID, "textures/item/ender_steel_armor_full.png");
-    private static final int TEXTURE_SIZE = 8;
+    private static final int TEXTURE_SIZE = 9;
     private static final int MAX_CHARGES = 5;
-    private static final int RECHARGE_TIME = 1400; // 70 seconds in ticks
 
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
@@ -24,17 +23,17 @@ public class EvasionChargesOverlay implements HudRenderCallback {
 
         if (player == null) return;
 
-        // Check if wearing full Ender Steel armor
+        // Check if player is wearing full Ender Steel armor
         if (!isWearingFullEnderSteelArmor(player)) return;
 
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         int charges = getEvasionCharges(player);
-        int cooldown = getCooldown(chestplate);
         
         int screenWidth = client.getWindow().getScaledWidth();
         int screenHeight = client.getWindow().getScaledHeight();
 
-        int startX = screenWidth / 2 - (MAX_CHARGES * TEXTURE_SIZE) / 2;
+        // Charge bar position
+        int startX = screenWidth / 2 - (MAX_CHARGES * TEXTURE_SIZE) / 2 - 69;  // Aligned armor bar
         int startY = screenHeight - 59;
 
         // Draw the charges
@@ -44,17 +43,6 @@ public class EvasionChargesOverlay implements HudRenderCallback {
             if (i < charges) {
                 // Full charge
                 drawContext.drawTexture(CHARGE_FULL, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
-            } else if (i == charges && cooldown > 0) {
-                // Recharging charge - draw both textures with alpha based on progress
-                float progress = 1.0f - (cooldown / (float)RECHARGE_TIME);
-                
-                // Draw empty background
-                drawContext.drawTexture(CHARGE_EMPTY, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
-                
-                // Draw filling charge with alpha
-                drawContext.setShaderColor(1.0f, 1.0f, 1.0f, progress);
-                drawContext.drawTexture(CHARGE_FULL, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
-                drawContext.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             } else {
                 // Empty charge
                 drawContext.drawTexture(CHARGE_EMPTY, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
@@ -75,16 +63,6 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (chestplate.getItem() instanceof EnderSteelArmorItem armorItem) {
             return armorItem.getCharges(chestplate);
-        }
-        return 0;
-    }
-    
-    private int getCooldown(ItemStack chestplate) {
-        if (chestplate.getItem() instanceof EnderSteelArmorItem) {
-            NbtCompound nbt = chestplate.getNbt();
-            if (nbt != null) {
-                return nbt.getInt("evasion_cooldown");
-            }
         }
         return 0;
     }

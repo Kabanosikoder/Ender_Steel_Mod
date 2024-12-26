@@ -15,10 +15,11 @@ public class ModEffects {
     public static final StatusEffect GAZING_VOID = new GazingVoidEffect();
 
     public static void registerEffects() {
-        Registry.register(Registries.STATUS_EFFECT, 
-            new Identifier(EnderSteel.MOD_ID, "gazing_void"), 
-            GAZING_VOID);
-        EnderSteel.LOGGER.info("Registering Effects for " + EnderSteel.MOD_ID);
+        Registry.register(
+            Registries.STATUS_EFFECT,
+            new Identifier(EnderSteel.MOD_ID, "gazing_void"),
+            GAZING_VOID
+        );
     }
 
     private static class GazingVoidEffect extends StatusEffect {

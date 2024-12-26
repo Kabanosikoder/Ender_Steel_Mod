@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class TeleportUtil {
     private static final Random random = Random.create();
-    private static final int MAX_VERTICAL_SEARCH = 10; // Maximum blocks to search up/down
+    private static final int MAX_VERTICAL_SEARCH = 8; // Maximum blocks to search up/down
 
     /**
      * Teleports an entity randomly within a radius
@@ -48,15 +48,15 @@ public class TeleportUtil {
             double theta = random.nextDouble() * 2 * Math.PI;
             double dx = radius * Math.cos(theta);
             double dz = radius * Math.sin(theta);
-            
+
             double newX = startX + dx;
             double newZ = startZ + dz;
 
             // Try to find a valid position, starting at current Y and searching up first
             BlockPos.Mutable checkPos = new BlockPos.Mutable(
-                (int)Math.floor(newX),
-                (int)Math.floor(entity.getY()),
-                (int)Math.floor(newZ)
+                    (int)Math.floor(newX),
+                    (int)Math.floor(entity.getY()),
+                    (int)Math.floor(newZ)
             );
 
             // First try going up more aggressively
@@ -66,19 +66,19 @@ public class TeleportUtil {
                     // Verify we're still within radius after potential terrain adjustments
                     double finalX = checkPos.getX() + 0.5;
                     double finalZ = checkPos.getZ() + 0.5;
-                    double distSq = (finalX - startX) * (finalX - startX) + 
-                                  (finalZ - startZ) * (finalZ - startZ);
-                    
+                    double distSq = (finalX - startX) * (finalX - startX) +
+                            (finalZ - startZ) * (finalZ - startZ);
+
                     if (distSq <= radius * radius) {
                         entity.teleport(finalX, checkPos.getY(), finalZ);
                         if (addGlowingEffect && entity instanceof LivingEntity living) {
                             living.addStatusEffect(new StatusEffectInstance(
-                                StatusEffects.GLOWING,
-                                60,  // Duration (3 seconds = 60 ticks)
-                                0,   // Amplifier (level 1)
-                                false,  // Ambient
-                                true,   // Show particles
-                                true    // Show icon
+                                    StatusEffects.GLOWING,
+                                    60,  // Duration (3 seconds = 60 ticks)
+                                    0,   // Amplifier (level 1)
+                                    false,  // Ambient
+                                    true,   // Show particles
+                                    true    // Show icon
                             ));
                         }
                         playTeleportEffects(entity);
@@ -95,19 +95,19 @@ public class TeleportUtil {
                         // Verify we're still within radius after potential terrain adjustments
                         double finalX = checkPos.getX() + 0.5;
                         double finalZ = checkPos.getZ() + 0.5;
-                        double distSq = (finalX - startX) * (finalX - startX) + 
-                                      (finalZ - startZ) * (finalZ - startZ);
-                        
+                        double distSq = (finalX - startX) * (finalX - startX) +
+                                (finalZ - startZ) * (finalZ - startZ);
+
                         if (distSq <= radius * radius) {
                             entity.teleport(finalX, checkPos.getY(), finalZ);
                             if (addGlowingEffect && entity instanceof LivingEntity living) {
                                 living.addStatusEffect(new StatusEffectInstance(
-                                    StatusEffects.GLOWING,
-                                    60,
-                                    0,
-                                    false,
-                                    true,
-                                    true
+                                        StatusEffects.GLOWING,
+                                        60,
+                                        0,
+                                        false,
+                                        true,
+                                        true
                                 ));
                             }
                             playTeleportEffects(entity);
@@ -130,8 +130,8 @@ public class TeleportUtil {
      */
     private static boolean isValidTeleportSpot(World world, BlockPos pos) {
         return world.getBlockState(pos.down()).isSolid() && // Must have solid ground
-               world.getBlockState(pos).isAir() &&          // Must have air here
-               world.getBlockState(pos.up()).isAir();       // Must have air above
+                world.getBlockState(pos).isAir() &&          // Must have air here
+                world.getBlockState(pos.up()).isAir();       // Must have air above
     }
 
     /**
@@ -141,31 +141,31 @@ public class TeleportUtil {
     public static void playTeleportEffects(Entity entity) {
         if (entity.getWorld().isClient) return;
         ServerWorld world = (ServerWorld) entity.getWorld();
-        
+
         // Play enderman teleport sound
         world.playSound(
-            null,
-            entity.getX(),
-            entity.getY(),
-            entity.getZ(),
-            SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-            SoundCategory.PLAYERS,
-            1.0f,
-            1.0f
+                null,
+                entity.getX(),
+                entity.getY(),
+                entity.getZ(),
+                SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+                SoundCategory.PLAYERS,
+                1.0f,
+                1.0f
         );
-        
+
         // Spawn particles
         for (int i = 0; i < 32; i++) {
             world.spawnParticles(
-                ParticleTypes.PORTAL,
-                entity.getX(),
-                entity.getY() + random.nextDouble() * 2.0,
-                entity.getZ(),
-                1,  // count
-                random.nextDouble() - 0.5,  // deltaX
-                random.nextDouble() - 0.5,  // deltaY
-                random.nextDouble() - 0.5,  // deltaZ
-                0.1  // speed
+                    ParticleTypes.DRAGON_BREATH,
+                    entity.getX(),
+                    entity.getY() + random.nextDouble() * 2.0,
+                    entity.getZ(),
+                    1,  // count
+                    random.nextDouble() - 0.5,  // deltaX
+                    random.nextDouble() - 0.5,  // deltaY
+                    random.nextDouble() - 0.5,  // deltaZ
+                    0.1  // speed
             );
         }
     }

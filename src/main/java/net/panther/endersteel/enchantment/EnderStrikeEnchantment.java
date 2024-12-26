@@ -36,18 +36,5 @@ public class EnderStrikeEnchantment extends Enchantment {
         return super.canAccept(other) && other != ModEnchantments.ENDER_STREAK;
     }
 
-    @Override
-    public boolean isTreasure() {
-        return true;  // This will hide it from the enchantment table
-    }
 
-    @Override
-    public boolean isAvailableForEnchantedBookOffer() {
-        return false;  // This will hide it from villager trades
-    }
-
-    @Override
-    public boolean isAvailableForRandomSelection() {
-        return false;  // This will hide it from random loot
-    }
 }

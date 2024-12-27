@@ -16,6 +16,7 @@ import java.util.Set;
 
 // THIS BLOCK IS VERY """EYE""" OPENING AHAHAHAH GET IT?
 // DO YOU FCUKING GET IT? IM GOING CRAZY BECAUSE OF THIS ONE BLOCK
+// Raycasting hell
 
 public class EnderSteelStareBlock extends Block {
     public static final EnumProperty<OpenState> OPEN_STATE = EnumProperty.of("open_state", OpenState.class);
@@ -112,7 +113,6 @@ public class EnderSteelStareBlock extends Block {
             for (BlockPos blockPos : toRemove) {
                 blocksBeingLookedAt.remove(blockPos);
 
-                // Set the block directly to CLOSED state once the player looks away
                 for (ServerPlayerEntity player : players) {
                     BlockState blockState = player.getWorld().getBlockState(blockPos);
                     if (blockState.getBlock() instanceof EnderSteelStareBlock) {

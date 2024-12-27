@@ -22,8 +22,6 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         PlayerEntity player = client.player;
 
         if (player == null) return;
-
-        // Check if player is wearing full Ender Steel armor
         if (!isWearingFullEnderSteelArmor(player)) return;
 
         ItemStack chestplate = player.getInventory().getArmorStack(2);
@@ -32,19 +30,15 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         int screenWidth = client.getWindow().getScaledWidth();
         int screenHeight = client.getWindow().getScaledHeight();
 
-        // Charge bar position
         int startX = screenWidth / 2 - (MAX_CHARGES * TEXTURE_SIZE) / 2 - 69;  // Aligned armor bar
         int startY = screenHeight - 59;
 
-        // Draw the charges
         for (int i = 0; i < MAX_CHARGES; i++) {
             int x = startX + (i * TEXTURE_SIZE);
             
             if (i < charges) {
-                // Full charge
                 drawContext.drawTexture(CHARGE_FULL, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
             } else {
-                // Empty charge
                 drawContext.drawTexture(CHARGE_EMPTY, x, startY, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE);
             }
         }

@@ -25,8 +25,7 @@ public class EnderSteelArmorItem extends ArmorItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        
-        // Initialize charges if not set
+
         if (!stack.getOrCreateNbt().contains(CHARGES_KEY)) {
             setCharges(stack, MAX_CHARGES);  // Initialize to max charges
         }
@@ -57,7 +56,7 @@ public class EnderSteelArmorItem extends ArmorItem {
         int currentCharges = getCharges(stack);
         if (currentCharges > 0) {
             setCharges(stack, currentCharges - 1);
-            // Start cooldown if we just used our last charge
+
             if (currentCharges == 1) {
                 NbtCompound nbt = stack.getOrCreateNbt();
                 nbt.putInt(COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS);

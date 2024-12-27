@@ -15,7 +15,7 @@ import java.util.Set;
 public class ModEventHandlers {
     private static final Set<BlockPos> blocksBeingLookedAt = new HashSet<>();
     private static final Map<BlockPos, Integer> blockTickDelays = new HashMap<>();
-    private static final int UPDATE_DELAY_TICKS = 15; // Quarter of a second (15 ticks) between updates
+    private static final int UPDATE_DELAY_TICKS = 15;
 
     public static void registerEventHandlers() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
@@ -38,20 +38,18 @@ public class ModEventHandlers {
                 int ticksRemaining = blockTickDelays.getOrDefault(blockPos, 0);
                 if (ticksRemaining > 0) {
                     blockTickDelays.put(blockPos, ticksRemaining - 1);
-                    return; // Wait for delay before transitioning
+                    return;
                 }
 
                 EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
                 EnderSteelStareBlock.OpenState nextState;
 
-                // Determine the next state
                 switch (currentState) {
                     case CLOSED -> nextState = EnderSteelStareBlock.OpenState.PARTLY_OPEN;
                     case PARTLY_OPEN -> nextState = EnderSteelStareBlock.OpenState.FULLY_OPEN;
                     default -> nextState = EnderSteelStareBlock.OpenState.FULLY_OPEN; // Stay at FULLY_OPEN
                 }
 
-                // Only update if state is changing
                 if (nextState != currentState) {
                     player.getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
                     blockTickDelays.put(blockPos, UPDATE_DELAY_TICKS); // Set delay for next update

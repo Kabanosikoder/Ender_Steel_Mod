@@ -36,19 +36,16 @@ public class EnderSteelSwordItem extends SwordItem {
         int storedPearls = getStoredPearls(stack);
         int currentStreak = getStreak(stack);
 
-        // Always show current streak if it exists
         if (currentStreak > 0) {
             tooltip.add(Text.literal("Current Streak: " + currentStreak).formatted(Formatting.LIGHT_PURPLE));
         }
 
-        // Show bonus damage if we have a streak
         if (currentStreak > 0) {
             float bonusDamage = currentStreak * 0.5f;
             tooltip.add(Text.literal("Bonus Damage: +" + String.format("%.1f", bonusDamage))
                     .formatted(Formatting.LIGHT_PURPLE));
         }
 
-        // Show stored pearls
         tooltip.add(Text.translatable("item.endersteel.ender_steel_sword.pearl_stored", storedPearls, MAX_STORED_PEARLS)
                 .formatted(Formatting.LIGHT_PURPLE));
     }
@@ -84,38 +81,32 @@ public class EnderSteelSwordItem extends SwordItem {
             if (storedPearls > 0) {
                 if (EnchantmentHelper.getLevel(ModEnchantments.VOID_STRIKE, stack) > 0) {
                     if (attacker instanceof PlayerEntity player) {
-                        if (random.nextFloat() < 0.5f) {  // 50% chance
-                            // Find nearby entities within 5 blocks
+                        if (random.nextFloat() < 0.5f) {
                             List<Entity> nearbyEntities = target.getWorld().getOtherEntities(target, 
                                 target.getBoundingBox().expand(5.0), 
                                 entity -> entity instanceof LivingEntity && entity != attacker);
-                            
-                            // Teleport all nearby entities
+
                             for (Entity entity : nearbyEntities) {
                                 if (entity instanceof LivingEntity livingEntity && teleportEntity(livingEntity, livingEntity.getWorld())) {
                                     setStoredPearls(stack, storedPearls - 1);
                                     if (storedPearls <= 0) break;
                                 }
                             }
-                            
-                            // Also teleport the hit target
+
                             if (storedPearls > 0 && teleportEntity(target, target.getWorld())) {
                                 setStoredPearls(stack, storedPearls - 1);
                             }
                         }
                     }
                 } else if (EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack) > 0) {
-                    // Ender Streak enchantment logic
                     int streakLevel = EnchantmentHelper.getLevel(ModEnchantments.ENDER_STREAK, stack);
                     int currentStreak = getStreak(stack);
-                    
-                    // 15% chance to trigger streak bonus damage
+
                     if (random.nextFloat() < STREAK_BASE_CHANCE) {
                         setStoredPearls(stack, storedPearls - 1);
                         setStreak(stack, currentStreak + 1);
-                        
-                        // Bonus damage based on streak, enhanced by enchantment level
                         float bonusDamage = currentStreak * 0.5f * streakLevel;
+
                         if (bonusDamage > 0) {
                             target.damage(target.getDamageSources().magic(), bonusDamage);
                         }

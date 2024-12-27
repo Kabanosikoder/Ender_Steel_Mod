@@ -11,7 +11,7 @@ public class GazingVoidEffect extends StatusEffect {
     public static final StatusEffect GAZING_VOID = new GazingVoidEffect();
 
     protected GazingVoidEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x1F1F1F); // Dark color for the effect
+        super(StatusEffectCategory.HARMFUL, 0x1F1F1F);
     }
 
     public static void register() {

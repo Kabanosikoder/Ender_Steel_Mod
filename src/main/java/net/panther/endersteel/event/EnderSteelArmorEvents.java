@@ -27,8 +27,8 @@ public class EnderSteelArmorEvents {
     private static final String EVASION_CHARGES_KEY = "evasion_charges";
     private static final String EVASION_COOLDOWN_KEY = "evasion_cooldown";
     private static final int MAX_CHARGES = 5;
-    private static final int CHARGE_COOLDOWN_TICKS = 480; // 24 seconds per charge, total 120 seconds
-    private static final float EVASION_CHANCE = 0.40f; // 40% chance to evade
+    private static final int CHARGE_COOLDOWN_TICKS = 480;
+    private static final float EVASION_CHANCE = 0.40f;
     private static final Random random = new Random();
     
     private static final Set<RegistryKey<DamageType>> UNDODGEABLE_DAMAGE = new HashSet<>();
@@ -81,8 +81,8 @@ public class EnderSteelArmorEvents {
                 int cooldown = nbt.getInt(EVASION_COOLDOWN_KEY);
                 if (cooldown > 0) {
                     nbt.putInt(EVASION_COOLDOWN_KEY, cooldown - 1);
+
                     if (cooldown == 1) {
-                        // Fully recharge when cooldown completes
                         armorItem.setCharges(chestplate, MAX_CHARGES);
                         
                         float pitch = 1.5f; // High pitch for full recharge
@@ -98,7 +98,6 @@ public class EnderSteelArmorEvents {
                         );
                     }
                 } else if (cooldown == 0) {
-                    // Start cooldown when charges hit 0
                     nbt.putInt(EVASION_COOLDOWN_KEY, CHARGE_COOLDOWN_TICKS * MAX_CHARGES);
                 }
             }
@@ -109,17 +108,15 @@ public class EnderSteelArmorEvents {
         if (!(player instanceof ServerPlayerEntity)) {
             return false;
         }
-        
+
         if (!isWearingFullEnderSteelArmor(player)) {
             return false;
         }
 
-        // Check if damage type is dodgeable
         if (UNDODGEABLE_DAMAGE.contains(source.getTypeRegistryEntry().getKey().orElse(null))) {
             return false;
         }
 
-        // Don't activate if player is blocking with shield
         if (player.isBlocking()) {
             return false;
         }
@@ -132,7 +129,6 @@ public class EnderSteelArmorEvents {
         if (!tryUseCharge(player)) {
             return false;
         }
-
         return TeleportUtil.teleportRandomly(player, 5.0);
     }
 

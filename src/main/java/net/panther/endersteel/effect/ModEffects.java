@@ -37,13 +37,11 @@ public class ModEffects {
         @Override
         public void applyUpdateEffect(LivingEntity entity, int amplifier) {
             if (!entity.getWorld().isClient && entity.getWorld() instanceof ServerWorld serverWorld) {
-                // Add random shaking
                 double shakeX = (random.nextDouble() - 0.5) * 0.2;
                 double shakeZ = (random.nextDouble() - 0.5) * 0.2;
                 entity.addVelocity(shakeX, 0, shakeZ);
                 entity.velocityModified = true;
 
-                // Spawn particles
                 for (int i = 0; i < 2; i++) {
                     double x = entity.getX() + (random.nextDouble() - 0.5) * 1.5;
                     double y = entity.getY() + random.nextDouble() * 2;

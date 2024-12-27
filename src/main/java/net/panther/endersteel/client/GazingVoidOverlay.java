@@ -45,8 +45,6 @@ public class GazingVoidOverlay implements HudRenderCallback {
                 size, size,
                 size, size
             );
-            
-            // Reset render system
             RenderSystem.disableBlend();
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         }

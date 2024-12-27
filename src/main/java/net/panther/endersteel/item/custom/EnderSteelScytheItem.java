@@ -24,7 +24,7 @@ import java.util.List;
 
 public class EnderSteelScytheItem extends SwordItem {
     private static final String VOID_GAZE_ACTIVE_KEY = "VoidGazeActive";
-    private static final int ABILITY_COOLDOWN = 300; // 15 seconds in ticks
+    private static final int ABILITY_COOLDOWN = 300;
 
     public EnderSteelScytheItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -37,16 +37,13 @@ public class EnderSteelScytheItem extends SwordItem {
         if (EnchantmentHelper.getLevel(ModEnchantments.GAZING_VOID, stack) > 0) {
             if (!player.getItemCooldownManager().isCoolingDown(this)) {
                 setVoidGazeActive(stack, true);
-                
-                // Play activation sound and effect
+
                 world.playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
                 
                 player.sendMessage(Text.literal("Void Gaze activated!").formatted(Formatting.DARK_PURPLE), true);
-                
-                // Set cooldown
                 player.getItemCooldownManager().set(this, ABILITY_COOLDOWN);
-                
+
                 return TypedActionResult.success(stack);
             } else {
                 player.sendMessage(Text.literal("Ability is on cooldown!").formatted(Formatting.RED), true);
@@ -59,18 +56,13 @@ public class EnderSteelScytheItem extends SwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (isVoidGazeActive(stack)) {
-            // Apply effects
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0)); // 5 seconds
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 4)); // 5 seconds, very slow
-            
-            // Apply custom void gaze effect for the overlay
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0));
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 4));
             target.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 100, 0));
-            
-            // Effect sound
+
             target.getWorld().playSound(null, target.getX(), target.getY(), target.getZ(),
                     SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.PLAYERS, 1.0F, 0.5F);
-            
-            // Reset the active state
+
             setVoidGazeActive(stack, false);
         }
         

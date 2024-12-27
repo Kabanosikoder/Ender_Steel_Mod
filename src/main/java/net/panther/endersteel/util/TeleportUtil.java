@@ -27,11 +27,7 @@ public class TeleportUtil {
     }
 
     /**
-     * Teleports an entity randomly within a radius
-     * @param entity The entity to teleport
-     * @param radius The radius to teleport within
      * @param addGlowingEffect Whether to add a glowing effect after teleport
-     * @return true if teleport was successful
      */
     public static boolean teleportRandomly(Entity entity, double radius, boolean addGlowingEffect) {
         if (entity == null || entity.getWorld().isClient) return false;
@@ -40,7 +36,7 @@ public class TeleportUtil {
         int attempts = 0;
         int maxAttempts = 10;
 
-        // Store original position for distance checks
+        // Distance checks
         double startX = entity.getX();
         double startZ = entity.getZ();
 
@@ -59,11 +55,10 @@ public class TeleportUtil {
                     (int)Math.floor(newZ)
             );
 
-            // First try going up more aggressively
+            // First try going up aggressively
             boolean foundSpot = false;
-            for (int y = 0; y <= MAX_VERTICAL_SEARCH * 2; y++) {  // Double the upward search range
+            for (int y = 0; y <= MAX_VERTICAL_SEARCH * 2; y++) {
                 if (isValidTeleportSpot(world, checkPos.setY(checkPos.getY() + y))) {
-                    // Verify we're still within radius after potential terrain adjustments
                     double finalX = checkPos.getX() + 0.5;
                     double finalZ = checkPos.getZ() + 0.5;
                     double distSq = (finalX - startX) * (finalX - startX) +
@@ -74,11 +69,11 @@ public class TeleportUtil {
                         if (addGlowingEffect && entity instanceof LivingEntity living) {
                             living.addStatusEffect(new StatusEffectInstance(
                                     StatusEffects.GLOWING,
-                                    60,  // Duration (3 seconds = 60 ticks)
-                                    0,   // Amplifier (level 1)
-                                    false,  // Ambient
-                                    true,   // Show particles
-                                    true    // Show icon
+                                    60,
+                                    0,
+                                    false,
+                                    false,
+                                    false
                             ));
                         }
                         playTeleportEffects(entity);
@@ -87,12 +82,11 @@ public class TeleportUtil {
                 }
             }
 
-            // Only if we can't go up, try going down a shorter distance
+            // Only if it can't go up, try going down a shorter distance
             if (!foundSpot) {
                 checkPos.setY((int)Math.floor(entity.getY()));
                 for (int y = 1; y <= MAX_VERTICAL_SEARCH / 2; y++) {  // Half the downward search range
                     if (isValidTeleportSpot(world, checkPos.setY(checkPos.getY() - y))) {
-                        // Verify we're still within radius after potential terrain adjustments
                         double finalX = checkPos.getX() + 0.5;
                         double finalZ = checkPos.getZ() + 0.5;
                         double distSq = (finalX - startX) * (finalX - startX) +
@@ -106,8 +100,8 @@ public class TeleportUtil {
                                         60,
                                         0,
                                         false,
-                                        true,
-                                        true
+                                        false,
+                                        false
                                 ));
                             }
                             playTeleportEffects(entity);
@@ -118,7 +112,7 @@ public class TeleportUtil {
             }
         }
 
-        return false; // Couldn't find a valid spot after max attempts
+        return false; // If it couldn't find a valid spot after max attempts
     }
 
     /**
@@ -129,9 +123,9 @@ public class TeleportUtil {
      * @return true if the position is valid for teleporting
      */
     private static boolean isValidTeleportSpot(World world, BlockPos pos) {
-        return world.getBlockState(pos.down()).isSolid() && // Must have solid ground
-                world.getBlockState(pos).isAir() &&          // Must have air here
-                world.getBlockState(pos.up()).isAir();       // Must have air above
+        return world.getBlockState(pos.down()).isSolid() &&
+                world.getBlockState(pos).isAir() &&
+                world.getBlockState(pos.up()).isAir();
     }
 
     /**
@@ -154,18 +148,17 @@ public class TeleportUtil {
                 1.0f
         );
 
-        // Spawn particles
         for (int i = 0; i < 32; i++) {
             world.spawnParticles(
                     ParticleTypes.DRAGON_BREATH,
                     entity.getX(),
                     entity.getY() + random.nextDouble() * 2.0,
                     entity.getZ(),
-                    1,  // count
-                    random.nextDouble() - 0.5,  // deltaX
-                    random.nextDouble() - 0.5,  // deltaY
-                    random.nextDouble() - 0.5,  // deltaZ
-                    0.1  // speed
+                    1,
+                    random.nextDouble() - 0.5,
+                    random.nextDouble() - 0.5,
+                    random.nextDouble() - 0.5,
+                    0.1
             );
         }
     }

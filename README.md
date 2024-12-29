@@ -1,4 +1,4 @@
-# Ender Steel Mod
+# Ender Steel Mod 1.20.1
 
 A Minecraft mod that adds Ender infused equipment with unique abilities and enchantments.
 

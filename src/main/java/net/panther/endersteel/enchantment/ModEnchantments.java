@@ -22,6 +22,12 @@ public class ModEnchantments {
             new EnderStreakEnchantment()
     );
 
+    public static final Enchantment PHANTOM_HARVEST = Registry.register(
+        Registries.ENCHANTMENT,
+        new Identifier(EnderSteel.MOD_ID, "phantom_harvest"),
+        new PhantomHarvestEnchantment()
+    );
+
     public static void registerModEnchantments() {
         EnderSteel.LOGGER.info("Registering enchantments for " + EnderSteel.MOD_ID);
     }

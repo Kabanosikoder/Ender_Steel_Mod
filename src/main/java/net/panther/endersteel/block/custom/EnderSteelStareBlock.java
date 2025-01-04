@@ -4,14 +4,20 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.IntProperty;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 import net.panther.endersteel.EnderSteel;
+import net.panther.endersteel.advancement.criterion.StareAtBlockCriterion;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 // THIS BLOCK IS VERY """EYE""" OPENING AHAHAHAH GET IT?
@@ -22,6 +28,9 @@ public class EnderSteelStareBlock extends Block {
     public static final EnumProperty<OpenState> OPEN_STATE = EnumProperty.of("open_state", OpenState.class);
 
     private static final Set<BlockPos> blocksBeingLookedAt = new HashSet<>();
+    private static final Map<BlockPos, Map<ServerPlayerEntity, Integer>> staringTicks = new HashMap<>();
+    private static final int STARING_CONTEST_TICKS = 2400; // 2 minutes (20 ticks/second * 120 seconds)
+    private static final float RAYCAST_RANGE = 20.0f;
 
     public EnderSteelStareBlock(Settings settings) {
         super(settings);
@@ -50,6 +59,21 @@ public class EnderSteelStareBlock extends Block {
         }
     }
 
+    @Override
+    public boolean emitsRedstonePower(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+        return state.get(OPEN_STATE) == OpenState.FULLY_OPEN ? 15 : 0;
+    }
+
+    @Override
+    public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+        return state.get(OPEN_STATE) == OpenState.FULLY_OPEN ? 15 : 0;
+    }
+
     public static class LookAtBlockHandler {
         public static void register() {
             EnderSteel.LOGGER.info("Registering LookAtBlockHandler");
@@ -73,6 +97,17 @@ public class EnderSteelStareBlock extends Block {
 
                 if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                     blocksBeingLookedAt.add(blockPos);
+
+                    // Update staring time
+                    staringTicks.computeIfAbsent(blockPos, k -> new HashMap<>());
+                    Map<ServerPlayerEntity, Integer> playerTicks = staringTicks.get(blockPos);
+                    int currentTicks = playerTicks.getOrDefault(player, 0) + 1;
+                    playerTicks.put(player, currentTicks);
+
+                    // Check for staring contest completion
+                    if (currentTicks >= STARING_CONTEST_TICKS) {
+                        StareAtBlockCriterion.INSTANCE.trigger(player);
+                    }
 
                     EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
                     EnderSteelStareBlock.OpenState nextState;
@@ -107,6 +142,8 @@ public class EnderSteelStareBlock extends Block {
                 if (!isBeingLookedAt) {
                     EnderSteel.LOGGER.info("Block no longer being looked at: " + blockPos);
                     toRemove.add(blockPos);
+                    // Reset staring time for all players for this block
+                    staringTicks.getOrDefault(blockPos, new HashMap<>()).clear();
                 }
             }
 
@@ -128,8 +165,7 @@ public class EnderSteelStareBlock extends Block {
         }
 
         private static BlockHitResult rayTrace(ServerPlayerEntity player) {
-            float reachDistance = player.getAbilities().creativeMode ? 5.0f : 4.5f;
-            return (BlockHitResult) player.raycast(reachDistance, 1.0f, false);
+            return (BlockHitResult) player.raycast(RAYCAST_RANGE, 1.0f, false);
         }
     }
 }

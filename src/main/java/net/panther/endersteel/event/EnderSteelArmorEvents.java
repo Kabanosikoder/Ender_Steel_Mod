@@ -15,6 +15,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.util.TeleportUtil;
+import net.panther.endersteel.advancement.ModCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class EnderSteelArmorEvents {
         UNDODGEABLE_DAMAGE.add(DamageTypes.MAGIC);            // Direct magic damage
         UNDODGEABLE_DAMAGE.add(DamageTypes.STALAGMITE);       // Falling on stalagmites
         UNDODGEABLE_DAMAGE.add(DamageTypes.SWEET_BERRY_BUSH); // Sweet berry bush
-        UNDODGEABLE_DAMAGE.add(DamageTypes.THROWN);           // Thrown projectiles
+        UNDODGEABLE_DAMAGE.add(DamageTypes.THROWN);           // Thrown projectiles (eggs, snowballs)
     }
     
     public static void register() {
@@ -105,7 +106,7 @@ public class EnderSteelArmorEvents {
     }
 
     public static boolean handleDamage(PlayerEntity player, DamageSource source) {
-        if (!(player instanceof ServerPlayerEntity)) {
+        if (!(player instanceof ServerPlayerEntity serverPlayer)) {
             return false;
         }
 
@@ -129,7 +130,12 @@ public class EnderSteelArmorEvents {
         if (!tryUseCharge(player)) {
             return false;
         }
-        return TeleportUtil.teleportRandomly(player, 5.0);
+
+        boolean teleported = TeleportUtil.teleportRandomly(player, 5.0);
+        if (teleported) {
+            ModCriteria.ENDER_STEEL_TELEPORT.trigger(serverPlayer);
+        }
+        return teleported;
     }
 
     private static boolean tryUseCharge(PlayerEntity player) {

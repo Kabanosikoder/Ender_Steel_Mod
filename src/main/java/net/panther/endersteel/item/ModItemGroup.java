@@ -40,10 +40,9 @@ public class ModItemGroup {
 
                         // Enchantments
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.VOID_STRIKE, 1)));
-                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 1)));
-                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 2)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 3)));
-
+                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.GAZING_VOID, 1)));
+                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.PHANTOM_HARVEST, 1)));
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
 

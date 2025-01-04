@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Item.class)
-public abstract class EnderSteelArmorMixin {
+public abstract class EnderSteelArmorMixin { // Armor update shenanigans
     @Inject(method = "inventoryTick", at = @At("HEAD"))
     private void onInventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
         if ((Object) this instanceof EnderSteelArmorItem && entity instanceof PlayerEntity player && !world.isClient) {

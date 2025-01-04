@@ -62,7 +62,6 @@ public class EnderSteelScytheItem extends SwordItem {
 
             target.getWorld().playSound(null, target.getX(), target.getY(), target.getZ(),
                     SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.PLAYERS, 1.0F, 0.5F);
-
             setVoidGazeActive(stack, false);
         }
         

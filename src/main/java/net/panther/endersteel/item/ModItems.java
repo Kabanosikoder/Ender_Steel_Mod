@@ -23,7 +23,7 @@ public class ModItems {
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EnderSteel.MOD_ID, name), item);
     }
-
+        // Tools
     public static final Item ENDER_STEEL_SWORD = registerItem("ender_steel_sword",
             new EnderSteelSwordItem(EndSteelToolMaterial.ENDER_STEEL, 3, -2.5f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_PICKAXE = registerItem("ender_steel_pickaxe",
@@ -34,7 +34,7 @@ public class ModItems {
             new EnderSteelScytheItem(EndSteelToolMaterial.ENDER_STEEL, 5, -2.7f, new FabricItemSettings()));
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 1, -2.8f, new FabricItemSettings()));
-
+        // Armor
     public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final Item ENDER_STEEL_CHESTPLATE = registerItem("ender_steel_chestplate",
@@ -43,7 +43,7 @@ public class ModItems {
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
-
+        // Bagel
     public static final Item BAGEL = registerItem("bagel", new BagelItem(new FabricItemSettings()));
 
     private static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries) {

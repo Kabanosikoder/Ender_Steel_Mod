@@ -36,13 +36,14 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_LEGGINGS);
                         entries.add(ModItems.ENDER_STEEL_BOOTS);
 
-                        entries.add(ModItems.BAGEL); // funny bagel
+                        entries.add(ModItems.BAGEL); // funny bagel ngl
 
                         // Enchantments
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.VOID_STRIKE, 1)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 3)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.GAZING_VOID, 1)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.PHANTOM_HARVEST, 1)));
+
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
 

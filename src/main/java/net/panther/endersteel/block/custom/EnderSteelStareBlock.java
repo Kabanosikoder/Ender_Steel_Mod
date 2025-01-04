@@ -29,7 +29,7 @@ public class EnderSteelStareBlock extends Block {
 
     private static final Set<BlockPos> blocksBeingLookedAt = new HashSet<>();
     private static final Map<BlockPos, Map<ServerPlayerEntity, Integer>> staringTicks = new HashMap<>();
-    private static final int STARING_CONTEST_TICKS = 2400; // 2 minutes (20 ticks/second * 120 seconds)
+    private static final int STARING_CONTEST_TICKS = 2400;
     private static final float RAYCAST_RANGE = 20.0f;
 
     public EnderSteelStareBlock(Settings settings) {
@@ -98,13 +98,12 @@ public class EnderSteelStareBlock extends Block {
                 if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                     blocksBeingLookedAt.add(blockPos);
 
-                    // Update staring time
                     staringTicks.computeIfAbsent(blockPos, k -> new HashMap<>());
                     Map<ServerPlayerEntity, Integer> playerTicks = staringTicks.get(blockPos);
                     int currentTicks = playerTicks.getOrDefault(player, 0) + 1;
                     playerTicks.put(player, currentTicks);
 
-                    // Check for staring contest completion
+                    // Checks for staring contest advancement completetion
                     if (currentTicks >= STARING_CONTEST_TICKS) {
                         StareAtBlockCriterion.INSTANCE.trigger(player);
                     }
@@ -142,7 +141,6 @@ public class EnderSteelStareBlock extends Block {
                 if (!isBeingLookedAt) {
                     EnderSteel.LOGGER.info("Block no longer being looked at: " + blockPos);
                     toRemove.add(blockPos);
-                    // Reset staring time for all players for this block
                     staringTicks.getOrDefault(blockPos, new HashMap<>()).clear();
                 }
             }

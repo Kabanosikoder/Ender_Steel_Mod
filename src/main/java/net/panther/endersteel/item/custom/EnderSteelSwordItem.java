@@ -76,6 +76,7 @@ public class EnderSteelSwordItem extends SwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        // I know this looks bad but it works
         if (!attacker.getWorld().isClient && target.isAlive()) {
             int storedPearls = getStoredPearls(stack);
             if (storedPearls > 0) {

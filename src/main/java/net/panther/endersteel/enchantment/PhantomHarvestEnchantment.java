@@ -40,6 +40,11 @@ public class PhantomHarvestEnchantment extends Enchantment {
     }
 
     @Override
+    public boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && !(other instanceof GazingVoidEnchantment);
+    }
+
+    @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if (!target.isAlive() && target instanceof LivingEntity livingTarget && user instanceof PlayerEntity player) {
             if (target == lastKilledEntity) {

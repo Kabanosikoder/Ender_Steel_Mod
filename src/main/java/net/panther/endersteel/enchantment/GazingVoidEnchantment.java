@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.panther.endersteel.item.custom.EnderSteelScytheItem;
+import net.panther.endersteel.enchantment.PhantomHarvestEnchantment;
 
 public class GazingVoidEnchantment extends Enchantment {
     public GazingVoidEnchantment() {
@@ -24,5 +25,10 @@ public class GazingVoidEnchantment extends Enchantment {
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
         return stack.getItem() instanceof EnderSteelScytheItem;
+    }
+
+    @Override
+    public boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && !(other instanceof PhantomHarvestEnchantment);
     }
 }

@@ -16,6 +16,9 @@ import net.minecraft.world.World;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.util.TeleportUtil;
 import net.panther.endersteel.advancement.ModCriteria;
+import net.panther.endersteel.enchantment.ModEnchantments;
+import net.panther.endersteel.enchantment.RepulsiveShriekEnchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +108,7 @@ public class EnderSteelArmorEvents {
         }
     }
 
-    public static boolean handleDamage(PlayerEntity player, DamageSource source) {
+    public static boolean handleDamage(PlayerEntity player, DamageSource source, float amount) {
         if (!(player instanceof ServerPlayerEntity serverPlayer)) {
             return false;
         }
@@ -122,11 +125,24 @@ public class EnderSteelArmorEvents {
             return false;
         }
 
-        // 40% chance to try evading
+        // 40% chance to try evading for both abilities
         if (random.nextFloat() >= EVASION_CHANCE) {
             return false;
         }
-        
+
+        ItemStack chestplate = player.getInventory().getArmorStack(2);
+        int shriekLevel = EnchantmentHelper.getLevel(ModEnchantments.REPULSIVE_SHRIEK, chestplate);
+        if (shriekLevel > 0) {
+            // Handle Repulsive Shriek effect
+            if (tryUseCharge(player)) {
+                RepulsiveShriekEnchantment shriek = (RepulsiveShriekEnchantment) ModEnchantments.REPULSIVE_SHRIEK;
+                shriek.onPlayerDamaged(player, source.getAttacker(), amount);
+                return true;
+            }
+            return false;
+        }
+
+        // Default teleport behavior
         if (!tryUseCharge(player)) {
             return false;
         }

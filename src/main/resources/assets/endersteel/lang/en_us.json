@@ -3,6 +3,7 @@
 
   "item.endersteel.ender_scrap": "Ender Scrap",
   "item.endersteel.ender_steel_ingot": "Ender Steel Ingot",
+  "item.endersteel.ender_steel_nugget": "Ender Steel Nugget",
 
   "item.endersteel.ender_steel_sword": "Ender Steel Sword",
   "item.endersteel.ender_steel_sword.pearl_stored": "Stored Pearls: %d/%d",
@@ -12,6 +13,7 @@
   "item.endersteel.ender_steel_axe": "Ender Steel Axe",
   "item.endersteel.ender_steel_scythe": "Ender Steel Scythe",
   "item.endersteel.ender_steel_shovel": "Ender Steel Shovel",
+  "item.endersteel.ender_steel_hoe": "Ender Steel Hoe",
 
   "item.endersteel.ender_steel_helmet": "Ender Steel Helmet",
   "item.endersteel.ender_steel_chestplate": "Ender Steel Chestplate",
@@ -20,7 +22,11 @@
 
   "item.endersteel.bagel": "Bagel",
 
-  "block.endersteel.ender_steel_block": "Ender Steel Block",
+  "block.endersteel.ender_steel_block": "Block of Ender Steel",
+  "block.endersteel.ender_steel_ore": "Ender Steel Ore",
+  "block.endersteel.deepslate_ender_steel_ore": "Deepslate Ender Steel Ore",
+
+  "itemgroup.endersteel": "Ender Steel",
 
   "item.endersteel.armor.set_bonus": "Full Set Bonus: Evasion",
   "item.endersteel.armor.teleport_ability": "Dodge up to 5 hits (2 minute cooldown)",
@@ -41,6 +47,12 @@
   "enchantment.endersteel.phantom_harvest": "Phantom Harvest",
   "enchantment.endersteel.phantom_harvest.desc": "Killing enemies recharges evasion charges when wearing full armor set, or heals 1 heart",
 
+  "enchantment.endersteel.rift_cleave": "Rift Cleave",
+  "enchantment.endersteel.rift_cleave.desc": "Sweeping attacks hit all enemies within 5 blocks, with a chance to pull them toward you",
+
+  "enchantment.endersteel.repulsive_shriek": "Repulsive Shriek",
+  "enchantment.endersteel.repulsive_shriek.desc": "When hit, repulse all nearby entities and reflect half the damage back to the attacker",
+
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void",
 
@@ -50,8 +62,8 @@
   "advancement.endersteel.get_full_armor": "Void Walker",
   "advancement.endersteel.get_full_armor.desc": "Obtain a complete set of Ender Steel armor",
   
-  "advancement.endersteel.phantom_harvest": "Soul Reaper",
-  "advancement.endersteel.phantom_harvest.desc": "Enchant a weapon with Phantom Harvest",
+  "advancement.endersteel.phantom_harvest": "Phantom Harvest",
+  "advancement.endersteel.phantom_harvest.desc": "Gain a teleport charge on kill, or heal 1 heart without full set",
   
   "advancement.endersteel.staring_contest": "Staring Contest",
   "advancement.endersteel.staring_contest.desc": "Make an Ender Steel Block fully open its eye",
@@ -60,5 +72,23 @@
   "advancement.endersteel.rift_step.desc": "Dodge an attack using the Ender Steel Armor's full set ability",
   
   "advancement.endersteel.endermite_bane": "Endermite's Bane",
-  "advancement.endersteel.endermite_bane.desc": "Defeat an Endermite using an Ender Steel weapon"
+  "advancement.endersteel.endermite_bane.desc": "Defeat an Endermite using an Ender Steel weapon",
+  
+  "advancement.endersteel.obtain_ender_steel.title": "Void-Touched Steel",
+  "advancement.endersteel.obtain_ender_steel.description": "Obtain Ender Steel",
+  
+  "advancement.endersteel.obtain_ender_steel_armor.title": "Void-Touched Protection",
+  "advancement.endersteel.obtain_ender_steel_armor.description": "Obtain a full set of Ender Steel Armor",
+  
+  "advancement.endersteel.obtain_ender_steel_tools.title": "Void-Touched Tools",
+  "advancement.endersteel.obtain_ender_steel_tools.description": "Obtain all Ender Steel Tools",
+  
+  "advancement.endersteel.obtain_phantom_harvest.title": "Phantom Farmer",
+  "advancement.endersteel.obtain_phantom_harvest.description": "Obtain the Phantom Harvest enchantment",
+
+  "advancement.endersteel.obtain_rift_cleave.title": "Rift Reaper",
+  "advancement.endersteel.obtain_rift_cleave.description": "Obtain the Rift Cleave enchantment",
+
+  "advancement.endersteel.obtain_repulsive_shriek.title": "Sonic Defense",
+  "advancement.endersteel.obtain_repulsive_shriek.description": "Obtain the Repulsive Shriek enchantment"
 }

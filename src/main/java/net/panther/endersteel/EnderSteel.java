@@ -27,6 +27,6 @@ public class EnderSteel implements ModInitializer {
 		ModEffects.registerEffects();
 		ModCriteria.register();
 
-		LOGGER.info("Initialized " + MOD_ID);
+		LOGGER.info("EnderSteel, hi goobers :3 " + MOD_ID);
 	}
 }

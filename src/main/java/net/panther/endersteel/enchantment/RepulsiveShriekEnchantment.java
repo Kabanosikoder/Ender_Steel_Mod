@@ -19,10 +19,11 @@ import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import java.util.List;
 
 public class RepulsiveShriekEnchantment extends Enchantment {
-    private static final double KNOCKBACK_RADIUS = 5.0;
+    private static final double NORMAL_RADIUS = 5.0;
+    private static final double LAST_CHARGE_RADIUS = 10.0;
     private static final double KNOCKBACK_STRENGTH = 1.5;
     private static final float DAMAGE_REFLECTION_RATIO = 0.5f;
-    private static final float LAST_CHARGE_DAMAGE = 2.0f; // Base damage for last charge effect
+    private static final float LAST_CHARGE_DAMAGE = 4.0f;
 
     public RepulsiveShriekEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentTarget.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
@@ -48,36 +49,27 @@ public class RepulsiveShriekEnchantment extends Enchantment {
         return stack.getItem() instanceof EnderSteelArmorItem;
     }
 
-    public void onPlayerDamaged(PlayerEntity player, Entity attacker, float amount) {
+    public void onPlayerDamaged(PlayerEntity player, Entity attacker, float amount, boolean isLastCharge) {
         if (!player.getWorld().isClient && player.getWorld() instanceof ServerWorld serverWorld) {
-            // Get all entities in radius
-            Box box = player.getBoundingBox().expand(KNOCKBACK_RADIUS);
+            double effectRadius = isLastCharge ? LAST_CHARGE_RADIUS : NORMAL_RADIUS;
+            
+            Box box = player.getBoundingBox().expand(effectRadius);
             List<Entity> nearbyEntities = player.getWorld().getOtherEntities(player, box);
             
             Vec3d playerPos = player.getPos();
             Random random = player.getRandom();
             
-            // Check if this is the last charge
-            ItemStack chestplate = player.getInventory().getArmorStack(2);
-            boolean isLastCharge = false;
-            if (chestplate.getItem() instanceof EnderSteelArmorItem armorItem) {
-                isLastCharge = armorItem.getCharges(chestplate) == 1;
-            }
-            
-            // Create sonic boom particles in a circle
-            for (int i = 0; i < 360; i += isLastCharge ? 5 : 10) { // More particles for last charge
+            for (int i = 0; i < 360; i += isLastCharge ? 5 : 10) {
                 double angle = Math.toRadians(i);
-                double x = playerPos.x + Math.cos(angle) * KNOCKBACK_RADIUS;
-                double z = playerPos.z + Math.sin(angle) * KNOCKBACK_RADIUS;
+                double x = playerPos.x + Math.cos(angle) * effectRadius;
+                double z = playerPos.z + Math.sin(angle) * effectRadius;
                 
-                // Sonic boom particles
                 serverWorld.spawnParticles(
                     ParticleTypes.SONIC_BOOM,
                     x, playerPos.y + 1.0, z,
                     1, 0, 0, 0, 0
                 );
                 
-                // More intense particles for last charge
                 if (isLastCharge || random.nextFloat() < 0.3f) {
                     serverWorld.spawnParticles(
                         ParticleTypes.SCULK_SOUL,
@@ -87,16 +79,13 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                 }
             }
             
-            // Repulse all nearby entities
             for (Entity entity : nearbyEntities) {
                 if (entity instanceof LivingEntity livingEntity) {
                     Vec3d entityPos = entity.getPos();
                     Vec3d pushDirection = entityPos.subtract(playerPos).normalize();
                     
-                    // Spawn particles along the push path
                     for (double d = 0.5; d < entityPos.distanceTo(playerPos); d += 0.5) {
                         Vec3d particlePos = playerPos.add(pushDirection.multiply(d));
-                        // Create a mix of particles for a "shriek" effect
                         serverWorld.spawnParticles(
                             ParticleTypes.SONIC_BOOM,
                             particlePos.x, particlePos.y + 1.0, particlePos.z,
@@ -111,33 +100,29 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                         }
                     }
                     
-                    // Apply knockback
+                    double knockbackMultiplier = isLastCharge ? 1.5 : 1.0;
                     entity.setVelocity(
-                        pushDirection.x * (isLastCharge ? KNOCKBACK_STRENGTH * 1.5 : KNOCKBACK_STRENGTH),
-                        0.4, // Slight upward motion
-                        pushDirection.z * (isLastCharge ? KNOCKBACK_STRENGTH * 1.5 : KNOCKBACK_STRENGTH)
+                        pushDirection.x * KNOCKBACK_STRENGTH * knockbackMultiplier,
+                        0.4,
+                        pushDirection.z * KNOCKBACK_STRENGTH * knockbackMultiplier
                     );
                     entity.velocityModified = true;
 
-                    // Apply damage on last charge
                     if (isLastCharge) {
                         float distance = (float) entityPos.distanceTo(playerPos);
-                        float damageMultiplier = 1.0f - (distance / (float) KNOCKBACK_RADIUS);
+                        float damageMultiplier = 1.0f - (distance / (float) LAST_CHARGE_RADIUS);
                         if (damageMultiplier > 0) {
                             livingEntity.damage(player.getDamageSources().magic(), LAST_CHARGE_DAMAGE * damageMultiplier);
                             
-                            // Chain reaction: Damage all entities around the affected entity
-                            Box chainBox = livingEntity.getBoundingBox().expand(3.0); // 3 block radius around affected entity
+                            Box chainBox = livingEntity.getBoundingBox().expand(3.0);
                             List<Entity> chainEntities = livingEntity.getWorld().getOtherEntities(livingEntity, chainBox);
                             for (Entity chainEntity : chainEntities) {
                                 if (chainEntity instanceof LivingEntity chainTarget && chainEntity != player) {
-                                    // Calculate chain damage based on distance from the chain source
                                     float chainDistance = (float) chainEntity.getPos().distanceTo(entityPos);
                                     float chainMultiplier = 1.0f - (chainDistance / 3.0f);
                                     if (chainMultiplier > 0) {
                                         chainTarget.damage(player.getDamageSources().magic(), LAST_CHARGE_DAMAGE * damageMultiplier * chainMultiplier * 0.5f);
                                         
-                                        // Add chain effect particles
                                         Vec3d chainPos = chainEntity.getPos();
                                         serverWorld.spawnParticles(
                                             ParticleTypes.SONIC_BOOM,
@@ -150,7 +135,6 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                                             10, 0.3, 0.3, 0.3, 0.1
                                         );
                                         
-                                        // Draw particle line between chain source and target
                                         Vec3d chainDirection = chainPos.subtract(entityPos);
                                         double chainLength = chainDirection.length();
                                         Vec3d normalizedDirection = chainDirection.normalize();
@@ -166,7 +150,6 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                                 }
                             }
                             
-                            // Play chain effect sound
                             player.getWorld().playSound(
                                 null,
                                 entityPos.x,
@@ -182,12 +165,10 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                 }
             }
             
-            // Reflect damage back to attacker if it's a living entity
             if (attacker instanceof LivingEntity livingAttacker) {
                 float reflectedDamage = amount * (isLastCharge ? DAMAGE_REFLECTION_RATIO * 1.5f : DAMAGE_REFLECTION_RATIO);
                 livingAttacker.damage(player.getDamageSources().magic(), reflectedDamage);
                 
-                // Spawn particles around the attacker
                 serverWorld.spawnParticles(
                     ParticleTypes.SCULK_SOUL,
                     attacker.getX(), attacker.getY() + 1.0, attacker.getZ(),
@@ -195,7 +176,6 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                 );
                 
                 if (isLastCharge) {
-                    // Extra end rod particles for the last charge
                     serverWorld.spawnParticles(
                         ParticleTypes.END_ROD,
                         attacker.getX(), attacker.getY() + 1.0, attacker.getZ(),
@@ -204,8 +184,7 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                 }
             }
             
-            // Play sound effect
-            float pitch = isLastCharge ? 0.8f : 1.5f; // Lower pitch for last charge
+            float pitch = isLastCharge ? 0.8f : 1.5f;
             player.getWorld().playSound(
                 null,
                 player.getX(),
@@ -217,8 +196,18 @@ public class RepulsiveShriekEnchantment extends Enchantment {
                 pitch
             );
 
-            // Play additional sound for last charge
             if (isLastCharge) {
+                player.getWorld().playSound(
+                    null,
+                    player.getX(),
+                    player.getY(),
+                    player.getZ(),
+                    SoundEvents.ENTITY_WARDEN_ROAR,
+                    SoundCategory.PLAYERS,
+                    1.0f,
+                    0.8f
+                );
+                
                 player.getWorld().playSound(
                     null,
                     player.getX(),

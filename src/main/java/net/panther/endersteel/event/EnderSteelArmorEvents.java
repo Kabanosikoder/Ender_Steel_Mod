@@ -133,11 +133,16 @@ public class EnderSteelArmorEvents {
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         int shriekLevel = EnchantmentHelper.getLevel(ModEnchantments.REPULSIVE_SHRIEK, chestplate);
         if (shriekLevel > 0) {
-            // Handle Repulsive Shriek effect
-            if (tryUseCharge(player)) {
-                RepulsiveShriekEnchantment shriek = (RepulsiveShriekEnchantment) ModEnchantments.REPULSIVE_SHRIEK;
-                shriek.onPlayerDamaged(player, source.getAttacker(), amount);
-                return true;
+            if (chestplate.getItem() instanceof EnderSteelArmorItem armorItem) {
+                int chargesBefore = armorItem.getCharges(chestplate);
+                
+                if (tryUseCharge(player)) {
+                    boolean isLastCharge = (chargesBefore == 1);
+                    
+                    RepulsiveShriekEnchantment shriek = (RepulsiveShriekEnchantment) ModEnchantments.REPULSIVE_SHRIEK;
+                    shriek.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
+                    return true;
+                }
             }
             return false;
         }

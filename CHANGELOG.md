@@ -2,7 +2,7 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
-## January 4, 2025
+## [1.1.1] January 4, 2025
 
 ### Added
 - New Advancements System

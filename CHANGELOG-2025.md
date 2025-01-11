@@ -1,6 +1,7 @@
 # Ender Steel Mod Changelog 2025
 
-## January 4, 2025
+## January 11, 2025
+- Updated mod version to 1.1.1
 
 ### Added
 - New Advancements System

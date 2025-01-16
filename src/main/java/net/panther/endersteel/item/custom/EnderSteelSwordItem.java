@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -105,11 +107,22 @@ public class EnderSteelSwordItem extends SwordItem {
 
                     if (random.nextFloat() < STREAK_BASE_CHANCE) {
                         setStoredPearls(stack, storedPearls - 1);
-                        setStreak(stack, currentStreak + 1);
+                        
+                        // Streak cap
+                        if (currentStreak >= 10) {
+                            setStreak(stack, 0); // Reset streak at 10
+                            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+                                    SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
+                        } else {
+                            setStreak(stack, currentStreak + 1);
+                        }
+                        
                         float bonusDamage = currentStreak * 0.5f * streakLevel;
 
                         if (bonusDamage > 0) {
                             target.damage(target.getDamageSources().magic(), bonusDamage);
+                            attacker.getWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
+                                    SoundEvents.ENTITY_ENDERMAN_HURT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         }
                     }
                 }

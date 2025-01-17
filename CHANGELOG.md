@@ -9,6 +9,8 @@ All notable changes to the Ender Steel Mod will be documented in this file.
   - Eye opens and stays open when a redstone block is adjacent
   - Eye closes when redstone block is removed (unless being looked at)
   - Can still interact with the eye normally through player staring
+- Added smithing tempalte
+  - Smithing recipes for each netherite armor/tool except the hoe (scythe)
 
 ## [1.1.1] January 11, 2025
 

@@ -12,7 +12,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.panther.endersteel.EnderSteel;
+import net.minecraft.block.Blocks;
 import net.panther.endersteel.advancement.criterion.StareAtBlockCriterion;
 
 import java.util.HashMap;
@@ -72,6 +74,30 @@ public class EnderSteelStareBlock extends Block {
     @Override
     public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         return state.get(OPEN_STATE) == OpenState.FULLY_OPEN ? 15 : 0;
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        if (!world.isClient) {
+            boolean hasAdjacentRedstone = hasAdjacentRedstoneBlock(world, pos);
+            OpenState currentState = state.get(OPEN_STATE);
+            
+            if (hasAdjacentRedstone && currentState == OpenState.CLOSED) {
+                world.setBlockState(pos, state.with(OPEN_STATE, OpenState.FULLY_OPEN));
+            } else if (!hasAdjacentRedstone && currentState == OpenState.FULLY_OPEN && !blocksBeingLookedAt.contains(pos)) {
+                world.setBlockState(pos, state.with(OPEN_STATE, OpenState.CLOSED));
+            }
+        }
+    }
+
+    private static boolean hasAdjacentRedstoneBlock(World world, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockState neighborState = world.getBlockState(pos.offset(direction));
+            if (neighborState.isOf(Blocks.REDSTONE_BLOCK)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class LookAtBlockHandler {
@@ -153,7 +179,9 @@ public class EnderSteelStareBlock extends Block {
                     if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                         EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
 
-                        if (currentState != EnderSteelStareBlock.OpenState.CLOSED) {
+                        // Only close the eye if there's no adjacent redstone block
+                        if (currentState != EnderSteelStareBlock.OpenState.CLOSED && 
+                            !hasAdjacentRedstoneBlock((World)player.getWorld(), blockPos)) {
                             EnderSteel.LOGGER.info("Closing eye at " + blockPos);
                             player.getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, EnderSteelStareBlock.OpenState.CLOSED));
                         }

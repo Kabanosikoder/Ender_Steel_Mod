@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.block.ModBlocks;
@@ -14,11 +15,31 @@ import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.item.custom.EnderSteelScytheItem;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
 
+import java.util.Arrays;
+
 public class ModItems {
     public static final Item ENDER_SCRAP = registerItem("ender_scrap",
             new Item(new FabricItemSettings()));
     public static final Item ENDER_STEEL_INGOT = registerItem("ender_steel_ingot",
             new Item(new FabricItemSettings()));
+    public static final Item ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE = registerItem("ender_steel_upgrade_smithing_template",
+            new SmithingTemplateItem(
+                    Text.translatable("item.endersteel.smithing_template.ender_steel_upgrade.applies_to"),
+                    Text.translatable("item.endersteel.smithing_template.ender_steel_upgrade.ingredients"),
+                    Text.translatable("item.endersteel.smithing_template.ender_steel_upgrade.title"),
+                    Text.translatable("item.endersteel.smithing_template.ender_steel_upgrade.base_slot_description"),
+                    Text.translatable("item.endersteel.smithing_template.ender_steel_upgrade.additions_slot_description"),
+                    Arrays.asList(
+                            new Identifier("item/empty_slot_sword"),
+                            new Identifier("item/empty_slot_pickaxe"),
+                            new Identifier("item/empty_slot_axe"),
+                            new Identifier("item/empty_slot_shovel"),
+                            new Identifier("item/empty_slot_helmet"),
+                            new Identifier("item/empty_slot_chestplate"),
+                            new Identifier("item/empty_slot_leggings"),
+                            new Identifier("item/empty_slot_boots")
+                    ),
+                    Arrays.asList(new Identifier("item/empty_slot_ingot"))));
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EnderSteel.MOD_ID, name), item);
@@ -43,12 +64,13 @@ public class ModItems {
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new FabricItemSettings()));
-        // Bagel
+        // Bagel :3
     public static final Item BAGEL = registerItem("bagel", new BagelItem(new FabricItemSettings()));
 
     private static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(ENDER_SCRAP);
         entries.add(ENDER_STEEL_INGOT);
+
         entries.add(BAGEL);
 
         entries.add(ENDER_STEEL_SWORD);
@@ -61,7 +83,7 @@ public class ModItems {
         entries.add(ENDER_STEEL_CHESTPLATE);
         entries.add(ENDER_STEEL_LEGGINGS);
         entries.add(ENDER_STEEL_BOOTS);
-
+        
         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
     }
 

@@ -2,6 +2,14 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
+## [1.1.2] January 17, 2025
+
+### Added
+- Added redstone functionality to Ender Steel Block
+  - Eye opens and stays open when a redstone block is adjacent
+  - Eye closes when redstone block is removed (unless being looked at)
+  - Can still interact with the eye normally through player staring
+
 ## [1.1.1] January 11, 2025
 
 ### Added

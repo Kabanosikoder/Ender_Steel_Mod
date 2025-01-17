@@ -24,6 +24,7 @@ public class ModItemGroup {
                         // Items:
                         entries.add(ModItems.ENDER_STEEL_INGOT);
                         entries.add(ModItems.ENDER_SCRAP);
+                        entries.add(ModItems.ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE);
 
                         entries.add(ModItems.ENDER_STEEL_SWORD);
                         entries.add(ModItems.ENDER_STEEL_PICKAXE);
@@ -43,6 +44,7 @@ public class ModItemGroup {
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.ENDER_STREAK, 3)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.GAZING_VOID, 1)));
                         entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.PHANTOM_HARVEST, 1)));
+                        entries.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(ModEnchantments.REPULSIVE_SHRIEK, 1)));
 
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);

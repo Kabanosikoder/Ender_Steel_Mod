@@ -20,6 +20,13 @@
   "item.endersteel.ender_steel_leggings": "Ender Steel Leggings",
   "item.endersteel.ender_steel_boots": "Ender Steel Boots",
 
+  "item.endersteel.ender_steel_upgrade_smithing_template": "Ender Steel Upgrade Smithing Template",
+  "item.endersteel.smithing_template.ender_steel_upgrade.title": "Ender Steel Upgrade",
+  "item.endersteel.smithing_template.ender_steel_upgrade.applies_to": "Netherite Equipment",
+  "item.endersteel.smithing_template.ender_steel_upgrade.ingredients": "Ender Steel Ingot",
+  "item.endersteel.smithing_template.ender_steel_upgrade.base_slot_description": "Add netherite equipment",
+  "item.endersteel.smithing_template.ender_steel_upgrade.additions_slot_description": "Add ender steel ingot",
+
   "item.endersteel.bagel": "Bagel",
 
   "block.endersteel.ender_steel_block": "Block of Ender Steel",

@@ -85,6 +85,7 @@ public class ModItems {
         entries.add(ENDER_STEEL_BOOTS);
         
         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
+        entries.add(ModBlocks.ENDER_REMNANT);
     }
 
     public static void registerModItems() {

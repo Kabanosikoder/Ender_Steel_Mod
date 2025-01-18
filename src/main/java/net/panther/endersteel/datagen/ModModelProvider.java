@@ -2,13 +2,8 @@ package net.panther.endersteel.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.panther.endersteel.block.ModBlocks;
-import net.panther.endersteel.block.custom.EnderSteelStareBlock;
 import net.panther.endersteel.item.ModItems;
 
 public class ModModelProvider extends FabricModelProvider {

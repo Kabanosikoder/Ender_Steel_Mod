@@ -16,8 +16,13 @@ import net.panther.endersteel.block.custom.EnderSteelStareBlock;
 public class ModBlocks {
 
     public static final Block ENDER_STEEL_BLOCK = registerBlock("ender_steel_block",
-            new EnderSteelStareBlock(FabricBlockSettings.create().mapColor(MapColor.TERRACOTTA_BLUE).strength(6f).requiresTool()
+            new EnderSteelStareBlock(FabricBlockSettings.create().mapColor(MapColor.TERRACOTTA_BLUE).strength(8f).requiresTool()
                     .luminance(state -> state.get(EnderSteelStareBlock.OPEN_STATE) == EnderSteelStareBlock.OpenState.FULLY_OPEN ? 7 : 0)));
+
+    public static final Block ENDER_REMNANT = registerBlock("ender_remnant",
+            new Block(FabricBlockSettings.copyOf(Blocks.ANCIENT_DEBRIS)
+                    .strength(30.0f, 1200.0f)
+                    .requiresTool()));
 
     private static Block registerBlock(String name, Block block){
         registerBlockItem(name, block);

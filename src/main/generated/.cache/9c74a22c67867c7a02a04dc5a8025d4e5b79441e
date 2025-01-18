@@ -1,2 +1,4 @@
-// 1.20.1	2024-12-24T20:56:07.1664708	Ender Steel Mod/Tags for minecraft:block
-ab7904fe9ad2312de59cd07d6fe65692dceca800 data\minecraft\tags\blocks\needs_diamond_tool.json
+// 1.20.1	2025-01-18T19:20:29.1541076	Ender Steel Mod/Tags for minecraft:block
+bdc5dbb954b685d8ac560d920457782cb72ed923 data\minecraft\tags\blocks\mineable\pickaxe.json
+bdc5dbb954b685d8ac560d920457782cb72ed923 data\fabric\tags\blocks\needs_tool_level_4.json
+bdc5dbb954b685d8ac560d920457782cb72ed923 data\fabric\tags\blocks\needs_tool_level_5.json

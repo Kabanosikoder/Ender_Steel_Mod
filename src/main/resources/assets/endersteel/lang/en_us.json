@@ -30,6 +30,7 @@
   "item.endersteel.bagel": "Bagel",
 
   "block.endersteel.ender_steel_block": "Block of Ender Steel",
+  "block.endersteel.ender_remnant": "Ender Remnant",
   "block.endersteel.ender_steel_ore": "Ender Steel Ore",
   "block.endersteel.deepslate_ender_steel_ore": "Deepslate Ender Steel Ore",
 
@@ -59,6 +60,8 @@
 
   "enchantment.endersteel.repulsive_shriek": "Repulsive Shriek",
   "enchantment.endersteel.repulsive_shriek.desc": "When hit, repulse all nearby entities and reflect half the damage back to the attacker",
+
+  "enchantment.endersteel.ender_step": "Ender Step",
 
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void",

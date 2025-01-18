@@ -2,6 +2,25 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
+## [1.1.2] January 18, 2025
+
+### Added
+- Added Ender Remnant ore
+  - Generates in End islands between Y=55 and Y=75
+  - Requires netherite-tier tools or higher to mine
+  - Generates in two patterns:
+    - Large veins (3 blocks) at Y=55-65
+    - Small veins (1 blocks) at Y=66-75
+  - Hidden in End Stone
+  - Can be smelted into Ender Scrap
+
+### Fixed
+- Updated mining level requirements
+  - Ender Steel tools are now properly tagged as level 5 tools
+- Fixed Ender Steel Block drop, it actually drops itself
+
+LOTS OF DATAGEN 
+
 ## [1.1.2] January 17, 2025
 
 ### Added

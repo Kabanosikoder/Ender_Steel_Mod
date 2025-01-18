@@ -48,6 +48,7 @@ public class ModItemGroup {
 
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
+                        entries.add(ModBlocks.ENDER_REMNANT);
 
                     }).build());
 

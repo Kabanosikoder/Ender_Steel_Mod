@@ -9,6 +9,7 @@ import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.event.EnderSteelArmorEvents;
 import net.panther.endersteel.item.ModItemGroup;
 import net.panther.endersteel.item.ModItems;
+import net.panther.endersteel.loot.ModLootTableModifiers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +22,13 @@ public class EnderSteel implements ModInitializer {
 		ModItemGroup.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+		ModLootTableModifiers.modifyLootTables();
 		ModEnchantments.registerModEnchantments();
 		EnderSteelArmorEvents.register();
 		EnderSteelStareBlock.LookAtBlockHandler.register();
 		ModEffects.registerEffects();
 		ModCriteria.register();
 
-		LOGGER.info("EnderSteel, hi goobers :3 " + MOD_ID);
+		LOGGER.info("Hey goobers :3 " + MOD_ID);
 	}
 }

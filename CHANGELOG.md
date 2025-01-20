@@ -2,6 +2,30 @@
 
 All notable changes to the Ender Steel Mod will be documented in this file.
 
+## [1.1.3] January 20, 2025
+
+### Added
+- Added configuration system for mod settings
+  - Config file generated at `.minecraft/config/endersteel.properties`
+  - Configurable settings include:
+    - Armor evasion chance (default: 0.45)
+    - Maximum evasion charges (default: 5)
+    - Evasion cooldown in seconds (default: 120)
+    - Phantom Harvest heal amount (default: 4)
+    - Repulsive Shriek damage reflection (default: 0.5)
+    - Repulsive Shriek knockback strength (default: 2.0)
+    - Ender Remnant ore generation settings
+  - All settings have detailed descriptions in the config file
+
+### Changed
+- Improved Repulsive Shriek enchantment behavior
+  - Better visual and sound effects
+  - More consistent behavior with evasion charges
+
+### Fixed
+- Fixed double-effect bug with Repulsive Shriek enchantment
+- Fixed shield blocking interaction with evasion abilities
+
 ## [1.1.2] January 18, 2025
 
 ### Added

@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.panther.endersteel.advancement.ModCriteria;
 import net.panther.endersteel.block.ModBlocks;
 import net.panther.endersteel.block.custom.EnderSteelStareBlock;
+import net.panther.endersteel.config.ModConfig;
 import net.panther.endersteel.effect.ModEffects;
 import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.event.EnderSteelArmorEvents;
@@ -20,6 +21,9 @@ public class EnderSteel implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        // Load config first
+        ModConfig.loadConfig();
+
         ModItemGroup.registerItemGroups();
         ModItems.registerModItems();
         ModBlocks.registerModBlocks();

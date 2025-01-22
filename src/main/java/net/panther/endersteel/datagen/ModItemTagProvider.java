@@ -23,7 +23,7 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 ModItems.ENDER_STEEL_LEGGINGS, ModItems.ENDER_STEEL_BOOTS);
 
         // Add tools that can mine level 5 blocks (Ender Steel tier)
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, new Identifier("fabric", "needs_tool_level_5")))
+        getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("fabric", "needs_tool_level_5")))
                 .add(ModItems.ENDER_STEEL_PICKAXE)
                 .add(ModItems.ENDER_STEEL_AXE)
                 .add(ModItems.ENDER_STEEL_SCYTHE)

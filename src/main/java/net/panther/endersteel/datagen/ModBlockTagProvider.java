@@ -19,12 +19,12 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         // Requires level 5 mining level (Ender Steel Tier)
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.BLOCK, new Identifier("fabric", "needs_tool_level_5")))
+        getOrCreateTagBuilder(TagKey.of(RegistryKeys.BLOCK, Identifier.of("fabric", "needs_tool_level_5")))
                 .add(ModBlocks.ENDER_REMNANT)
                 .add(ModBlocks.ENDER_STEEL_BLOCK);
 
         // Requires diamond tool
-        getOrCreateTagBuilder(TagKey.of(RegistryKeys.BLOCK, new Identifier("fabric","needs_tool_level_4")))
+        getOrCreateTagBuilder(TagKey.of(RegistryKeys.BLOCK, Identifier.of("fabric", "needs_tool_level_4")))
                 .add(ModBlocks.ENDER_REMNANT)
                 .add(ModBlocks.ENDER_STEEL_BLOCK);
 

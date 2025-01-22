@@ -16,7 +16,7 @@ public class GazingVoidEffect extends StatusEffect {
 
     public static void register() {
         Registry.register(Registries.STATUS_EFFECT,
-            new Identifier(EnderSteel.MOD_ID, "gazing_void"),
+             Identifier.of(EnderSteel.MOD_ID, "gazing_void"),
             GAZING_VOID);
     }
 }

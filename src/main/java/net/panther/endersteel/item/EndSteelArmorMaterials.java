@@ -1,103 +1,35 @@
 package net.panther.endersteel.item;
 
-import net.minecraft.item.ArmorItem;
+
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ArmorMaterials;
-import net.minecraft.item.Items;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Lazy;
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.panther.endersteel.EnderSteel;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Supplier;
 
-public enum EndSteelArmorMaterials implements ArmorMaterial {
-    ENDER_STEEL("ender_steel", 34, Util.make(new EnumMap(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 4);
-        map.put(ArmorItem.Type.LEGGINGS, 7);
-        map.put(ArmorItem.Type.CHESTPLATE, 9);
-        map.put(ArmorItem.Type.HELMET, 4);
-    }), 15, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 1.5F, 0.1F, () -> Ingredient.ofItems(ModItems.ENDER_STEEL_INGOT));
+public class EndSteelArmorMaterials{
+    public static final RegistryEntry<ArmorMaterial> ENDER_STEEL_ARMOR_MATERIAL = registeredArmorMaterial("ender_steel",
+            () -> new ArmorMaterial(Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 4);
+                map.put(ArmorItem.Type.LEGGINGS, 7);
+                map.put(ArmorItem.Type.CHESTPLATE, 9);
+                map.put(ArmorItem.Type.HELMET, 4);
+                map.put(ArmorItem.Type.BODY, 4);
+            }), 20, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, () -> Ingredient.ofItems(ModItems.ENDER_STEEL_INGOT),
+                    List.of(new ArmorMaterial.Layer(Identifier.of(EnderSteel.MOD_ID, "ender_steel"))), 0,0));
 
-    public static final StringIdentifiable.Codec<ArmorMaterials> CODEC = StringIdentifiable.createCodec(ArmorMaterials::values);
-    private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = Util.make(new EnumMap(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 13);
-        map.put(ArmorItem.Type.LEGGINGS, 15);
-        map.put(ArmorItem.Type.CHESTPLATE, 16);
-        map.put(ArmorItem.Type.HELMET, 11);
-    });
-    private final String name;
-    private final int durabilityMultiplier;
-    private final EnumMap<ArmorItem.Type, Integer> protectionAmounts;
-    private final int enchantability;
-    private final SoundEvent equipSound;
-    private final float toughness;
-    private final float knockbackResistance;
-    private final Lazy<Ingredient> repairIngredientSupplier;
-
-    private EndSteelArmorMaterials(
-            String name,
-            int durabilityMultiplier,
-            EnumMap<ArmorItem.Type, Integer> protectionAmounts,
-            int enchantability,
-            SoundEvent equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngredientSupplier
-    ) {
-        this.name = name;
-        this.durabilityMultiplier = durabilityMultiplier;
-        this.protectionAmounts = protectionAmounts;
-        this.enchantability = enchantability;
-        this.equipSound = equipSound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredientSupplier = new Lazy<>(repairIngredientSupplier);
+    public static RegistryEntry<ArmorMaterial> registeredArmorMaterial(String name, Supplier<ArmorMaterial> material){
+        return Registry.registerReference(Registries.ARMOR_MATERIAL, Identifier.of(EnderSteel.MOD_ID, name), material.get());
     }
-
-    @Override
-    public int getDurability(ArmorItem.Type type) {
-        return (Integer)BASE_DURABILITY.get(type) * this.durabilityMultiplier;
-    }
-
-    @Override
-    public int getProtection(ArmorItem.Type type) {
-        return (Integer)this.protectionAmounts.get(type);
-    }
-
-    @Override
-    public int getEnchantability() {
-        return this.enchantability;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return this.equipSound;
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairIngredientSupplier.get();
-    }
-
-    @Override
-    public String getName() {
-        return EnderSteel.MOD_ID + ":" + this.name;
-    }
-
-    @Override
-    public float getToughness() {
-        return this.toughness;
-    }
-
-    @Override
-    public float getKnockbackResistance() {
-        return this.knockbackResistance;
-    }
-
 }
+
 

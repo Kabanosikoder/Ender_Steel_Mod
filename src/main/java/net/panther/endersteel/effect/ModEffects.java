@@ -17,7 +17,7 @@ public class ModEffects {
     public static void registerEffects() {
         Registry.register(
             Registries.STATUS_EFFECT,
-            new Identifier(EnderSteel.MOD_ID, "gazing_void"),
+                Identifier.of(EnderSteel.MOD_ID, "gazing_void"),
             GAZING_VOID
         );
     }
@@ -35,7 +35,7 @@ public class ModEffects {
         }
 
         @Override
-        public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
             if (!entity.getWorld().isClient && entity.getWorld() instanceof ServerWorld serverWorld) {
                 double shakeX = (random.nextDouble() - 0.5) * 0.2;
                 double shakeZ = (random.nextDouble() - 0.5) * 0.2;
@@ -56,6 +56,7 @@ public class ModEffects {
                     );
                 }
             }
+            return false;
         }
     }
 }

@@ -1,0 +1,42 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "endersteel:item/ender_steel_scythe"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, 270, 35],
+      "translation": [0, 4, 2],
+      "scale": [2.0, 2.0, 2.0]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, 35],
+      "translation": [0, 4, 2],
+      "scale": [2.0, 2.0, 2.0]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -135, 25],
+      "translation": [0, 3, 1],
+      "scale": [1.8, 1.8, 1.8]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 45, 25],
+      "translation": [0, 3, 1],
+      "scale": [1.8, 1.8, 1.8]
+    },
+    "ground": {
+      "translation": [0, 2, 0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    "fixed": {
+      "rotation": [0, 180, 0],
+      "translation": [0, 0, 0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    "gui": {
+      "rotation": [0, 180, 0],
+      "translation": [0, -1, 0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "allowed_items": [
+    "endersteel:ender_steel_sword"
+  ],
+  "weight": 10,
+  "max_level": 1,
+  "min_cost": {
+    "base": 15,
+    "per_level": 0
+  },
+  "max_cost": {
+    "base": 65,
+    "per_level": 0
+  },
+  "treasure": true,
+  "incompatible_with": [
+    "endersteel:ender_streak"
+  ],
+  "effects": [
+    {
+      "type": "endersteel:void_strike_effect",
+      "target": "victim",
+      "value": {
+        "type": "constant",
+        "value": 4.0
+      }
+    }
+  ]
+}

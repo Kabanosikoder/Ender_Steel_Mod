@@ -1,0 +1,32 @@
+{
+  "allowed_items": [
+    "endersteel:ender_steel_chestplate"
+  ],
+  "weight": 5,
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level": 0
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level": 0
+  },
+  "treasure": true,
+  "effects": [
+    {
+      "type": "endersteel:repulsive_shriek_effect",
+      "target": "self",
+      "value": {
+        "radius": {
+          "type": "constant",
+          "value": 5.0
+        },
+        "force": {
+          "type": "constant",
+          "value": 1.5
+        }
+      }
+    }
+  ]
+}

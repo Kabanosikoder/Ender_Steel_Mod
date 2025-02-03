@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "endersteel:ender_steel_ingot"
+    },
+    "title": {
+      "translate": "advancement.endersteel.root"
+    },
+    "description": {
+      "translate": "advancement.endersteel.root.desc"
+    },
+    "background": "minecraft:textures/block/end_stone.png",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_ender_scrap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["endersteel:ender_scrap"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_ender_scrap"]]
+}

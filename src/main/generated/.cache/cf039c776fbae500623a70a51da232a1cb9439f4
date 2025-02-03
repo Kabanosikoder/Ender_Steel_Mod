@@ -1,0 +1,4 @@
+// 1.21.1	2025-02-02T19:25:07.3118751	Ender Steel Mod/Tags for minecraft:item
+4325f294734f11e4be47f847aa8a465a0ddf581a data\minecraft\tags\item\trimmable_armor.json
+1fd146ba65ec4f12f8f87fae56b0d7e6c977d136 data\endersteel\tags\item\scythe_enchantable.json
+03f2363125ed748bce1e036c2456741c59a49249 data\fabric\tags\item\needs_tool_level_5.json

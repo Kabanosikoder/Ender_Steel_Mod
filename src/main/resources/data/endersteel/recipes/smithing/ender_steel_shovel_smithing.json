@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "endersteel:ender_steel_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "minecraft:netherite_shovel"
+  },
+  "addition": {
+    "item": "endersteel:ender_steel_ingot"
+  },
+  "result": {
+    "item": "endersteel:ender_steel_shovel"
+  }
+}

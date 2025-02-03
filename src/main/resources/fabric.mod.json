@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "endersteel",
+	"version": "1.2.0",
+	"name": "Ender Steel Mod",
+	"description": "Adds new material, tools and armor to the game with some very epic abilities",
+	"authors": [
+		"Panther3618"
+	],
+	"contact": {
+		"homepage": "https://github.com/Kabanosikoder",
+		"sources": ""
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/endersteel/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.panther.endersteel.EnderSteel"
+		],
+		"fabric-datagen": [
+			"net.panther.endersteel.EnderSteelDataGenerator"
+		],
+		"client": [
+			"net.panther.endersteel.EnderSteelClient"
+		]
+	},
+	"mixins": [
+		"ender-steel.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

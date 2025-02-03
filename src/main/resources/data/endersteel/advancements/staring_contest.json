@@ -1,0 +1,23 @@
+{
+  "parent": "endersteel:root",
+  "display": {
+    "icon": {
+      "item": "endersteel:ender_steel_block"
+    },
+    "title": {
+      "translate": "advancement.endersteel.staring_contest"
+    },
+    "description": {
+      "translate": "advancement.endersteel.staring_contest.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+"criteria": {
+  "stare_at_block": {
+    "trigger": "endersteel:stare_at_block"
+  }
+}
+}

@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "net.panther.endersteel.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin",
+		"EnderSteelArmorMixin",
+		"PlayerEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

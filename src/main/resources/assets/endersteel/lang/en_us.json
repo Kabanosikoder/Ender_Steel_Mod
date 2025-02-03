@@ -1,0 +1,112 @@
+{
+  "itemgroup.ender_steel_group": "Ender Steel Mod",
+
+  "item.endersteel.ender_scrap": "Ender Scrap",
+  "item.endersteel.ender_steel_ingot": "Ender Steel Ingot",
+  "item.endersteel.ender_steel_nugget": "Ender Steel Nugget",
+
+  "item.endersteel.ender_steel_sword": "Ender Steel Sword",
+  "item.endersteel.ender_steel_sword.pearl_stored": "Stored Pearls: %d/%d",
+  "item.endersteel.ender_steel_sword.pearls_stored": "Stored %d/%d pearls",
+
+  "item.endersteel.ender_steel_pickaxe": "Ender Steel Pickaxe",
+  "item.endersteel.ender_steel_axe": "Ender Steel Axe",
+  "item.endersteel.ender_steel_scythe": "Ender Steel Scythe",
+  "item.endersteel.ender_steel_shovel": "Ender Steel Shovel",
+  "item.endersteel.ender_steel_hoe": "Ender Steel Hoe",
+
+  "item.endersteel.ender_steel_helmet": "Ender Steel Helmet",
+  "item.endersteel.ender_steel_chestplate": "Ender Steel Chestplate",
+  "item.endersteel.ender_steel_leggings": "Ender Steel Leggings",
+  "item.endersteel.ender_steel_boots": "Ender Steel Boots",
+
+  "item.endersteel.ender_steel_upgrade_smithing_template": "Ender Steel Upgrade Smithing Template",
+  "item.endersteel.smithing_template.ender_steel_upgrade.title": "§2Ender Steel Upgrade",
+  "item.endersteel.smithing_template.ender_steel_upgrade.applies_to": "§0Netherite Equipment",
+  "item.endersteel.smithing_template.ender_steel_upgrade.ingredients": "§2Ender Steel Ingot",
+  "item.endersteel.smithing_template.ender_steel_upgrade.base_slot_description": "Add netherite equipment",
+  "item.endersteel.smithing_template.ender_steel_upgrade.additions_slot_description": "Add ender steel ingot",
+
+  "item.endersteel.bagel": "Bagel",
+
+  "block.endersteel.ender_steel_block": "Block of Ender Steel",
+  "block.endersteel.ender_remnant": "Ender Remnant",
+  "block.endersteel.ender_steel_ore": "Ender Steel Ore",
+  "block.endersteel.deepslate_ender_steel_ore": "Deepslate Ender Steel Ore",
+
+  "itemgroup.endersteel": "Ender Steel",
+
+  "item.endersteel.armor.set_bonus": "Full Set Bonus: Evasion",
+  "item.endersteel.armor.teleport_ability": "Dodge up to 5 hits (2 minute cooldown)",
+
+  "item.endersteel.sword.store_instruction": "Right-click with Ender Pearl to store",
+  "item.endersteel.sword.teleport_chance": "Chance to teleport and damage enemies on hit",
+  "item.endersteel.sword.enders_edge": "Ender's Edge: Teleports enemies within 5 blocks",
+
+  "enchantment.endersteel.gazing_void": "Gazing Void",
+  "enchantment.endersteel.gazing_void.desc": "Right-click to activate. Next hit blinds and immobilizes target",
+
+  "enchantment.endersteel.ender_streak": "Ender Streak",
+  "enchantment.endersteel.ender_streak.desc": "Current Streak: %d",
+  "enchantment.endersteel.ender_streak.bonus": "Bonus Damage: x%s",
+  "enchantment.endersteel.void_strike": "Void Strike",
+  "enchantment.endersteel.void_strike.desc": "50% chance to teleport hit enemies within a 5-block radius",
+
+  "enchantment.endersteel.phantom_harvest": "Phantom Harvest",
+  "enchantment.endersteel.phantom_harvest.desc": "Killing enemies recharges evasion charges when wearing full armor set, or heals 1 heart",
+
+  "enchantment.endersteel.rift_cleave": "Rift Cleave",
+  "enchantment.endersteel.rift_cleave.desc": "Sweeping attacks hit all enemies within 5 blocks, with a chance to pull them toward you",
+
+  "enchantment.endersteel.repulsive_shriek": "Repulsive Shriek",
+  "enchantment.endersteel.repulsive_shriek.desc": "When hit, repulse all nearby entities and reflect half the damage back to the attacker",
+
+  "enchantment.endersteel.ender_step": "Ender Step",
+
+  "effect.endersteel.gazing_void": "Gazing Void",
+  "effect.endersteel.gazing_void.description": "Your vision is revoked by the void",
+
+  "advancement.endersteel.root": "Enter the Void",
+  "advancement.endersteel.root.desc": "Obtain your first piece of Ender Scrap",
+  
+  "advancement.endersteel.get_full_armor": "Void Walker",
+  "advancement.endersteel.get_full_armor.desc": "Obtain a complete set of Ender Steel armor",
+  
+  "advancement.endersteel.phantom_harvest": "Phantom Harvest",
+  "advancement.endersteel.phantom_harvest.desc": "Gain a teleport charge on kill, or heal 1 heart without full set",
+  
+  "advancement.endersteel.staring_contest": "Staring Contest",
+  "advancement.endersteel.staring_contest.desc": "Make an Ender Steel Block fully open its eye",
+  
+  "advancement.endersteel.rift_step": "Echo of the End",
+  "advancement.endersteel.rift_step.desc": "Dodge an attack using the Ender Steel Armor's full set ability",
+  
+  "advancement.endersteel.endermite_bane": "Endermite's Bane",
+  "advancement.endersteel.endermite_bane.desc": "Defeat an Endermite using an Ender Steel weapon",
+  
+  "advancement.endersteel.obtain_ender_steel.title": "Void-Touched Steel",
+  "advancement.endersteel.obtain_ender_steel.description": "Obtain Ender Steel",
+  
+  "advancement.endersteel.obtain_ender_steel_armor.title": "Void-Touched Protection",
+  "advancement.endersteel.obtain_ender_steel_armor.description": "Obtain a full set of Ender Steel Armor",
+  
+  "advancement.endersteel.obtain_ender_steel_tools.title": "Void-Touched Tools",
+  "advancement.endersteel.obtain_ender_steel_tools.description": "Obtain all Ender Steel Tools",
+  
+  "advancement.endersteel.obtain_phantom_harvest.title": "Phantom Farmer",
+  "advancement.endersteel.obtain_phantom_harvest.description": "Obtain the Phantom Harvest enchantment",
+
+  "advancement.endersteel.obtain_rift_cleave.title": "Rift Reaper",
+  "advancement.endersteel.obtain_rift_cleave.description": "Obtain the Rift Cleave enchantment",
+
+  "advancement.endersteel.obtain_repulsive_shriek.title": "Sonic Defense",
+  "advancement.endersteel.obtain_repulsive_shriek.description": "Obtain the Repulsive Shriek enchantment",
+
+  "tooltip.ender_steel.sword.pearls_stored": "Stored Pearls: %d/%d",
+  "tooltip.ender_steel.sword.current_streak": "Current Streak: %d",
+  "tooltip.ender_steel.sword.bonus_damage": "Bonus Damage: +%s",
+  "tooltip.ender_steel.sword.void_strike": "Void Strike: 50%% chance to teleport nearby enemies",
+  "tooltip.ender_steel.void_gaze_activate": "Right-click to activate Void Gaze",
+  "tooltip.ender_steel.void_gaze_effect": "Next hit blinds and immobilizes target",
+  "item.endersteel.ender_steel_sword.void_strike_success": "You hurt your enemy with the Void"
+}

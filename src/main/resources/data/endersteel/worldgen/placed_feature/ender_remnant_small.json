@@ -1,0 +1,53 @@
+{
+  "feature": {
+    "type": "minecraft:ore",
+    "config": {
+      "size": 2,
+      "discard_chance_on_air_exposure": 1.0,
+      "targets": [
+        {
+          "target": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:end_stone"
+          },
+          "state": {
+            "Name": "endersteel:ender_remnant"
+          }
+        }
+      ]
+    }
+  },
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 0,
+        "max_inclusive": 1
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 66
+        },
+        "max_inclusive": {
+          "absolute": 75
+        }
+      }
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": 0
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

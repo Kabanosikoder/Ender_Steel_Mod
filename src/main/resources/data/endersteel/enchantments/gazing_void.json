@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.endersteel.gazing_void"
+  },
+  "effects": [
+    {
+      "type": "minecraft:apply_mob_effect",
+      "target": "victim",
+      "effect": {
+        "type": "minecraft:wither",
+        "duration": {
+          "type": "minecraft:level_based",
+          "base_value": 40,
+          "per_level_value": 20
+        },
+        "amplifier": 0
+      }
+    }
+  ]
+}

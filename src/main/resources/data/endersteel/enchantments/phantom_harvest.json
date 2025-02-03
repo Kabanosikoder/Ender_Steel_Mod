@@ -1,0 +1,29 @@
+{
+  "allowed_items": [
+    "endersteel:ender_steel_scythe"
+  ],
+  "weight": 10,
+  "max_level": 1,
+  "min_cost": {
+    "base": 15,
+    "per_level": 0
+  },
+  "max_cost": {
+    "base": 65,
+    "per_level": 0
+  },
+  "treasure": true,
+  "incompatible_with": [
+    "endersteel:gazing_void"
+  ],
+  "effects": [
+    {
+      "type": "endersteel:phantom_harvest_effect",
+      "target": "victim",
+      "value": {
+        "type": "constant",
+        "value": 0.3
+      }
+    }
+  ]
+}

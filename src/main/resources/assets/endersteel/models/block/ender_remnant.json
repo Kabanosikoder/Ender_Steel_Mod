@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "endersteel:block/ender_remnant_top",
+    "side": "endersteel:block/ender_remnant_side"
+  }
+}

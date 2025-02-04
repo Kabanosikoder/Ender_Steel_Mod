@@ -1,0 +1,31 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.endersteel.repulsive_shriek"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "endersteel:repulsive_shriek"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 15
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 12
+  },
+  "slots": [
+    "chest"
+  ],
+  "supported_items": "#endersteel:ender_steel_chestplate",
+  "weight": 2
+}

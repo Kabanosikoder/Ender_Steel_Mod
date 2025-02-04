@@ -3,6 +3,8 @@ package net.panther.endersteel.item;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlag;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
@@ -71,6 +73,9 @@ public class ModItems {
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
             new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new Item.Settings()));
 
+    public static final Item ENDER_STEEL_ARMOR_SMITHING_TEMPLATE = registerItem("endersteel_armor_trim_smithing_template",
+            SmithingTemplateItem.of(Identifier.of(EnderSteel.MOD_ID, "voidbringer"), FeatureFlags.VANILLA));
+    
     // Food
     public static final Item BAGEL = registerItem("bagel",
             new BagelItem(new Item.Settings()));

@@ -36,5 +36,11 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(ModItems.ENDER_STEEL_AXE)
                 .add(ModItems.ENDER_STEEL_SCYTHE)
                 .add(ModItems.ENDER_STEEL_SHOVEL);
+
+        getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS)
+                .add(ModItems.ENDER_STEEL_INGOT);
+
+        getOrCreateTagBuilder(ItemTags.TRIM_TEMPLATES)
+                .add(ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE);
     }
 }

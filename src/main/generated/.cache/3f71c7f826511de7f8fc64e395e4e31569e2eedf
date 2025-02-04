@@ -1,4 +1,4 @@
-// 1.21.1	2025-02-02T19:25:07.3092246	Ender Steel Mod/Model Definitions
+// 1.21.1	2025-02-03T20:56:16.5679319	Ender Steel Mod/Model Definitions
 8213459b7ce5ba2d45d28eedf708909cd189b647 assets\endersteel\models\item\ender_steel_chestplate_lapis_trim.json
 2a6ba2683834052c97269b814d27f0bed8281dce assets\endersteel\models\item\ender_steel_ingot.json
 9766261a6ad9ca83a9d9e2e4d9d282b2f57286bd assets\endersteel\models\item\ender_steel_leggings_quartz_trim.json
@@ -41,8 +41,9 @@ ecad2d9ff02a5d86f365cacd858f6f32207600f4 assets\endersteel\models\item\ender_ste
 5a5e8c8ebe8c1e59c13a576df8b088f325dd63ce assets\endersteel\models\item\ender_steel_leggings_diamond_trim.json
 c19e8f9ef04060e4045a4f07feaddf98d2d865ae assets\endersteel\models\item\ender_steel_helmet_quartz_trim.json
 52ae7b990056ff5342fd6d243227747b44cfd46d assets\endersteel\models\item\ender_steel_helmet_gold_trim.json
-409fc5714af48c712842fc98311767559b6396b6 assets\endersteel\models\item\ender_steel_helmet.json
+542b37a2e0dbf3cf4043fb2879a401c28bc79bea assets\endersteel\models\item\endersteel_armor_trim_smithing_template.json
 df4af803aa2839fc94ac9ca3f258811cd171460b assets\endersteel\models\item\ender_steel_chestplate_netherite_trim.json
+409fc5714af48c712842fc98311767559b6396b6 assets\endersteel\models\item\ender_steel_helmet.json
 05104c1a4a4c43953064d0d93b1f790f352e2733 assets\endersteel\models\item\ender_steel_boots_netherite_trim.json
 fedd37fa652490137bda5996b2d9db0c8ac375fd assets\endersteel\models\item\ender_steel_pickaxe.json
 446c70b5640aa9e0670ed0c40cbeb913ff77b833 assets\endersteel\models\item\ender_steel_helmet_netherite_trim.json

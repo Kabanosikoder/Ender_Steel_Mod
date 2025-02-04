@@ -1,0 +1,8 @@
+{
+  "asset_id": "endersteel:endersteel",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.endersteel.ender_steel"
+  },
+  "template_item": "endersteel:ender_steel_armor_trim_smithing_template"
+}

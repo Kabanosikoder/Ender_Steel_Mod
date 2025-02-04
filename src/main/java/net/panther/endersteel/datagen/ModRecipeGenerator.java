@@ -8,6 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
+import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.item.ModItems;
 
 import java.util.concurrent.CompletableFuture;
@@ -29,5 +30,8 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .criterion(hasItem(Items.ENDER_EYE), conditionsFromItem(Items.ENDER_EYE))
                 .criterion(hasItem(Items.NETHERITE_SCRAP), conditionsFromItem(Items.NETHERITE_SCRAP))
                 .offerTo(exporter, Identifier.of("endersteel", getRecipeName(ModItems.ENDER_SCRAP)));
+
+
+        offerSmithingTrimRecipe(exporter, ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE, Identifier.of(EnderSteel.MOD_ID, "endersteel"));
     }
 }

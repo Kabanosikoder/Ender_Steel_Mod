@@ -39,6 +39,8 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_LEGGINGS);
                         entries.add(ModItems.ENDER_STEEL_BOOTS);
 
+                        entries.add(ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE);
+
                         entries.add(ModItems.BAGEL); // funny bagel ngl
 
                         // Blocks

@@ -15,6 +15,10 @@ import java.util.concurrent.CompletableFuture;
 public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     // Define your custom scythe enchantable tag
     public static final TagKey<Item> SCYTHE_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "scythe_enchantable"));
+    // Define custom ender steel chestplate tag for enchanting
+    public static final TagKey<Item> ENDER_STEEL_CHESTPLATE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "ender_steel_chestplate"));
+    // Define custom sword enchantable tag
+    public static final TagKey<Item> SWORD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "sword_enchantable"));
 
     public ModItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
         super(output, completableFuture);
@@ -30,6 +34,14 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(SCYTHE_ENCHANTABLE)
                 .add(ModItems.ENDER_STEEL_SCYTHE);
         
+        // Add the ender steel chestplate to its custom tag
+        getOrCreateTagBuilder(ENDER_STEEL_CHESTPLATE)
+                .add(ModItems.ENDER_STEEL_CHESTPLATE);
+
+        // Add the sword to its custom enchantable tag
+        getOrCreateTagBuilder(SWORD_ENCHANTABLE)
+                .add(ModItems.ENDER_STEEL_SWORD);
+
         // Add tools that can mine level 5 blocks (Ender Steel tier)
         getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("fabric", "needs_tool_level_5")))
                 .add(ModItems.ENDER_STEEL_PICKAXE)
@@ -37,10 +49,5 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(ModItems.ENDER_STEEL_SCYTHE)
                 .add(ModItems.ENDER_STEEL_SHOVEL);
 
-        getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS)
-                .add(ModItems.ENDER_STEEL_INGOT);
-
-        getOrCreateTagBuilder(ItemTags.TRIM_TEMPLATES)
-                .add(ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE);
     }
 }

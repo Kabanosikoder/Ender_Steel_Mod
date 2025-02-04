@@ -20,10 +20,6 @@
   "item.endersteel.ender_steel_leggings": "Ender Steel Leggings",
   "item.endersteel.ender_steel_boots": "Ender Steel Boots",
 
-  "trim_material.endersteel.ender_steel": "Ender Steel Material",
-  "trim_pattern.endersteel.ender_steel": "Ender Steel Pattern",
-  "item.endersteel.endersteel_armor_trim_smithing_template": "Ender Steel Armor Trim Template",
-
   "item.endersteel.ender_steel_upgrade_smithing_template": "Ender Steel Upgrade Smithing Template",
   "item.endersteel.smithing_template.ender_steel_upgrade.title": "§2Ender Steel Upgrade",
   "item.endersteel.smithing_template.ender_steel_upgrade.applies_to": "§0Netherite Equipment",

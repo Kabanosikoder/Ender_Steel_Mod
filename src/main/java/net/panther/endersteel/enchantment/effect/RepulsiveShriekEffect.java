@@ -1,9 +1,7 @@
 package net.panther.endersteel.enchantment.effect;
 
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.enchantment.EnchantmentEffectContext;
-import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -19,15 +17,11 @@ import net.panther.endersteel.config.ModConfig;
 
 import java.util.List;
 
-public record RepulsiveShriekEffect(EnchantmentLevelBasedValue duration) implements EnchantmentEntityEffect {
+public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
     private static final double NORMAL_RADIUS = 5.0;
     private static final double LAST_CHARGE_RADIUS = 10.0;
 
-    public static final MapCodec<RepulsiveShriekEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    EnchantmentLevelBasedValue.CODEC.fieldOf("duration").forGetter(RepulsiveShriekEffect::duration)
-            ).apply(instance, RepulsiveShriekEffect::new)
-    );
+    public static final MapCodec<RepulsiveShriekEffect> CODEC = MapCodec.unit(RepulsiveShriekEffect::new);
 
     public static void onPlayerDamaged(PlayerEntity player, Entity attacker, float amount, boolean isLastCharge) {
         if (!player.getWorld().isClient && player.getWorld() instanceof ServerWorld serverWorld) {

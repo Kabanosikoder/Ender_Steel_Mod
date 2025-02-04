@@ -19,14 +19,9 @@ import net.minecraft.component.type.NbtComponent;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.config.ModConfig;
 
-public record PhantomHarvestEffect(EnchantmentLevelBasedValue charges) implements EnchantmentEntityEffect {
+public record PhantomHarvestEffect() implements EnchantmentEntityEffect {
     private static final String EVASION_CHARGES_KEY = "evasion_charges";
-    
-    public static final MapCodec<PhantomHarvestEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    EnchantmentLevelBasedValue.CODEC.fieldOf("charges").forGetter(PhantomHarvestEffect::charges)
-            ).apply(instance, PhantomHarvestEffect::new)
-    );
+    public static final MapCodec<PhantomHarvestEffect> CODEC = MapCodec.unit(PhantomHarvestEffect::new);
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
@@ -46,7 +41,7 @@ public record PhantomHarvestEffect(EnchantmentLevelBasedValue charges) implement
                 if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
                     NbtComponent nbtComponent = chestplate.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
                     int currentCharges = nbtComponent.getNbt().getInt(EVASION_CHARGES_KEY);
-                    int chargesToAdd = (int) this.charges.getValue(level);
+                    int chargesToAdd = 1;
                     
                     // Update charges
                     NbtComponent.set(DataComponentTypes.CUSTOM_DATA, chestplate, nbt -> 

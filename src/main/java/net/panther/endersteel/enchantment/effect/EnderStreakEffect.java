@@ -1,8 +1,6 @@
 package net.panther.endersteel.enchantment.effect;
 
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.enchantment.EnchantmentEffectContext;
 import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
 import net.minecraft.entity.Entity;
@@ -17,17 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public record EnderStreakEffect(EnchantmentLevelBasedValue damagePerStreak) implements EnchantmentEntityEffect {
+public record EnderStreakEffect() implements EnchantmentEntityEffect {
+
+    public static final MapCodec<EnderStreakEffect> CODEC = MapCodec.unit(EnderStreakEffect::new);
+
     private static final Map<UUID, StreakData> playerStreaks = new HashMap<>();
     private static final int STREAK_TIMEOUT_TICKS = 60; // 3 seconds
     
     private record StreakData(int streak, long lastHitTime) {}
-    
-    public static final MapCodec<EnderStreakEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    EnchantmentLevelBasedValue.CODEC.fieldOf("damage_per_streak").forGetter(EnderStreakEffect::damagePerStreak)
-            ).apply(instance, EnderStreakEffect::new)
-    );
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
@@ -49,7 +44,7 @@ public record EnderStreakEffect(EnchantmentLevelBasedValue damagePerStreak) impl
             playerStreaks.put(playerId, new StreakData(newStreak, currentTime));
             
             // Calculate and apply bonus damage based on streak
-            float damagePerStreak = this.damagePerStreak.getValue(level);
+            float damagePerStreak = 2;
             float bonusDamage = damagePerStreak * (newStreak - 1); // -1 so first hit has no bonus
             
             if (bonusDamage > 0) {

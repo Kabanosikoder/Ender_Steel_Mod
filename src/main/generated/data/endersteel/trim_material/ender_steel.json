@@ -1,9 +1,0 @@
-{
-  "asset_name": "ender_steel",
-  "description": {
-    "color": "#312D75",
-    "translate": "trim_material.endersteel.ender_steel"
-  },
-  "ingredient": "endersteel:ender_steel_ingot",
-  "item_model_index": 1.0
-}

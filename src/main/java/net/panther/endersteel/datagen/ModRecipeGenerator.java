@@ -19,19 +19,7 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.ENDER_SCRAP)
-                .pattern("NPN")
-                .pattern("PEP")
-                .pattern("NPN")
-                .input('E', Items.ENDER_EYE)
-                .input('N', Items.NETHERITE_SCRAP)
-                .input('P', Items.ENDER_EYE)
-                .criterion(hasItem(Items.ENDER_EYE), conditionsFromItem(Items.ENDER_EYE))
-                .criterion(hasItem(Items.NETHERITE_SCRAP), conditionsFromItem(Items.NETHERITE_SCRAP))
-                .offerTo(exporter, Identifier.of("endersteel", getRecipeName(ModItems.ENDER_SCRAP)));
+    public void generate(RecipeExporter recipeExporter) {
 
-
-        offerSmithingTrimRecipe(exporter, ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE, Identifier.of(EnderSteel.MOD_ID, "endersteel"));
     }
 }

@@ -1,7 +1,6 @@
 package net.panther.endersteel.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
@@ -9,13 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.block.ModBlocks;
-import net.panther.endersteel.enchantment.ModEnchantments;
-import net.panther.endersteel.item.ModItems;
 
 public class ModItemGroup {
     public static final ItemGroup ENDER_STEEL_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -39,13 +35,20 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_LEGGINGS);
                         entries.add(ModItems.ENDER_STEEL_BOOTS);
 
-                        entries.add(ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE);
-
                         entries.add(ModItems.BAGEL); // funny bagel ngl
 
                         // Blocks
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
                         entries.add(ModBlocks.ENDER_REMNANT);
+
+                        // Add enchanted books
+                        var enchantments = displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).orElseThrow();
+                        enchantments.streamEntries().forEach(enchantmentEntry -> {
+                            if (enchantmentEntry.getKey().orElseThrow().getValue().getNamespace().equals(EnderSteel.MOD_ID)) {
+                                entries.add(EnchantedBookItem.forEnchantment(
+                                    new EnchantmentLevelEntry(enchantmentEntry, 1)));
+                            }
+                        });
 
                     }).build());
 

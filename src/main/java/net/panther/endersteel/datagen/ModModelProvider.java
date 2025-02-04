@@ -31,7 +31,5 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.ENDER_STEEL_LEGGINGS));
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.ENDER_STEEL_BOOTS));
 
-        itemModelGenerator.register(ModItems.ENDER_STEEL_ARMOR_SMITHING_TEMPLATE, Models.GENERATED);
-
     }
 }

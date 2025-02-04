@@ -1,12 +1,10 @@
 package net.panther.endersteel.datagen;
 
-import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.enchantment.effect.EnchantmentEffectTarget;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
@@ -55,17 +53,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
-                        new GazingVoidEffect(new EnchantmentLevelBasedValue() {
-                            @Override
-                            public float getValue(int level) {
-                                return 0;
-                            }
-
-                            @Override
-                            public MapCodec<? extends EnchantmentLevelBasedValue> getCodec() {
-                                return null;
-                            }
-                        })));
+                        new GazingVoidEffect()));
 
         // Register Void Strike enchantment
         register(registerable, VOID_STRIKE, Enchantment.builder(Enchantment.definition(
@@ -80,17 +68,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
-                        new VoidStrikeEffect(new EnchantmentLevelBasedValue() {
-                            @Override
-                            public float getValue(int level) {
-                                return 0;
-                            }
-
-                            @Override
-                            public MapCodec<? extends EnchantmentLevelBasedValue> getCodec() {
-                                return null;
-                            }
-                        })));
+                        new VoidStrikeEffect()));
 
         // Register Ender Streak enchantment
         register(registerable, ENDER_STREAK, Enchantment.builder(Enchantment.definition(
@@ -105,17 +83,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
-                        new EnderStreakEffect(new EnchantmentLevelBasedValue() {
-                            @Override
-                            public float getValue(int level) {
-                                return 0;
-                            }
-
-                            @Override
-                            public MapCodec<? extends EnchantmentLevelBasedValue> getCodec() {
-                                return null;
-                            }
-                        })));
+                        new EnderStreakEffect()));
 
         // Register Phantom Harvest enchantment
         register(registerable, PHANTOM_HARVEST, Enchantment.builder(Enchantment.definition(
@@ -130,17 +98,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
-                        new PhantomHarvestEffect(new EnchantmentLevelBasedValue() {
-                            @Override
-                            public float getValue(int level) {
-                                return 0;
-                            }
-
-                            @Override
-                            public MapCodec<? extends EnchantmentLevelBasedValue> getCodec() {
-                                return null;
-                            }
-                        })));
+                        new PhantomHarvestEffect()));
 
         // Register Repulsive Shriek enchantment
         register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
@@ -155,17 +113,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
-                        new RepulsiveShriekEffect(new EnchantmentLevelBasedValue() {
-                            @Override
-                            public float getValue(int level) {
-                                return 0;
-                            }
-
-                            @Override
-                            public MapCodec<? extends EnchantmentLevelBasedValue> getCodec() {
-                                return null;
-                            }
-                        })));
+                        new RepulsiveShriekEffect()));
     }
 
     public static RegistryEntry<Enchantment> getGazingVoid(World world) {

@@ -5,8 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.panther.endersteel.datagen.*;
-import net.panther.endersteel.trim.ModTrimMaterials;
-import net.panther.endersteel.trim.ModTrimPatterns;
+import net.panther.endersteel.enchantment.ModEnchantments;
 
 public class EnderSteelDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -24,8 +23,6 @@ public class EnderSteelDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void buildRegistry(RegistryBuilder registryBuilder) {
-        registryBuilder.addRegistry(RegistryKeys.TRIM_MATERIAL, ModTrimMaterials::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.TRIM_PATTERN, ModTrimPatterns::bootstrap);
-        registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT, EnchantmentGenerator::bootstrap);
+        registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT, ModEnchantments::bootstrap);
     }
 }

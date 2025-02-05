@@ -19,7 +19,7 @@ public record VoidStrikeEffect() implements EnchantmentEntityEffect {
             // 50% chance to teleport on hit
             if (world.getRandom().nextFloat() < 0.5f) {
                 // Teleport the entity within the radius
-                TeleportUtil.teleportRandomly(victim, 16.0);
+                TeleportUtil.teleportRandomly(victim, 5.0);
             }
         }
     }

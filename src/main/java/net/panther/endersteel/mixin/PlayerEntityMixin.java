@@ -5,9 +5,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.panther.endersteel.component.EnderSteelDataComponents;
 import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.enchantment.effect.RepulsiveShriekEffect;
 import net.panther.endersteel.event.EnderSteelArmorEvents;
@@ -42,12 +42,13 @@ public abstract class PlayerEntityMixin {
 
                 // If we have Repulsive Shriek, use it instead of teleporting
                 if (shriekLevel > 0 && source.getAttacker() != null) {
-                    NbtCompound nbt = (NbtCompound) chestplate.getComponents();
-                    boolean isLastCharge = nbt.getInt("evasion_charges") == 1;
+                    // Get the evasion charges from the component
+                    int evasionCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);
+                    boolean isLastCharge = evasionCharges == 1;
 
                     // Use a charge to repulse enemies
                     if (EnderSteelArmorEvents.useCharge(player)) {
-                        RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
+                    RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
                         cir.setReturnValue(Boolean.FALSE);
                         cir.cancel();
                     }

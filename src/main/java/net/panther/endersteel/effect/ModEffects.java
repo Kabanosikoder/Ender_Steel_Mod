@@ -41,8 +41,8 @@ public class ModEffects {
         public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
             if (!entity.getWorld().isClient && entity.getWorld() instanceof ServerWorld serverWorld) {
                 // Add random shake effect
-                double shakeX = (random.nextDouble() - 0.5) * 0.2;
-                double shakeZ = (random.nextDouble() - 0.5) * 0.2;
+                double shakeX = (random.nextDouble() - 1) * 0.2;
+                double shakeZ = (random.nextDouble() - 1) * 0.2;
                 entity.addVelocity(shakeX, 0, shakeZ);
                 entity.velocityModified = true;
 

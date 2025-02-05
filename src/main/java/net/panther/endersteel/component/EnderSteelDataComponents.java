@@ -19,6 +19,9 @@ public class EnderSteelDataComponents {
     public static final ComponentType<Boolean> VOID_GAZE_ACTIVE = register("void_gaze_active", 
         builder -> builder.codec(Codec.BOOL));
 
+    public static final ComponentType<Integer> EVASION_CHARGES = register("evasion_charges",
+        builder -> builder.codec(Codec.INT));
+
     public static <T>ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(EnderSteel.MOD_ID, name),
             builderOperator.apply(ComponentType.builder()).build());

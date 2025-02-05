@@ -84,7 +84,13 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
                     );
                     entity.velocityModified = true;
 
-                    // Apply damage on last charge
+                    // Apply damage reflection to attacker only during normal charges
+                    if (!isLastCharge && entity == attacker) {
+                        float reflectedDamage = amount * ModConfig.REPULSIVE_SHRIEK_DAMAGE_REFLECTION;
+                        livingEntity.damage(player.getDamageSources().magic(), reflectedDamage);
+                    }
+
+                    // On last charge, apply damage to all surrounding entities
                     if (isLastCharge) {
                         float distance = (float) entityPos.distanceTo(playerPos);
                         float damageMultiplier = 1.0f - (distance / (float) LAST_CHARGE_RADIUS);

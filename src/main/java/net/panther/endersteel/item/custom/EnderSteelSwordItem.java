@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -23,7 +25,7 @@ import java.util.Random;
 
 public class EnderSteelSwordItem extends SwordItem {
     private static final int MAX_STORED_PEARLS = 10;
-    private static final float STREAK_BASE_CHANCE = 1.0f; // 100% chance
+    private static final float STREAK_BASE_CHANCE = 0.5f; // 50% base chance
     private static final Random random = new Random();
 
     public EnderSteelSwordItem(EndSteelToolMaterial enderSteel, Settings settings) {
@@ -84,7 +86,10 @@ public class EnderSteelSwordItem extends SwordItem {
                     int streakLevel = EnchantmentHelper.getLevel(EnchantmentGenerator.getEnderStreak(world), stack);
                     int currentStreak = getStreak(stack);
 
-                    if (random.nextFloat() < STREAK_BASE_CHANCE) {
+                    // Calculate chance: 50% base + 5% per streak
+                    float streakChance = STREAK_BASE_CHANCE + (currentStreak * 0.05f);
+                    
+                    if (random.nextFloat() < streakChance) {
                         setStoredPearls(stack, storedPearls - 1);
 
                         // Streak cap
@@ -94,6 +99,22 @@ public class EnderSteelSwordItem extends SwordItem {
                                     SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
                         } else {
                             setStreak(stack, currentStreak + 1);
+                            // Only spawn particles on successful streak increment
+                            if (!world.isClient && attacker instanceof PlayerEntity player) {
+                                Random random = (Random) world.getRandom();
+                                for (int i = 0; i < 15; i++) {
+                                    double offsetX = (random.nextDouble() - 0.5) * 2.0;
+                                    double offsetY = random.nextDouble() * 2.0;
+                                    double offsetZ = (random.nextDouble() - 0.5) * 2.0;
+                                    ((ServerWorld) world).spawnParticles(
+                                        ParticleTypes.PORTAL,
+                                        player.getX() + offsetX,
+                                        player.getY() + offsetY,
+                                        player.getZ() + offsetZ,
+                                        1, 0, 0, 0, 0
+                                    );
+                                }
+                            }
                         }
 
                         float bonusDamage = currentStreak * 0.5f * streakLevel;

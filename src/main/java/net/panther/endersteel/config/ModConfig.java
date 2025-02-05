@@ -31,7 +31,7 @@ public class ModConfig {
 
     public static void loadConfig() {
         properties = new Properties();
-        EnderSteel.LOGGER.info("Loading Ender Steel config from: " + CONFIG_FILE.getAbsolutePath());
+        EnderSteel.LOGGER.info("Loading Ender Steel config from: {}", CONFIG_FILE.getAbsolutePath());
 
         if (CONFIG_FILE.exists()) {
             try (FileReader reader = new FileReader(CONFIG_FILE)) {
@@ -149,7 +149,7 @@ public class ModConfig {
                     ender_remnant_small_vein_count=1
                     """);
                 }
-                EnderSteel.LOGGER.info("Successfully saved Ender Steel config to: " + CONFIG_FILE.getAbsolutePath());
+                EnderSteel.LOGGER.info("Successfully saved Ender Steel config to: {}", CONFIG_FILE.getAbsolutePath());
             }
         } catch (IOException e) {
             EnderSteel.LOGGER.error("Error saving Ender Steel config file", e);
@@ -159,18 +159,18 @@ public class ModConfig {
     private static void logCurrentValues() {
         EnderSteel.LOGGER.info("Current Ender Steel config values:");
         EnderSteel.LOGGER.info("Armor Settings:");
-        EnderSteel.LOGGER.info("  - Evasion Chance: " + EVASION_CHANCE);
-        EnderSteel.LOGGER.info("  - Max Evasion Charges: " + MAX_EVASION_CHARGES);
-        EnderSteel.LOGGER.info("  - Evasion Cooldown: " + EVASION_COOLDOWN_SECONDS + "s");
+        EnderSteel.LOGGER.info("  - Evasion Chance: {}", EVASION_CHANCE);
+        EnderSteel.LOGGER.info("  - Max Evasion Charges: {}", MAX_EVASION_CHARGES);
+        EnderSteel.LOGGER.info("  - Evasion Cooldown: {}s", EVASION_COOLDOWN_SECONDS);
         
         EnderSteel.LOGGER.info("Enchantment Settings:");
-        EnderSteel.LOGGER.info("  - Phantom Harvest Heal: " + PHANTOM_HARVEST_HEAL_AMOUNT);
-        EnderSteel.LOGGER.info("  - Repulsive Shriek Reflection: " + REPULSIVE_SHRIEK_DAMAGE_REFLECTION);
-        EnderSteel.LOGGER.info("  - Repulsive Shriek Knockback: " + REPULSIVE_SHRIEK_KNOCKBACK);
+        EnderSteel.LOGGER.info("  - Phantom Harvest Heal: {}", PHANTOM_HARVEST_HEAL_AMOUNT);
+        EnderSteel.LOGGER.info("  - Repulsive Shriek Reflection: {}", REPULSIVE_SHRIEK_DAMAGE_REFLECTION);
+        EnderSteel.LOGGER.info("  - Repulsive Shriek Knockback: {}", REPULSIVE_SHRIEK_KNOCKBACK);
         
         EnderSteel.LOGGER.info("Ore Generation Settings:");
-        EnderSteel.LOGGER.info("  - Large Veins: " + ENDER_REMNANT_LARGE_VEIN_COUNT + "x" + ENDER_REMNANT_LARGE_VEIN_SIZE + " at Y:" + ENDER_REMNANT_LARGE_VEIN_MIN_Y + "-" + ENDER_REMNANT_LARGE_VEIN_MAX_Y);
-        EnderSteel.LOGGER.info("  - Small Veins: " + ENDER_REMNANT_SMALL_VEIN_COUNT + "x" + ENDER_REMNANT_SMALL_VEIN_SIZE + " at Y:" + ENDER_REMNANT_SMALL_VEIN_MIN_Y + "-" + ENDER_REMNANT_SMALL_VEIN_MAX_Y);
+        EnderSteel.LOGGER.info("  - Large Veins: {}x{} at Y:{}-{}", ENDER_REMNANT_LARGE_VEIN_COUNT, ENDER_REMNANT_LARGE_VEIN_SIZE, ENDER_REMNANT_LARGE_VEIN_MIN_Y, ENDER_REMNANT_LARGE_VEIN_MAX_Y);
+        EnderSteel.LOGGER.info("  - Small Veins: {}x{} at Y:{}-{}", ENDER_REMNANT_SMALL_VEIN_COUNT, ENDER_REMNANT_SMALL_VEIN_SIZE, ENDER_REMNANT_SMALL_VEIN_MIN_Y, ENDER_REMNANT_SMALL_VEIN_MAX_Y);
     }
 
     private static int getInt(String key, int defaultValue) {

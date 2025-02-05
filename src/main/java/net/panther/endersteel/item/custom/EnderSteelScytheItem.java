@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
@@ -26,6 +25,7 @@ import net.panther.endersteel.datagen.EnchantmentGenerator;
 import net.panther.endersteel.effect.ModEffects;
 import net.panther.endersteel.item.EndSteelToolMaterial;
 import net.panther.endersteel.component.EnderSteelDataComponents;
+import net.panther.endersteel.config.ModConfig;
 
 import java.util.List;
 
@@ -104,10 +104,9 @@ public class EnderSteelScytheItem extends SwordItem {
                 // Add 1 charge on kill
                 ItemStack chestplate = player.getInventory().getArmorStack(2);
                 if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
-                    NbtCompound nbt = (NbtCompound) chestplate.getComponents();
-                    int currentCharges = nbt.getInt("evasion_charges");
-                    if (currentCharges < 5) {
-                        nbt.putInt("evasion_charges", currentCharges + 1);
+                    int currentCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);
+                    if (currentCharges < ModConfig.MAX_EVASION_CHARGES) {
+                        chestplate.set(EnderSteelDataComponents.EVASION_CHARGES, currentCharges + 1);
                         // Play recharge sound
                         player.getWorld().playSound(
                             null,

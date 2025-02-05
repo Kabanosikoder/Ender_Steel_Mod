@@ -45,33 +45,33 @@ public class ModItems {
     // Tools
     public static final Item ENDER_STEEL_SWORD = registerItem("ender_steel_sword",
             new EnderSteelSwordItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .attributeModifiers(SwordItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 3, -2.3f))));
+                    .attributeModifiers(SwordItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 3, -2.5f))));
 
     public static final Item ENDER_STEEL_PICKAXE = registerItem("ender_steel_pickaxe",
             new PickaxeItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .attributeModifiers(PickaxeItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 0, -2.8f))));
+                    .attributeModifiers(PickaxeItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, -1, -2.8f))));
 
     public static final Item ENDER_STEEL_AXE = registerItem("ender_steel_axe",
             new AxeItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .attributeModifiers(AxeItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 9, -3.2f))));
+                    .attributeModifiers(AxeItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 8, -3.2f))));
 
     public static final Item ENDER_STEEL_SCYTHE = registerItem("ender_steel_scythe",
             new EnderSteelScytheItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .attributeModifiers(SwordItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 6, -2.6f))));
+                    .attributeModifiers(SwordItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 6, -2.75f))));
 
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .attributeModifiers(ShovelItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 0.5f, -3.0f))));
+                    .attributeModifiers(ShovelItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 0.5f, -2.8f))));
 
     // Armor
     public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.HELMET, new Item.Settings()));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1)));
     public static final Item ENDER_STEEL_CHESTPLATE = registerItem("ender_steel_chestplate",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1)));
     public static final Item ENDER_STEEL_LEGGINGS = registerItem("ender_steel_leggings",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings()));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1)));
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new Item.Settings()));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1)));
 
     // Food
     public static final Item BAGEL = registerItem("bagel",

@@ -40,7 +40,7 @@ public class EnderSteel implements ModInitializer {
 
         ModFeatures.registerFeatures();
 
-        EnderSteelDataComponents.register();
+        EnderSteelDataComponents.registerDataComponents();
 
         ModEnchantmentEffects.registerModEnchantmentEffects();
 

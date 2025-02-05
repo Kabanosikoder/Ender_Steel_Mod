@@ -33,30 +33,29 @@ public class ModEffects {
 
         @Override
         public boolean canApplyUpdateEffect(int duration, int amplifier) {
-            return true;
+            // Apply effect every 5 ticks (1/4 second)
+            return duration % 5 == 0;
         }
 
         @Override
         public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
             if (!entity.getWorld().isClient && entity.getWorld() instanceof ServerWorld serverWorld) {
+                // Add random shake effect
                 double shakeX = (random.nextDouble() - 0.5) * 0.2;
                 double shakeZ = (random.nextDouble() - 0.5) * 0.2;
                 entity.addVelocity(shakeX, 0, shakeZ);
                 entity.velocityModified = true;
 
+                // Add void particles around the entity
                 for (int i = 0; i < 2; i++) {
                     double x = entity.getX() + (random.nextDouble() - 0.5) * 1.5;
                     double y = entity.getY() + random.nextDouble() * 2;
                     double z = entity.getZ() + (random.nextDouble() - 0.5) * 1.5;
                     
-                    serverWorld.spawnParticles(
-                        ParticleTypes.PORTAL,
-                        x, y, z,
-                        1, // particle count
-                        0, 0, 0, // velocity
-                        0.1 // speed
-                    );
+                    serverWorld.spawnParticles(ParticleTypes.PORTAL, x, y, z, 1, 0, 0, 0, 0.1);
                 }
+
+                return true;
             }
             return false;
         }

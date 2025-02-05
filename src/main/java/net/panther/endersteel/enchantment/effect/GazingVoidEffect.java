@@ -18,9 +18,10 @@ public record GazingVoidEffect() implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (target instanceof LivingEntity victim && context.owner() instanceof PlayerEntity player) {
-            victim.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 5, 0));
-            victim.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 6, 1));
-            victim.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 7,  0));
+            int duration = 60 + (level * 20); // Base 3 seconds + 1 second per level
+            victim.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, duration, 0));
+            victim.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, duration, 1));
+            victim.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, duration, 0));
         }
     }
 

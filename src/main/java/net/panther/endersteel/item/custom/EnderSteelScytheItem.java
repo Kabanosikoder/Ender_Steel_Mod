@@ -25,11 +25,11 @@ import net.minecraft.world.World;
 import net.panther.endersteel.datagen.EnchantmentGenerator;
 import net.panther.endersteel.effect.ModEffects;
 import net.panther.endersteel.item.EndSteelToolMaterial;
+import net.panther.endersteel.component.EnderSteelDataComponents;
 
 import java.util.List;
 
 public class EnderSteelScytheItem extends SwordItem {
-    private static final String VOID_GAZE_ACTIVE_KEY = "VoidGazeActive";
     private static final int ABILITY_COOLDOWN = 300;
     private Entity lastKilledEntity = null;
 
@@ -45,7 +45,7 @@ public class EnderSteelScytheItem extends SwordItem {
             return TypedActionResult.pass(stack);
         }
 
-RegistryEntry<Enchantment> gazingVoid = EnchantmentGenerator.getGazingVoid(world);
+        RegistryEntry<Enchantment> gazingVoid = EnchantmentGenerator.getGazingVoid(world);
         if (gazingVoid == null || EnchantmentHelper.getLevel(gazingVoid, stack) <= 0) {
             return TypedActionResult.pass(stack);
         }
@@ -171,12 +171,10 @@ RegistryEntry<Enchantment> gazingVoid = EnchantmentGenerator.getGazingVoid(world
     }
 
     private static boolean isVoidGazeActive(ItemStack stack) {
-        NbtCompound nbt = (NbtCompound) stack.getComponents();
-        return nbt.getBoolean(VOID_GAZE_ACTIVE_KEY);
+        return stack.getOrDefault(EnderSteelDataComponents.VOID_GAZE_ACTIVE, false);
     }
 
     private static void setVoidGazeActive(ItemStack stack, boolean active) {
-        NbtCompound nbt = (NbtCompound) stack.getComponents();
-        nbt.putBoolean(VOID_GAZE_ACTIVE_KEY, active);
+        stack.set(EnderSteelDataComponents.VOID_GAZE_ACTIVE, active);
     }
 }

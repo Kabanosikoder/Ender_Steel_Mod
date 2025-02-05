@@ -1,14 +1,11 @@
 package net.panther.endersteel.item.custom;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -18,6 +15,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.panther.endersteel.datagen.EnchantmentGenerator;
 import net.panther.endersteel.item.EndSteelToolMaterial;
+import net.panther.endersteel.component.EnderSteelDataComponents;
 import net.panther.endersteel.util.TeleportUtil;
 
 import java.util.List;
@@ -25,9 +23,8 @@ import java.util.Random;
 
 public class EnderSteelSwordItem extends SwordItem {
     private static final int MAX_STORED_PEARLS = 10;
-    private static final String STREAK_KEY = "teleport_streak";
+    private static final float STREAK_BASE_CHANCE = 1.0f; // 100% chance
     private static final Random random = new Random();
-    private static final float STREAK_BASE_CHANCE = 0.15f; // 15% base chance
 
     public EnderSteelSwordItem(EndSteelToolMaterial enderSteel, Settings settings) {
         super(EndSteelToolMaterial.ENDER_STEEL, settings);
@@ -113,28 +110,20 @@ public class EnderSteelSwordItem extends SwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-    private int getStoredPearls(ItemStack stack) {
-        NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
-        if (nbtComponent == null) return 0;
-        return nbtComponent.getNbt().getInt("stored_pearls");
+    private static int getStoredPearls(ItemStack stack) {
+        return stack.getOrDefault(EnderSteelDataComponents.STORED_PEARLS, 0);
     }
 
-    private void setStoredPearls(ItemStack stack, int count) {
-        NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).getNbt().copy();
-        nbt.putInt("stored_pearls", count);
-        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+    private static void setStoredPearls(ItemStack stack, int pearls) {
+        stack.set(EnderSteelDataComponents.STORED_PEARLS, Math.min(pearls, MAX_STORED_PEARLS));
     }
 
-    private int getStreak(ItemStack stack) {
-        NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
-        if (nbtComponent == null) return 0;
-        return nbtComponent.getNbt().getInt(STREAK_KEY);
+    private static int getStreak(ItemStack stack) {
+        return stack.getOrDefault(EnderSteelDataComponents.TELEPORT_STREAK, 0);
     }
 
-    private void setStreak(ItemStack stack, int streak) {
-        NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).getNbt().copy();
-        nbt.putInt(STREAK_KEY, streak);
-        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+    private static void setStreak(ItemStack stack, int streak) {
+        stack.set(EnderSteelDataComponents.TELEPORT_STREAK, streak);
     }
 
     private void teleportEntity(LivingEntity entity, World world) {

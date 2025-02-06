@@ -22,7 +22,7 @@
 
   "item.endersteel.ender_steel_upgrade_smithing_template": "Ender Steel Upgrade Smithing Template",
   "item.endersteel.smithing_template.ender_steel_upgrade.title": "§2Ender Steel Upgrade",
-  "item.endersteel.smithing_template.ender_steel_upgrade.applies_to": "§0Netherite Equipment",
+  "item.endersteel.smithing_template.ender_steel_upgrade.applies_to": "§9Netherite Equipment",
   "item.endersteel.smithing_template.ender_steel_upgrade.ingredients": "§2Ender Steel Ingot",
   "item.endersteel.smithing_template.ender_steel_upgrade.base_slot_description": "Add netherite equipment",
   "item.endersteel.smithing_template.ender_steel_upgrade.additions_slot_description": "Add ender steel ingot",

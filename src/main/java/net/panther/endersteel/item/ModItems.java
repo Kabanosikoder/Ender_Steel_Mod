@@ -3,12 +3,10 @@ package net.panther.endersteel.item;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlag;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
+
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
-import net.panther.endersteel.block.ModBlocks;
 import net.panther.endersteel.item.custom.BagelItem;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.item.custom.EnderSteelScytheItem;
@@ -79,25 +77,6 @@ public class ModItems {
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(EnderSteel.MOD_ID, name), item);
-    }
-
-    public static void addToItemGroup(ItemGroup.Builder builder) {
-        builder.entries((context, entries) -> {
-            entries.add(ENDER_SCRAP);
-            entries.add(ENDER_STEEL_INGOT);
-            entries.add(BAGEL);
-            entries.add(ENDER_STEEL_SWORD);
-            entries.add(ENDER_STEEL_PICKAXE);
-            entries.add(ENDER_STEEL_AXE);
-            entries.add(ENDER_STEEL_SCYTHE);
-            entries.add(ENDER_STEEL_SHOVEL);
-            entries.add(ENDER_STEEL_HELMET);
-            entries.add(ENDER_STEEL_CHESTPLATE);
-            entries.add(ENDER_STEEL_LEGGINGS);
-            entries.add(ENDER_STEEL_BOOTS);
-            entries.add(ModBlocks.ENDER_STEEL_BLOCK);
-            entries.add(ModBlocks.ENDER_REMNANT);
-        });
     }
 
     public static void registerModItems() {

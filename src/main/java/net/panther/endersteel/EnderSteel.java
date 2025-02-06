@@ -26,14 +26,18 @@ public class EnderSteel implements ModInitializer {
         ModConfig.loadConfig();
 
         ModItemGroup.registerItemGroups();
-        ModItems.registerModItems();
-        ModBlocks.registerModBlocks();
 
         ModLootTableModifiers.modifyLootTables();
+
+        ModItems.registerModItems();
+
+
+        ModBlocks.registerModBlocks();
 
         EnderSteelArmorEvents.register();
 
         EnderSteelStareBlock.LookAtBlockHandler.register();
+
         ModEffects.registerModEffects();
 
         ModCriteria.register();

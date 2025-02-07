@@ -89,7 +89,7 @@ public class ModEnchantments {
                         new PhantomHarvestEffect()));
 
         register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
-            items.getOrThrow(ModItemTagProvider.ENDER_STEEL_CHESTPLATE),
+            items.getOrThrow(ModItemTagProvider.ARMOR_ENCHANTABLE),
                 2,
                 1,
                 Enchantment.leveledCost(10,12),

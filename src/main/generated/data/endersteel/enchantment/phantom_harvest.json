@@ -27,6 +27,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#endersteel:scythe_enchantable",
+  "supported_items": "#endersteel:enchantable/scythe",
   "weight": 2
 }

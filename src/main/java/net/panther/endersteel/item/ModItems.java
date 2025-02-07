@@ -3,7 +3,6 @@ package net.panther.endersteel.item;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
@@ -11,7 +10,6 @@ import net.panther.endersteel.item.custom.BagelItem;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.item.custom.EnderSteelScytheItem;
 import net.panther.endersteel.item.custom.EnderSteelSwordItem;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,13 +61,17 @@ public class ModItems {
 
     // Armor
     public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1)));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
+                    .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(37))));
     public static final Item ENDER_STEEL_CHESTPLATE = registerItem("ender_steel_chestplate",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1)));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Settings()
+                    .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(37))));
     public static final Item ENDER_STEEL_LEGGINGS = registerItem("ender_steel_leggings",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1)));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Settings()
+                    .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(37))));
     public static final Item ENDER_STEEL_BOOTS = registerItem("ender_steel_boots",
-            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1)));
+            new EnderSteelArmorItem(EndSteelArmorMaterials.ENDER_STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Settings()
+                    .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(37))));
 
     // Food
     public static final Item BAGEL = registerItem("bagel",

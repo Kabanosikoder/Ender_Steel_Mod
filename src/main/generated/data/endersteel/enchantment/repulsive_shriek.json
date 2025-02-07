@@ -26,6 +26,6 @@
   "slots": [
     "chest"
   ],
-  "supported_items": "#endersteel:ender_steel_chestplate",
+  "supported_items": "#endersteel:enchantable/armor",
   "weight": 2
 }

@@ -3,8 +3,11 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 4.0,
+  "group": "ender_steel_ingot",
   "ingredient": {
     "item": "endersteel:ender_scrap"
   },
-  "result": "endersteel:ender_steel_ingot"
+  "result": {
+    "id": "endersteel:ender_steel_ingot"
+  }
 }

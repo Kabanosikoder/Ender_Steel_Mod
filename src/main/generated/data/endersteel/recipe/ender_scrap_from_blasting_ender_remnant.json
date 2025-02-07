@@ -3,8 +3,11 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 8.0,
+  "group": "ender_scrap",
   "ingredient": {
     "item": "endersteel:ender_remnant"
   },
-  "result": "endersteel:ender_scrap"
+  "result": {
+    "id": "endersteel:ender_scrap"
+  }
 }

@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "endersteel",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"name": "Ender Steel Mod",
 	"description": "Adds new material, tools and armor to the game with some very epic abilities",
 	"authors": [
@@ -9,7 +9,9 @@
 	],
 	"contact": {
 		"homepage": "https://github.com/Kabanosikoder",
-		"sources": ""
+		"sources": "https://github.com/Kabanosikoder/Ender_Steel_Mod",
+		"discord": "https://discord.gg/STe8K2gsqM",
+		"issues":"https://github.com/Kabanosikoder/Ender_Steel_Mod/issues"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/endersteel/icon.png",

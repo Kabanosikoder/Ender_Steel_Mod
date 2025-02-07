@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "endersteel:ender_steel_block"
+    },
+    "E": {
+      "item": "endersteel:ender_steel_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "EEB",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "endersteel:ender_steel_scythe"
+  }
+}

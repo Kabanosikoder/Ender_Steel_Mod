@@ -1,4 +1,4 @@
-## [1.2.1] - 2025-05-28
+## [1.2.2] - 2025-05-28
 
 ### Fixed
 - Fixed Repulsive Shriek enchantment not being applicable to Ender Steel Chestplate

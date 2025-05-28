@@ -27,6 +27,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#endersteel:enchantable/sword",
+  "supported_items": "#endersteel:enchantable/ender_steel_sword",
   "weight": 3
 }

@@ -1,7 +1,7 @@
-## [1.2.0] February 5, 2025
+## [1.2.1] - 2025-05-28
 
-### Update
-- UPDATED TO 1.21.1 yipeee
-
-### Changes
-- Ender Streak now has 50% chance to activate on hit
+### Fixed
+- Fixed Repulsive Shriek enchantment not being applicable to Ender Steel Chestplate
+- Fixed Ender Steel Sword not being enchantable in anvil
+- Made Void Strike and Ender Streak enchantments exclusive to Ender Steel Sword
+- Fixed various enchantment tag issues affecting weapon and armor enchantability

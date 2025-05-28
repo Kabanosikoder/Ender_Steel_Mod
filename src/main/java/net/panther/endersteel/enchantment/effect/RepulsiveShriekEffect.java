@@ -119,8 +119,8 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (context.owner() instanceof PlayerEntity player && target instanceof LivingEntity) {
-            float amount = level * 2.0f; // Scale damage with enchantment level
-            boolean isLastCharge = level >= 3; // Consider it a last charge if level is 3 or higher
+            float amount = level * 2.0f;
+            boolean isLastCharge = level >= 3;
             onPlayerDamaged(player, target, amount, isLastCharge);
         }
     }

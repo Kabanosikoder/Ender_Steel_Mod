@@ -47,9 +47,9 @@ public class ModEnchantments {
                         new GazingVoidEffect())
         );
 
-        // Register Void Strike - for both swords and scythes
+        // Register Void Strike for Ender Steel Sword only
         register(registerable, VOID_STRIKE, Enchantment.builder(Enchantment.definition(
-            items.getOrThrow(ModItemTagProvider.SWORD_ENCHANTABLE),
+            items.getOrThrow(ModItemTagProvider.ENDER_STEEL_SWORD_ENCHANTABLE),
             4,
             1,
             Enchantment.leveledCost(10,11),
@@ -61,9 +61,9 @@ public class ModEnchantments {
                     EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                     new VoidStrikeEffect()));
 
-        // Register Ender Streak - for both swords and scythes
+        // Register Ender Streak - for Ender Steel Sword only
         register(registerable, ENDER_STREAK, Enchantment.builder(Enchantment.definition(
-            items.getOrThrow(ModItemTagProvider.SWORD_ENCHANTABLE),
+            items.getOrThrow(ModItemTagProvider.ENDER_STEEL_SWORD_ENCHANTABLE),
             3,
             1,
             Enchantment.leveledCost(15,20),
@@ -88,21 +88,17 @@ public class ModEnchantments {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new PhantomHarvestEffect()));
 
-        register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
-            items.getOrThrow(ModItemTagProvider.ARMOR_ENCHANTABLE),
-                2,
-                1,
-                Enchantment.leveledCost(10,12),
-                Enchantment.leveledCost(25,15),
-                1,
-                AttributeModifierSlot.CHEST))
-                .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
+                register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
+                         items.getOrThrow(ModItemTagProvider.REPULSIVE_SHRIEK_ENCHANTABLE),  // Changed from ARMOR_ENCHANTABLE cuz that was broken :skull:
+                         2,
+                         1,
+                         Enchantment.leveledCost(10,12),
+                         Enchantment.leveledCost(25,15),
+                         1,
+                         AttributeModifierSlot.CHEST))
+                         .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new RepulsiveShriekEffect()));
-    }
-
-    private static RegistryKey<Enchantment> of(String path) {
-        return RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, path));
     }
 
     private static void register(Registerable<Enchantment> registry, RegistryKey<Enchantment> key, Enchantment.Builder builder) {

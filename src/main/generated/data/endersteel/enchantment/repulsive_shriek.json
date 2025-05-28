@@ -26,6 +26,6 @@
   "slots": [
     "chest"
   ],
-  "supported_items": "#endersteel:enchantable/armor",
+  "supported_items": "#endersteel:enchantable/repulsive_shriek",
   "weight": 2
 }

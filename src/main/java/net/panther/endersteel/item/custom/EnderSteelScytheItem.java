@@ -157,6 +157,11 @@ public class EnderSteelScytheItem extends SwordItem {
         return super.postHit(stack, target, attacker);
     }
 
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         if (stack.getHolder() instanceof Entity entity) {
             World world = entity.getWorld();

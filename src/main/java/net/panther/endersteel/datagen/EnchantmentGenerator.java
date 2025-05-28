@@ -40,29 +40,26 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
         var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
         var items = registerable.getRegistryLookup(RegistryKeys.ITEM);
 
-        // Register Gazing Void enchantment
         register(registerable, GAZING_VOID, Enchantment.builder(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                         5, // Rarity
-                        2, // Max Level
+                        1,
                         Enchantment.leveledCost(5, 7), // Min Cost
                         Enchantment.leveledCost(25, 9), // Max Cost
-                        2, // Weight
+                        2,
                         AttributeModifierSlot.MAINHAND))
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new GazingVoidEffect()));
 
-        // Register Void Strike enchantment
         register(registerable, VOID_STRIKE, Enchantment.builder(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        items.getOrThrow(ModItemTagProvider.SWORD_ENCHANTABLE),
                         3,
-                        Enchantment.leveledCost(6, 8),
-                        Enchantment.leveledCost(26, 10),
+                        2,
+                        Enchantment.leveledCost(5, 7),
+                        Enchantment.leveledCost(25, 9),
                         2,
                         AttributeModifierSlot.MAINHAND))
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
@@ -70,7 +67,6 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new VoidStrikeEffect()));
 
-        // Register Ender Streak enchantment
         register(registerable, ENDER_STREAK, Enchantment.builder(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
@@ -85,7 +81,6 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new EnderStreakEffect()));
 
-        // Register Phantom Harvest enchantment
         register(registerable, PHANTOM_HARVEST, Enchantment.builder(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
@@ -100,16 +95,14 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new PhantomHarvestEffect()));
 
-        // Register Repulsive Shriek enchantment
         register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
                         3,
                         2,
                         Enchantment.leveledCost(5, 7),
                         Enchantment.leveledCost(25, 9),
                         2,
-                        AttributeModifierSlot.MAINHAND))
+                        AttributeModifierSlot.CHEST))
                 .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
                 .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
@@ -120,7 +113,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
         return world.getRegistryManager()
                 .get(RegistryKeys.ENCHANTMENT)
                 .getEntry(GAZING_VOID)
-                .orElse(null); // Return null instead of throwing
+                .orElse(null);
     }
     public static RegistryEntry<Enchantment> getVoidStrike(World world) {
         return world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(VOID_STRIKE).orElseThrow();
@@ -143,4 +136,3 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
         return "Enchantment";
     }
 }
-

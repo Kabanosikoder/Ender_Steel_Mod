@@ -2,6 +2,7 @@ package net.panther.endersteel.item.custom;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -14,6 +15,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.panther.endersteel.datagen.EnchantmentGenerator;
 import net.panther.endersteel.item.EndSteelToolMaterial;
@@ -129,6 +133,53 @@ public class EnderSteelSwordItem extends SwordItem {
             }
         }
         return super.postHit(stack, target, attacker);
+    }
+
+    @Override
+    public boolean postMine(ItemStack stack, World world, net.minecraft.block.BlockState state, net.minecraft.util.math.BlockPos pos, LivingEntity miner) {
+        if (!world.isClient && miner instanceof PlayerEntity player) {
+            // Get the player's attack damage from their main hand item
+            float attackDamage = (float)player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            
+            // Increase Scythe sweep dmg
+            float sweepDamage = 2.0f + attackDamage * 0.75f;
+            
+            // Increase sweep range
+            double range = 1.5;
+            
+            // Get all entities in the sweep area
+            Vec3d posVec = player.getPos();
+            List<LivingEntity> entities = world.getNonSpectatingEntities(
+                LivingEntity.class,
+                new Box(
+                    posVec.x - range, posVec.y - range, posVec.z - range,
+                    posVec.x + range, posVec.y + range, posVec.z + range
+                )
+            );
+
+            // Apply sweep damage to all nearby entities
+            for (LivingEntity target : entities) {
+                if (target != player && !player.isTeammate(target) && player.squaredDistanceTo(target) < range * range) {
+                    
+                    // Apply damage with knockback
+                    target.takeKnockback(0.4f, 
+                        MathHelper.sin(player.getYaw() * 0.017453292F), 
+                        -MathHelper.cos(player.getYaw() * 0.017453292F));
+                    target.damage(world.getDamageSources().playerAttack(player), sweepDamage);
+                    
+                    // Add particle effects for visual feedback
+                    ((ServerWorld) world).spawnParticles(
+                        ParticleTypes.SWEEP_ATTACK,
+                        target.getX(), target.getY() + target.getHeight() * 0.5, target.getZ(),
+                        5, 0.1, 0.1, 0.1, 0.0);
+                }
+            }
+            
+            // Play sweep sound
+            world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0F, 1.0F);
+        }
+        return super.postMine(stack, world, state, pos, miner);
     }
 
     private static int getStoredPearls(ItemStack stack) {

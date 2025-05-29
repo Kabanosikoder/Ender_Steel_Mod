@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ESE",
+    "SCS",
+    "ESE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "S": {
+      "item": "endersteel:ender_steel_ingot"
+    },
+    "C": {
+      "item": "endersteel:heavy_core"
+    }
+  },
+  "result": {
+    "item": "endersteel:ender_steel_core"
+  }
+}

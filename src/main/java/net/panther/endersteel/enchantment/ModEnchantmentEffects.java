@@ -20,6 +20,8 @@ public class ModEnchantmentEffects {
             registerEntityEffect("phantom_harvest", PhantomHarvestEffect.CODEC);
     public static final MapCodec<? extends EnchantmentEntityEffect> REPULSIVE_SHRIEK =
             registerEntityEffect("repulsive_shriek", RepulsiveShriekEffect.CODEC);
+    public static final MapCodec<? extends EnchantmentEntityEffect> GRAVITIDE =
+            registerEntityEffect("gravitide", GravitideEffect.CODEC);
 
     private static MapCodec<? extends EnchantmentEntityEffect> registerEntityEffect(String name,
         MapCodec<? extends EnchantmentEntityEffect> codec) {

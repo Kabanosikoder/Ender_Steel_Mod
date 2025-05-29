@@ -3,6 +3,7 @@
 
   "item.endersteel.ender_scrap": "Ender Scrap",
   "item.endersteel.ender_steel_ingot": "Ender Steel Ingot",
+  "item.endersteel.raw_ender_steel": "Raw Ender Steel",
   "item.endersteel.ender_steel_nugget": "Ender Steel Nugget",
 
   "item.endersteel.ender_steel_sword": "Ender Steel Sword",
@@ -14,6 +15,13 @@
   "item.endersteel.ender_steel_scythe": "Ender Steel Scythe",
   "item.endersteel.ender_steel_shovel": "Ender Steel Shovel",
   "item.endersteel.ender_steel_hoe": "Ender Steel Hoe",
+
+  "item.endersteel.ender_steel_core": "Ender Steel Core",
+  "item.endersteel.ender_steel_rod": "Ender Steel Rod",
+  "item.endersteel.void_mace": "Void Mace",
+  "item.endersteel.ender_steel_core.tooltip": "§7A powerful core infused with ender energy",
+  "item.endersteel.ender_steel_rod.tooltip": "§7A reinforced rod infused with ender steel",
+  "item.endersteel.void_mace.tooltip": "§5A powerful mace that can be enhanced with ender energy",
 
   "item.endersteel.ender_steel_helmet": "Ender Steel Helmet",
   "item.endersteel.ender_steel_chestplate": "Ender Steel Chestplate",
@@ -62,6 +70,8 @@
   "enchantment.endersteel.repulsive_shriek.desc": "When hit, repulse all nearby entities and reflect half the damage back to the attacker",
 
   "enchantment.endersteel.ender_step": "Ender Step",
+  "enchantment.endersteel.gravitide": "Gravitide",
+  "enchantment.endersteel.gravitide.desc": "Pulls enemies toward you on hit and on kill",
 
   "effect.endersteel.gazing_void": "Gazing Void",
   "effect.endersteel.gazing_void.description": "Your vision is revoked by the void",
@@ -108,5 +118,9 @@
   "tooltip.ender_steel.sword.void_strike": "Void Strike: 50%% chance to teleport nearby enemies",
   "tooltip.ender_steel.void_gaze_activate": "Right-click to activate Void Gaze",
   "tooltip.ender_steel.void_gaze_effect": "Next hit blinds and immobilizes target",
-  "item.endersteel.ender_steel_sword.void_strike_success": "You hurt your enemy with the Void"
+  "item.endersteel.ender_steel_sword.void_strike_success": "You hurt your enemy with the Void",
+  "tooltip.void_mace.sockets": "Sockets: %d/%d",
+  "tooltip.void_mace.unsocketed": "§7Socket with Eyes of Ender or Ender Pearls",
+  "tooltip.void_mace.socket_type.eye": "§5Eyes of Ender: %d/4",
+  "tooltip.void_mace.socket_type.pearl": "§5Ender Pearls: %d/4"
 }

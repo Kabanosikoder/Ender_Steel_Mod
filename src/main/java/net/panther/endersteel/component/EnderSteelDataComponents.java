@@ -21,8 +21,14 @@ public class EnderSteelDataComponents {
 
     public static final ComponentType<Integer> EVASION_CHARGES = register("evasion_charges",
         builder -> builder.codec(Codec.INT));
+        
+    public static final ComponentType<Integer> VOID_MACE_SOCKETS = register("void_mace_sockets",
+        builder -> builder.codec(Codec.INT));
+        
+    public static final ComponentType<String> SOCKET_TYPE = register("socket_type",
+        builder -> builder.codec(Codec.STRING));
 
-    public static <T>ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    public static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(EnderSteel.MOD_ID, name),
             builderOperator.apply(ComponentType.builder()).build());
     }

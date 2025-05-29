@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "endersteel:ender_steel_core"
+  },
+  "addition": {
+    "item": "endersteel:ender_steel_rod"
+  },
+  "result": {
+    "item": "endersteel:void_mace"
+  },
+  "template": {
+    "item": "endersteel:ender_steel_smithing_template"
+  }
+}

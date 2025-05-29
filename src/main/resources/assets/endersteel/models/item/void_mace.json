@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "endersteel:item/void_mace_in_hand"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "endersteel:item/void_mace_in_hand"
+    }
+  ]
+}

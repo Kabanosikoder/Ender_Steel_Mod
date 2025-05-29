@@ -19,22 +19,28 @@ public class ModItemGroup {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.ender_steel_group"))
                     .icon(() -> new ItemStack(ModItems.ENDER_STEEL_INGOT)).entries((displayContext, entries) -> {
 
-                        // Items:
+                        // Resources:
                         entries.add(ModItems.ENDER_STEEL_INGOT);
                         entries.add(ModItems.ENDER_SCRAP);
                         entries.add(ModItems.ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE);
+                        entries.add(ModItems.ENDER_STEEL_CORE);
+                        entries.add(ModItems.ENDER_STEEL_ROD);
 
+                        // Tools and Weapons
                         entries.add(ModItems.ENDER_STEEL_SWORD);
                         entries.add(ModItems.ENDER_STEEL_PICKAXE);
                         entries.add(ModItems.ENDER_STEEL_AXE);
                         entries.add(ModItems.ENDER_STEEL_SCYTHE);
                         entries.add(ModItems.ENDER_STEEL_SHOVEL);
+                        entries.add(ModItems.VOID_MACE);
 
+                        // Armor
                         entries.add(ModItems.ENDER_STEEL_HELMET);
                         entries.add(ModItems.ENDER_STEEL_CHESTPLATE);
                         entries.add(ModItems.ENDER_STEEL_LEGGINGS);
                         entries.add(ModItems.ENDER_STEEL_BOOTS);
 
+                        // Food
                         entries.add(ModItems.BAGEL); // funny bagel ngl
 
                         // Blocks

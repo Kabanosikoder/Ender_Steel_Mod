@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    " | ",
+    " | "
+  ],
+  "key": {
+    "#": {
+      "item": "endersteel:ender_steel_core"
+    },
+    "|": {
+      "item": "minecraft:end_rod"
+    }
+  },
+  "result": {
+    "item": "endersteel:ender_steel_mace"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:end_rod"
+  },
+  "addition": {
+    "item": "endersteel:ender_steel_ingot"
+  },
+  "result": {
+    "item": "endersteel:ender_steel_rod"
+  },
+  "template": {
+    "item": "endersteel:ender_steel_smithing_template"
+  }
+}

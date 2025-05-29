@@ -13,6 +13,7 @@ import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.datagen.ModItemTagProvider;
 import net.panther.endersteel.enchantment.effect.EnderStreakEffect;
 import net.panther.endersteel.enchantment.effect.GazingVoidEffect;
+import net.panther.endersteel.enchantment.effect.GravitideEffect;
 import net.panther.endersteel.enchantment.effect.PhantomHarvestEffect;
 import net.panther.endersteel.enchantment.effect.RepulsiveShriekEffect;
 import net.panther.endersteel.enchantment.effect.VoidStrikeEffect;
@@ -28,6 +29,8 @@ public class ModEnchantments {
             RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "phantom_harvest"));
     public static final RegistryKey<Enchantment> REPULSIVE_SHRIEK =
             RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "repulsive_shriek"));
+    public static final RegistryKey<Enchantment> GRAVITIDE =
+            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "gravitide"));
 
     public static void bootstrap(Registerable<Enchantment> registerable) {
         var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
@@ -88,7 +91,21 @@ public class ModEnchantments {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new PhantomHarvestEffect()));
 
-                register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
+        register(registerable, GRAVITIDE, Enchantment.builder(Enchantment.definition(
+            items.getOrThrow(ModItemTagProvider.SCYTHE_ENCHANTABLE),
+                10,
+                2,
+                Enchantment.leveledCost(15, 10),
+                Enchantment.leveledCost(30, 10),
+                2,
+                AttributeModifierSlot.MAINHAND))
+                .exclusiveSet(enchantments.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE_SET))
+                .addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
+                        EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
+                        new GravitideEffect())
+        );
+
+        register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
                          items.getOrThrow(ModItemTagProvider.REPULSIVE_SHRIEK_ENCHANTABLE),  // Changed from ARMOR_ENCHANTABLE cuz that was broken :skull:
                          2,
                          1,

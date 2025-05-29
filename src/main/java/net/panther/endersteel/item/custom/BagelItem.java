@@ -11,6 +11,6 @@ public class BagelItem extends Item { // BAGELLLLL
 		.build();
 
     public BagelItem(Settings settings) {
-        super(settings);
+        super(settings.food(BAGEL_FOOD_COMPONENT));
     }
 }

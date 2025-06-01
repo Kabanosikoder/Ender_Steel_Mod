@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "endersteel:ender_steel_ingot"
+  },
+  "base": {
+    "item": "minecraft:mace"
+  },
+  "result": {
+    "count": 1,
+    "id": "endersteel:void_mace"
+  },
+  "template": {
+    "item": "endersteel:ender_steel_upgrade_smithing_template"
+  }
+}

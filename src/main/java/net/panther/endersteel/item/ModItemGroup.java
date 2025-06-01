@@ -23,8 +23,6 @@ public class ModItemGroup {
                         entries.add(ModItems.ENDER_STEEL_INGOT);
                         entries.add(ModItems.ENDER_SCRAP);
                         entries.add(ModItems.ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE);
-                        entries.add(ModItems.ENDER_STEEL_CORE);
-                        entries.add(ModItems.ENDER_STEEL_ROD);
 
                         // Tools and Weapons
                         entries.add(ModItems.ENDER_STEEL_SWORD);
@@ -55,7 +53,6 @@ public class ModItemGroup {
                                     new EnchantmentLevelEntry(enchantmentEntry, 1)));
                             }
                         });
-
                     }).build());
 
     public static void registerItemGroups() {

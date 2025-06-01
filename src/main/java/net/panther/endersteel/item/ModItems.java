@@ -59,12 +59,6 @@ public class ModItems {
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
                     .attributeModifiers(ShovelItem.createAttributeModifiers(EndSteelToolMaterial.ENDER_STEEL, 0.5f, -2.8f))));
-
-    public static final Item ENDER_STEEL_CORE = registerItem("ender_steel_core",
-            new EnderSteelCoreItem(new Item.Settings()));
-
-    public static final Item ENDER_STEEL_ROD = registerItem("ender_steel_rod",
-            new EnderSteelRodItem(new Item.Settings()));
             
     public static final Item VOID_MACE = registerItem("void_mace",
             new VoidMaceItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()

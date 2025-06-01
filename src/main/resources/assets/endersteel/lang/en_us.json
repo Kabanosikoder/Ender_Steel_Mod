@@ -120,7 +120,9 @@
   "tooltip.ender_steel.void_gaze_effect": "Next hit blinds and immobilizes target",
   "item.endersteel.ender_steel_sword.void_strike_success": "You hurt your enemy with the Void",
   "tooltip.void_mace.sockets": "Sockets: %d/%d",
-  "tooltip.void_mace.unsocketed": "§7Socket with Eyes of Ender or Ender Pearls",
-  "tooltip.void_mace.socket_type.eye": "§5Eyes of Ender: %d/4",
-  "tooltip.void_mace.socket_type.pearl": "§5Ender Pearls: %d/4"
+  "tooltip.void_mace.unsocketed": "§7No socket type",
+  "tooltip.void_mace.socket_type.eye": "§5Eye of Ender Socketed (%d/4)",
+  "tooltip.void_mace.socket_type.pearl": "§5Ender Pearl Socketed (%d/4)",
+  "message.void_mace.socket_added": "Added %s to Void Mace",
+  "message.void_mace.wrong_socket_type": "Cannot add different socket type to an already socketed mace"
 }

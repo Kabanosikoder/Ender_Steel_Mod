@@ -1,31 +1,36 @@
 package net.panther.endersteel.item.custom;
 
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.panther.endersteel.component.EnderSteelDataComponents;
+import net.panther.endersteel.effect.ModEffects;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
 
 public class VoidMaceItem extends MaceItem {
+    private static final int DASH_COOLDOWN = 140; // 20 ticks = 1 second
+    private static final float DASH_SPEED = 0.5f;
+    private static final float DASH_RANGE = 3.5f;
+    private static final float EFFECT_RADIUS = 3.0f;
+    
+    private static final float PULL_RANGE = 20.0f; // Maximum range for pulling
+    private static final float PULL_STRENGTH = 1.5f; // Base strength of the pull
+    private static final int GROUND_DURATION = 40; // Base duration of grounding effect in ticks (2 seconds)
+
     private static final int MAX_SOCKETS = 4;
     private static final String EYE_TYPE = "eye";
     private static final String PEARL_TYPE = "pearl";
@@ -34,12 +39,6 @@ public class VoidMaceItem extends MaceItem {
     public VoidMaceItem(ToolMaterial material, Settings settings) {
         super(settings.attributeModifiers(MaceItem.createAttributeModifiers()));
         this.material = material;
-    }
-
-    private void applyEyeEffects(LivingEntity target, int sockets) {
-    }
-
-    private void applyPearlEffects(LivingEntity target, int sockets) {
     }
 
     @Override
@@ -63,159 +62,217 @@ public class VoidMaceItem extends MaceItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        ItemStack offhandStack = user.getOffHandStack();
         
-        // Check if player is holding an Eye of Ender or Ender Pearl in offhand
-        if (!world.isClient && hand == Hand.MAIN_HAND) {
-            if (offhandStack.isOf(Items.ENDER_EYE)) {
-                if (addSocket(stack, EYE_TYPE, user)) {
-                    offhandStack.decrement(1);
-                    user.sendMessage(Text.translatable("message.void_mace.socket_added", "Eye of Ender"), true);
-                    world.playSound(null, user.getX(), user.getY(), user.getZ(), 
-                        SoundEvents.ITEM_LODESTONE_COMPASS_LOCK, SoundCategory.PLAYERS, 
-                        0.5f, 1.0f);
-                    return TypedActionResult.success(stack);
+        if (user.isSneaking() && hand == Hand.MAIN_HAND) {
+            // Only activate if the mace has ender pearl sockets
+            if (PEARL_TYPE.equals(getSocketType(stack)) && getFilledSockets(stack) > 0) {
+                if (!world.isClient()) {
+                    pullAndGroundEntities(user, stack);
                 }
-            } else if (offhandStack.isOf(Items.ENDER_PEARL)) {
-                if (addSocket(stack, PEARL_TYPE, user)) {
-                    offhandStack.decrement(1);
-                    user.sendMessage(Text.translatable("message.void_mace.socket_added", "Ender Pearl"), true);
-                    world.playSound(null, user.getX(), user.getY(), user.getZ(), 
-                        SoundEvents.ITEM_LODESTONE_COMPASS_LOCK, SoundCategory.PLAYERS, 
-                        0.5f, 1.0f);
-                    return TypedActionResult.success(stack);
-                }
+                user.getItemCooldownManager().set(this, 60); // 3 second cooldown
+                return TypedActionResult.success(stack);
             }
+            return TypedActionResult.pass(stack);
         }
         
-        // Default behavior if not socketing
-        user.setCurrentHand(hand);
-        return TypedActionResult.consume(stack);
+        // Existing socket/dash logic
+        if (!world.isClient && hand == Hand.MAIN_HAND) {
+            ItemStack offhandStack = user.getOffHandStack();
+            if (offhandStack.isOf(Items.ENDER_EYE) || offhandStack.isOf(Items.ENDER_PEARL)) {
+                String type = offhandStack.isOf(Items.ENDER_EYE) ? EYE_TYPE : PEARL_TYPE;
+                if (addSocket(stack, type, user)) {
+                    offhandStack.decrement(1);
+                    user.sendMessage(Text.translatable("message.void_mace.socket_added", 
+                        type.equals(EYE_TYPE) ? "Eye of Ender" : "Ender Pearl"), true);
+                    world.playSound(null, user.getX(), user.getY(), user.getZ(), 
+                        SoundEvents.ITEM_LODESTONE_COMPASS_LOCK, 
+                        SoundCategory.PLAYERS, 
+                        1.0f, 1.0f);
+                }
+                return TypedActionResult.success(stack);
+            }
+        }
+
+        if (EYE_TYPE.equals(getSocketType(stack))) {
+            int sockets = getFilledSockets(stack);
+            if (sockets > 0) {
+                performDash(user, stack);
+
+                stack.set(EnderSteelDataComponents.VOID_MACE_SOCKETS, sockets - 1);
+
+                world.playSound(
+                    null,
+                    user.getX(),
+                    user.getY(),
+                    user.getZ(),
+                    SoundEvents.ENTITY_ENDER_EYE_DEATH,
+                    SoundCategory.PLAYERS,
+                    1.25f,
+                    0.25f
+                );
+                return TypedActionResult.success(stack);
+            }
+        }
+
+        return super.use(world, user, hand);
     }
 
-    private void applyWindBurstEffect(World world, LivingEntity attacker, LivingEntity target, int windBurstLevel, int sockets) {
-        if (windBurstLevel <= 0) return;
+    private void performDash(PlayerEntity player, ItemStack stack) {
+        if (player.getItemCooldownManager().isCoolingDown(this)) return;
         
-        // Combined range calculation
-        double baseRange = 2.0 + (sockets * 1.5); // Base from sockets
-        double range = baseRange + (windBurstLevel * 1.5); // Enhanced by wind burst
+        Vec3d look = player.getRotationVector().normalize();
         
-        // Combined pull strength
-        float basePullStrength = 0.3f;
-        float pullStrength = basePullStrength + (windBurstLevel * 0.1f);
-        
-        // Get all nearby entities (excluding attacker)
-        List<LivingEntity> nearbyEntities = world.getEntitiesByClass(
-            LivingEntity.class,
-            target.getBoundingBox().expand(range),
-            entity -> entity != attacker
+        // Dash velocity
+        Vec3d velocity = look.multiply(DASH_SPEED * DASH_RANGE);
+        player.setVelocity(velocity);
+        player.velocityModified = true;
+
+        player.getWorld().playSound(
+            null,
+            player.getX(),
+            player.getY(),
+            player.getZ(),
+            SoundEvents.ENTITY_ENDER_DRAGON_GROWL,
+            SoundCategory.PLAYERS,
+            0.75f,
+            0.25f
         );
         
-        for (LivingEntity entity : nearbyEntities) {
-            // Calculate direction (pull towards target for universal effect)
-            Vec3d direction = target.getPos().subtract(entity.getPos()).normalize();
-            double distance = target.distanceTo(entity);
-            double distanceFactor = 1 + ((range - distance) / range);
-            
-            // Apply pull effect
-            entity.addVelocity(
-                direction.x * pullStrength * distanceFactor,
-                direction.y * 0.5 + 0.2,
-                direction.z * pullStrength * distanceFactor
-            );
-            
-            // Apply slowness - combined from both effects
-            int slownessDuration = 40 + (sockets * 40) + (windBurstLevel * 20);
-            int slownessAmplifier = Math.min(
-                Math.max(0, sockets - 1) + windBurstLevel, 
-                3
-            );
-            
-            entity.addStatusEffect(new StatusEffectInstance(
-                StatusEffects.SLOWNESS,
-                slownessDuration,
-                slownessAmplifier,
-                false,
-                false
-            ));
-            
-            // Particles - using end rod particles from universal effect
-            if (world instanceof ServerWorld serverWorld) {
-                int particleCount = 5 + (windBurstLevel * 2);
+        player.getItemCooldownManager().set(this, DASH_COOLDOWN);
+        
+        if (!player.getWorld().isClient) {
+            spawnDashParticles(player.getWorld(), player.getPos(), look);
+            affectEntitiesInPath(player, player.getPos(), look);
+        }
+    }
+
+    private void spawnDashParticles(World world, Vec3d startPos, Vec3d direction) {
+        if (world instanceof ServerWorld serverWorld) {
+            for (int i = 0; i < 10; i++) {
+                double progress = i / 10.0 * DASH_RANGE;
+                Vec3d pos = startPos.add(direction.multiply(progress));
+                
                 serverWorld.spawnParticles(
-                    ParticleTypes.END_ROD,
-                    entity.getX(),
-                    entity.getY() + entity.getHeight() / 2,
-                    entity.getZ(),
-                    particleCount,
-                    0.3, 0.3, 0.3,
-                    0.1
+                    ParticleTypes.DRAGON_BREATH,
+                    pos.x,
+                    pos.y + 1.0,
+                    pos.z,
+                    5,
+                    0.2, 0.2, 0.2,
+                    0.02
+                );
+                
+                serverWorld.spawnParticles(
+                    ParticleTypes.FLAME,
+                    pos.x,
+                    pos.y + 1.0,
+                    pos.z,
+                    3,
+                    0.1, 0.1, 0.1,
+                    0.05
                 );
             }
         }
-        
-        // Sound - using ender dragon flap from universal effect
-        float volume = 0.7f + (windBurstLevel * 0.1f);
-        world.playSound(
-            null,
-            target.getX(),
-            target.getY(),
-            target.getZ(),
-            SoundEvents.ENTITY_ENDER_DRAGON_FLAP,
-            SoundCategory.PLAYERS,
-            volume,
-            0.8f + world.random.nextFloat() * 0.4f
-        );
     }
 
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        boolean result = super.postHit(stack, target, attacker);
-        
-        if (result) {
-            int sockets = getFilledSockets(stack);
-            if (sockets > 0) {
-                // Check if Wind Burst enchantment is present
-                boolean hasWindBurst = EnchantmentHelper.getEnchantments(Enchantment.get).containsKey(stack);
+    private void affectEntitiesInPath(LivingEntity source, Vec3d startPos, Vec3d direction) {
+        World world = source.getWorld();
+        Box box = new Box(
+            startPos.x - EFFECT_RADIUS,
+            startPos.y - 1.0,
+            startPos.z - EFFECT_RADIUS,
+            startPos.x + EFFECT_RADIUS,
+            startPos.y + 2.0,
+            startPos.z + EFFECT_RADIUS
+        ).stretch(direction.multiply(DASH_RANGE));
 
-                if (hasWindBurst) {
-                    // Apply effect with socket count
-                    applyWindBurstEffect(attacker.getWorld(), attacker, target, 1, sockets);
-                    
-                    // Consume one socket
-                    int newSockets = Math.max(0, sockets - 1);
-                    stack.set(EnderSteelDataComponents.VOID_MACE_SOCKETS, newSockets);
-                    
-                    // Play a sound when socket is consumed
-                    attacker.getWorld().playSound(
-                        null,
-                        attacker.getX(),
-                        attacker.getY(),
-                        attacker.getZ(),
-                        SoundEvents.ENTITY_ENDER_EYE_DEATH,
-                        SoundCategory.PLAYERS,
-                        0.5f,
-                        1.0f
-                    );
-                }
+        for (LivingEntity entity : world.getEntitiesByClass(
+            LivingEntity.class,
+            box,
+            e -> e != source && e.isAlive()
+        )) {
+            entity.setOnFireFor(6); // 3 seconds of fire
+            entity.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 60, 0));
+            
+            Vec3d away = entity.getPos().subtract(startPos).normalize().multiply(0.5);
+            entity.addVelocity(away.x, 0.2, away.z);
+        }
+    }
+
+    private void pullAndGroundEntities(PlayerEntity user, ItemStack stack) {
+        World world = user.getWorld();
+        int sockets = getFilledSockets(stack);
+        
+        // Calculate the end position of the raycast
+        Vec3d startPos = user.getEyePos();
+        Vec3d lookVec = user.getRotationVec(1.0f);
+        Vec3d endPos = startPos.add(lookVec.multiply(PULL_RANGE));
+        
+        // Raycast
+        HitResult hitResult = world.raycast(new RaycastContext(
+            startPos, endPos, 
+            RaycastContext.ShapeType.COLLIDER,
+            RaycastContext.FluidHandling.NONE, 
+            user
+        ));
+        
+        // Get entities in a cone in front of the player
+        Vec3d lookVecHor = new Vec3d(lookVec.x, 0, lookVec.z).normalize();
+        double coneAngle = Math.toRadians(30); // 30 degree cone
+        
+        List<LivingEntity> entities = world.getEntitiesByClass(
+            LivingEntity.class,
+            user.getBoundingBox().stretch(lookVec.multiply(PULL_RANGE)).expand(1.0, 2.0, 1.0),
+            entity -> {
+                if (entity == user || !entity.isAlive()) return false;
                 
-                // Apply specific socket effects if we still have sockets left
-                if (sockets > 1) {
-                    String socketType = getSocketType(stack);
-                    if (EYE_TYPE.equals(socketType)) {
-                        applyEyeEffects(target, sockets - 1);
-                    } else if (PEARL_TYPE.equals(socketType)) {
-                        applyPearlEffects(target, sockets - 1);
-                    }
+                // Is entity is within the cone?
+                Vec3d toEntity = entity.getPos().subtract(startPos).normalize();
+                double angle = Math.acos(toEntity.normalize().dotProduct(lookVec));
+                
+                return angle < coneAngle && entity.distanceTo(user) < PULL_RANGE;
+            }
+        );
+        
+        if (!entities.isEmpty()) {
+
+            world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+                SoundCategory.PLAYERS,
+                1.0f, 0.01f);
+                
+            for (LivingEntity entity : entities) {
+
+                Vec3d pullVec = user.getPos().subtract(entity.getPos()).normalize()
+                    .multiply(PULL_STRENGTH * (1 + sockets * 0.2)); // Scales with socket count
+
+                entity.setVelocity(pullVec);
+                entity.velocityModified = true;
+                
+                int groundDuration = GROUND_DURATION + (sockets * 30); // 1.5s per socket
+                entity.addStatusEffect(new StatusEffectInstance(
+                    ModEffects.GAZING_VOID,
+                    groundDuration,
+                    0,
+                    false,
+                    true,
+                    true
+                ));
+                
+                if (world instanceof ServerWorld serverWorld) {
+                    serverWorld.spawnParticles(
+                        ParticleTypes.REVERSE_PORTAL,
+                        entity.getX(), entity.getY() + entity.getHeight()/2, entity.getZ(),
+                        10, 0.5, 0.5, 0.5, 0.1
+                    );
                 }
             }
         }
-        
-        return result;
     }
+
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return this.material.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
+        return true;
     }
 
     @Override
@@ -265,7 +322,6 @@ public class VoidMaceItem extends MaceItem {
             player.playSound(SoundEvents.ITEM_LODESTONE_COMPASS_LOCK
                 , 0.5f, 1.0f);
         }
-        
         return true;
     }
 }

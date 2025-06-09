@@ -5,7 +5,9 @@
 	"mixins": [
 		"ExampleMixin",
 		"EnderSteelArmorMixin",
-		"PlayerEntityMixin"
+		"PlayerEntityMixin",
+		"EnderPearlItemMixin",
+		"EnderEyeItemMixin"
 	],
 	"client": [
 		"ItemRendererMixin",

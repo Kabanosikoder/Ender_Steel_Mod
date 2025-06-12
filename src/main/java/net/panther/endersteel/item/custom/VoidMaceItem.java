@@ -1,6 +1,7 @@
 package net.panther.endersteel.item.custom;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -24,12 +25,12 @@ import java.util.List;
 public class VoidMaceItem extends MaceItem {
     private static final int DASH_COOLDOWN = 140; // 20 ticks = 1 second
     private static final float DASH_SPEED = 0.5f;
-    private static final float DASH_RANGE = 3.5f;
-    private static final float EFFECT_RADIUS = 3.0f;
-    
+    private static final float DASH_RANGE = 3.75f;
+    private static final float EFFECT_RADIUS = 6.0f;
+
     private static final float PULL_RANGE = 20.0f; // Maximum range for pulling
-    private static final float PULL_STRENGTH = 1.5f; // Base strength of the pull
-    private static final int GROUND_DURATION = 40; // Base duration of grounding effect in ticks (2 seconds)
+    private static final float PULL_STRENGTH = 1.25f; // Base strength of the pull
+    private static final int GROUND_DURATION = 60; // Base duration of grounding effect in ticks (3 seconds)
 
     private static final int MAX_SOCKETS = 4;
     private static final String EYE_TYPE = "eye";
@@ -44,13 +45,13 @@ public class VoidMaceItem extends MaceItem {
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-    
+
         int filledSockets = getFilledSockets(stack);
         String socketType = getSocketType(stack);
-    
+
         tooltip.add(Text.translatable("tooltip.void_mace.sockets", filledSockets, MAX_SOCKETS)
                 .formatted(Formatting.GRAY));
-    
+
         if (socketType.isEmpty()) {
             tooltip.add(Text.translatable("tooltip.void_mace.unsocketed").formatted(Formatting.DARK_GRAY));
         } else {
@@ -62,7 +63,7 @@ public class VoidMaceItem extends MaceItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        
+
         if (user.isSneaking() && hand == Hand.MAIN_HAND) {
             // Only activate if the mace has ender pearl sockets
             if (PEARL_TYPE.equals(getSocketType(stack)) && getFilledSockets(stack) > 0) {
@@ -74,7 +75,7 @@ public class VoidMaceItem extends MaceItem {
             }
             return TypedActionResult.pass(stack);
         }
-        
+
         // Existing socket/dash logic
         if (!world.isClient && hand == Hand.MAIN_HAND) {
             ItemStack offhandStack = user.getOffHandStack();
@@ -82,11 +83,11 @@ public class VoidMaceItem extends MaceItem {
                 String type = offhandStack.isOf(Items.ENDER_EYE) ? EYE_TYPE : PEARL_TYPE;
                 if (addSocket(stack, type, user)) {
                     offhandStack.decrement(1);
-                    user.sendMessage(Text.translatable("message.void_mace.socket_added", 
+                    user.sendMessage(Text.translatable("message.void_mace.socket_added",
                         type.equals(EYE_TYPE) ? "Eye of Ender" : "Ender Pearl"), true);
-                    world.playSound(null, user.getX(), user.getY(), user.getZ(), 
-                        SoundEvents.ITEM_LODESTONE_COMPASS_LOCK, 
-                        SoundCategory.PLAYERS, 
+                    world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                        SoundEvents.ITEM_LODESTONE_COMPASS_LOCK,
+                        SoundCategory.PLAYERS,
                         1.0f, 1.0f);
                 }
                 return TypedActionResult.success(stack);
@@ -119,9 +120,9 @@ public class VoidMaceItem extends MaceItem {
 
     private void performDash(PlayerEntity player, ItemStack stack) {
         if (player.getItemCooldownManager().isCoolingDown(this)) return;
-        
+
         Vec3d look = player.getRotationVector().normalize();
-        
+
         // Dash velocity
         Vec3d velocity = look.multiply(DASH_SPEED * DASH_RANGE);
         player.setVelocity(velocity);
@@ -137,9 +138,9 @@ public class VoidMaceItem extends MaceItem {
             0.75f,
             0.25f
         );
-        
+
         player.getItemCooldownManager().set(this, DASH_COOLDOWN);
-        
+
         if (!player.getWorld().isClient) {
             spawnDashParticles(player.getWorld(), player.getPos(), look);
             affectEntitiesInPath(player, player.getPos(), look);
@@ -151,7 +152,7 @@ public class VoidMaceItem extends MaceItem {
             for (int i = 0; i < 10; i++) {
                 double progress = i / 10.0 * DASH_RANGE;
                 Vec3d pos = startPos.add(direction.multiply(progress));
-                
+
                 serverWorld.spawnParticles(
                     ParticleTypes.DRAGON_BREATH,
                     pos.x,
@@ -161,7 +162,7 @@ public class VoidMaceItem extends MaceItem {
                     0.2, 0.2, 0.2,
                     0.02
                 );
-                
+
                 serverWorld.spawnParticles(
                     ParticleTypes.FLAME,
                     pos.x,
@@ -193,7 +194,7 @@ public class VoidMaceItem extends MaceItem {
         )) {
             entity.setOnFireFor(6); // 3 seconds of fire
             entity.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 60, 0));
-            
+
             Vec3d away = entity.getPos().subtract(startPos).normalize().multiply(0.5);
             entity.addVelocity(away.x, 0.2, away.z);
         }
@@ -202,54 +203,68 @@ public class VoidMaceItem extends MaceItem {
     private void pullAndGroundEntities(PlayerEntity user, ItemStack stack) {
         World world = user.getWorld();
         int sockets = getFilledSockets(stack);
-        
+
+        if (sockets > 0) {
+            stack.set(EnderSteelDataComponents.VOID_MACE_SOCKETS, sockets - 1);
+        } else {
+            return;
+        }
+
         // Calculate the end position of the raycast
         Vec3d startPos = user.getEyePos();
         Vec3d lookVec = user.getRotationVec(1.0f);
         Vec3d endPos = startPos.add(lookVec.multiply(PULL_RANGE));
-        
+
         // Raycast
         HitResult hitResult = world.raycast(new RaycastContext(
-            startPos, endPos, 
+            startPos, endPos,
             RaycastContext.ShapeType.COLLIDER,
-            RaycastContext.FluidHandling.NONE, 
+            RaycastContext.FluidHandling.NONE,
             user
         ));
-        
+
         // Get entities in a cone in front of the player
         Vec3d lookVecHor = new Vec3d(lookVec.x, 0, lookVec.z).normalize();
         double coneAngle = Math.toRadians(30); // 30 degree cone
-        
+
         List<LivingEntity> entities = world.getEntitiesByClass(
             LivingEntity.class,
             user.getBoundingBox().stretch(lookVec.multiply(PULL_RANGE)).expand(1.0, 2.0, 1.0),
             entity -> {
                 if (entity == user || !entity.isAlive()) return false;
-                
+
                 // Is entity is within the cone?
                 Vec3d toEntity = entity.getPos().subtract(startPos).normalize();
                 double angle = Math.acos(toEntity.normalize().dotProduct(lookVec));
-                
+
                 return angle < coneAngle && entity.distanceTo(user) < PULL_RANGE;
             }
         );
-        
-        if (!entities.isEmpty()) {
 
+        if (!entities.isEmpty()) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(),
                 SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                 SoundCategory.PLAYERS,
                 1.0f, 0.01f);
-                
-            for (LivingEntity entity : entities) {
 
+            for (LivingEntity entity : entities) {
                 Vec3d pullVec = user.getPos().subtract(entity.getPos()).normalize()
                     .multiply(PULL_STRENGTH * (1 + sockets * 0.2)); // Scales with socket count
 
                 entity.setVelocity(pullVec);
                 entity.velocityModified = true;
-                
+
                 int groundDuration = GROUND_DURATION + (sockets * 30); // 1.5s per socket
+
+                entity.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.SLOWNESS,
+                    groundDuration,
+                    3,
+                    false,
+                    true,
+                    true
+                ));
+
                 entity.addStatusEffect(new StatusEffectInstance(
                     ModEffects.GAZING_VOID,
                     groundDuration,
@@ -258,7 +273,7 @@ public class VoidMaceItem extends MaceItem {
                     true,
                     true
                 ));
-                
+
                 if (world instanceof ServerWorld serverWorld) {
                     serverWorld.spawnParticles(
                         ParticleTypes.REVERSE_PORTAL,
@@ -272,7 +287,7 @@ public class VoidMaceItem extends MaceItem {
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return true;
+        return this.material.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
     }
 
     @Override
@@ -289,7 +304,7 @@ public class VoidMaceItem extends MaceItem {
     public int getEnchantability() {
         return this.material.getEnchantability();
     }
-    
+
     public static int getFilledSockets(ItemStack stack) {
         return stack.getOrDefault(EnderSteelDataComponents.VOID_MACE_SOCKETS, 0);
     }
@@ -301,7 +316,7 @@ public class VoidMaceItem extends MaceItem {
     public static boolean canAddSocket(ItemStack stack, String type) {
         int currentSockets = getFilledSockets(stack);
         String currentType = getSocketType(stack);
-        return currentSockets < MAX_SOCKETS && (currentType.isEmpty() || currentType.equals(type));
+        return currentSockets < MAX_SOCKETS && (currentSockets == 0 || currentType.isEmpty() || currentType.equals(type));
     }
 
     public static boolean addSocket(ItemStack stack, String type, @Nullable PlayerEntity player) {

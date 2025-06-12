@@ -20,11 +20,10 @@ public record GravitideEffect() implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (target instanceof LivingEntity victim && context.owner() instanceof PlayerEntity player) {
-            // Calculate vector from victim to player
+
             Vec3d toPlayer = player.getPos().subtract(victim.getPos());
             
-            // Normalize and scale the pull strength
-            double pullStrength = 0.6; // Adjust this value to control pull strength
+            double pullStrength = 0.6; 
             Vec3d pullVector = toPlayer.normalize().multiply(pullStrength);
             
             // Cancel any existing velocity and apply pull
@@ -40,7 +39,6 @@ public record GravitideEffect() implements EnchantmentEntityEffect {
                 5, 0.2, 0.2, 0.2, 0.1
             );
 
-            // Check if this attack killed the target
             if (victim.isDead()) {
                 applyKillEffect(world, player, level);
             }
@@ -75,19 +73,17 @@ public record GravitideEffect() implements EnchantmentEntityEffect {
         // Apply pull effect to all entities
         for (Entity entity : world.getOtherEntities(player, box)) {
             if (entity instanceof LivingEntity) {
-                // Calculate pull vector with increased strength
+
                 Vec3d toPlayer = player.getPos().subtract(entity.getPos());
                 double distance = toPlayer.length();
                 double distanceFactor = 1.0 - (distance / radius); // Stronger pull when closer
                 
-                // Scale pull strength by distance (stronger when closer to player)
                 double strength = pullStrength * (0.5 + distanceFactor * 0.5);
                 Vec3d pullVector = toPlayer.normalize().multiply(strength);
                 
                 entity.setVelocity(pullVector);
                 entity.velocityModified = true;
 
-                // Spawn particles around pulled entities
                 world.spawnParticles(
                     ParticleTypes.PORTAL,
                     entity.getX(), 
@@ -100,7 +96,6 @@ public record GravitideEffect() implements EnchantmentEntityEffect {
             }
         }
 
-        // Spawn particles around player
         for (int i = 0; i < 20; i++) {
             double angle = i * Math.PI * 2 / 20;
             double x = player.getX() + Math.cos(angle) * radius * 0.8;

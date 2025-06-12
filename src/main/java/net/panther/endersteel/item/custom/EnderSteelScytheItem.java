@@ -69,29 +69,16 @@ public class EnderSteelScytheItem extends SwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        // Handle Void Gaze effect
-        if (isVoidGazeActive(stack)) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0));
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 4));
-            target.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, 100, 0));
 
-            target.getWorld().playSound(null, target.getX(), target.getY(), target.getZ(),
-                    SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.PLAYERS, 1.0F, 0.5F);
-            setVoidGazeActive(stack, false);
-        }
-
-        // Handle Phantom Harvest effect
         World world = target.getWorld();
         if (world != null && EnchantmentHelper.getLevel(EnchantmentGenerator.getPhantomHarvest(world), stack) > 0 &&
                 !target.isAlive() && attacker instanceof PlayerEntity player) {
 
-            // Prevent duplicate processing
             if (target == lastKilledEntity) {
                 return super.postHit(stack, target, attacker);
             }
             lastKilledEntity = target;
 
-            // Check if wearing full Ender Steel armor
             boolean hasFullSet = true;
             for (ItemStack armorPiece : player.getArmorItems()) {
                 if (!(armorPiece.getItem() instanceof EnderSteelArmorItem)) {
@@ -107,7 +94,7 @@ public class EnderSteelScytheItem extends SwordItem {
                     int currentCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);
                     if (currentCharges < ModConfig.MAX_EVASION_CHARGES) {
                         chestplate.set(EnderSteelDataComponents.EVASION_CHARGES, currentCharges + 1);
-                        // Play recharge sound
+
                         player.getWorld().playSound(
                             null,
                             player.getX(),
@@ -138,8 +125,8 @@ public class EnderSteelScytheItem extends SwordItem {
                     }
                 }
             } else {
-                // Heal player by 1 heart on kill
-                player.heal(1.0f);
+
+                player.heal(4.0f);
 
                 player.getWorld().playSound(
                     null,
@@ -174,11 +161,11 @@ public class EnderSteelScytheItem extends SwordItem {
         }
     }
 
-    private static boolean isVoidGazeActive(ItemStack stack) {
+    public static boolean isVoidGazeActive(ItemStack stack) {
         return stack.getOrDefault(EnderSteelDataComponents.VOID_GAZE_ACTIVE, false);
     }
 
-    private static void setVoidGazeActive(ItemStack stack, boolean active) {
+    public static void setVoidGazeActive(ItemStack stack, boolean active) {
         stack.set(EnderSteelDataComponents.VOID_GAZE_ACTIVE, active);
     }
 }

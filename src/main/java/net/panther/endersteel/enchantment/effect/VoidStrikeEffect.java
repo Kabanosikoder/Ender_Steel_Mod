@@ -16,9 +16,7 @@ public record VoidStrikeEffect() implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (target instanceof LivingEntity victim && context.owner() instanceof PlayerEntity) {
-            // 50% chance to teleport on hit
             if (world.getRandom().nextFloat() < 0.5f) {
-                // Teleport the entity within the radius
                 TeleportUtil.teleportRandomly(victim, 5.0);
             }
         }

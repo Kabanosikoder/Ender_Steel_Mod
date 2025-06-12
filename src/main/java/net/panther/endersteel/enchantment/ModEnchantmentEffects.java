@@ -29,7 +29,6 @@ public class ModEnchantmentEffects {
     }
 
     public static void registerModEnchantmentEffects() {
-        // Effects are registered via the static fields above
         EnderSteel.LOGGER.info("Registering enchantment effects for " + EnderSteel.MOD_ID);
     }
 }

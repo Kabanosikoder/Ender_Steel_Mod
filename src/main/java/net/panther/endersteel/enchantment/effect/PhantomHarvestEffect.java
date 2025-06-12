@@ -46,7 +46,6 @@ public record PhantomHarvestEffect() implements EnchantmentEntityEffect {
                         nbt.putInt(EVASION_CHARGES_KEY, Math.min(currentCharges + chargesToAdd, ModConfig.MAX_EVASION_CHARGES))
                     );
                     
-                    // Play effects
                     world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                             SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
                     world.spawnParticles(ParticleTypes.PORTAL,

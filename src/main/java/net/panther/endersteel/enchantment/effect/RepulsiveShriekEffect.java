@@ -31,7 +31,6 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
             Vec3d playerPos = player.getPos();
             Random random = player.getRandom();
 
-            // Visual effects for the shriek
             for (int i = 0; i < 360; i += isLastCharge ? 5 : 10) {
                 double angle = Math.toRadians(i);
                 double x = playerPos.x + Math.cos(angle) * effectRadius;
@@ -75,7 +74,7 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
                         }
                     }
 
-                    // Apply knockback to entity
+                    // Apply knockback
                     double knockbackMultiplier = isLastCharge ? 1.5 : 1.0;
                     entity.setVelocity(
                         pushDirection.x * ModConfig.REPULSIVE_SHRIEK_KNOCKBACK * knockbackMultiplier,
@@ -101,7 +100,6 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
                 }
             }
 
-            // Play sound effect
             float pitch = isLastCharge ? 0.8f : 1.5f;
             player.getWorld().playSound(
                 null,

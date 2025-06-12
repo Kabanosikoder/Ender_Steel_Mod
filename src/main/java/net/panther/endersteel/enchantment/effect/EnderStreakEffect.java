@@ -20,14 +20,14 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
     public static final MapCodec<EnderStreakEffect> CODEC = MapCodec.unit(EnderStreakEffect::new);
 
     private static final Map<UUID, StreakData> playerStreaks = new HashMap<>();
-    private static final int STREAK_TIMEOUT_TICKS = 60; // 3 seconds
+    private static final int STREAK_TIMEOUT_TICKS = 60; // 3 seconds (1 tick = 1/20th of a second)
     
     private record StreakData(int streak, long lastHitTime) {}
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (target instanceof LivingEntity victim && context.owner() instanceof PlayerEntity player) {
-            // Update streak
+
             UUID playerId = player.getUuid();
             long currentTime = world.getTime();
             StreakData currentStreak = playerStreaks.getOrDefault(playerId, new StreakData(0, currentTime));
@@ -37,7 +37,7 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
             if (currentTime - currentStreak.lastHitTime() > STREAK_TIMEOUT_TICKS) {
                 newStreak = 1; // Reset streak
             } else {
-                newStreak = currentStreak.streak() + 1; // Increment streak
+                newStreak = currentStreak.streak() + 1;
             }
             
             // Update streak data
@@ -52,12 +52,11 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
             }
             
             // Visual feedback - more particles with higher streaks
-            int particleCount = Math.min(5 * newStreak, 30); // Cap at 30 particles
+            int particleCount = Math.min(5 * newStreak, 30);
             world.spawnParticles(ParticleTypes.PORTAL, 
                 victim.getX(), victim.getY() + 1, victim.getZ(),
                 particleCount, 0.2, 0.2, 0.2, 0.1);
             
-            // Sound effect that gets higher pitched with higher streaks
             float pitch = Math.min(1.0f + (newStreak * 0.1f), 2.0f);
             world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                 SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5f, pitch);

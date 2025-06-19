@@ -79,11 +79,6 @@ public class EnderSteelSwordItem extends SwordItem {
                         if (random.nextFloat() < 0.25f) {  // 25% chance
                             teleportEntity(target, world);
                             setStoredPearls(stack, storedPearls - 1);
-
-                            if (!world.isClient) {
-                                attacker.sendMessage(Text.translatable("item.endersteel.ender_steel_sword.void_strike_success")
-                                        .formatted(Formatting.DARK_PURPLE));
-                            }
                         }
                     }
                 } else if (EnchantmentHelper.getLevel(EnchantmentGenerator.getEnderStreak(world), stack) > 0) {
@@ -96,14 +91,12 @@ public class EnderSteelSwordItem extends SwordItem {
                     if (random.nextFloat() < streakChance) {
                         setStoredPearls(stack, storedPearls - 1);
 
-                        // Streak cap
                         if (currentStreak >= 10) {
                             setStreak(stack, 0); // Reset streak at 10
                             world.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                                     SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
                         } else {
                             setStreak(stack, currentStreak + 1);
-                            // Only spawn particles on successful streak increment
                             if (!world.isClient && attacker instanceof PlayerEntity player) {
                                 Random random = (Random) world.getRandom();
                                 for (int i = 0; i < 15; i++) {

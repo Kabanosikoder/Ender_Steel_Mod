@@ -31,7 +31,6 @@ public class EnderSteel implements ModInitializer {
 
         ModItems.registerModItems();
 
-
         ModBlocks.registerModBlocks();
 
         EnderSteelArmorEvents.register();

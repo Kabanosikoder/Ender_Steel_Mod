@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
 	"id": "endersteel",
-	"version": "1.3.0-test01",
+	"version": "1.3.0",
 	"name": "Ender Steel Mod",
-	"description": "Adds new material, tools and armor to the game with some very epic abilities",
+	"description": "Adds a new material, tools and armor to the game with some very epic abilities.",
 	"authors": [
 		"Panther3618"
 	],

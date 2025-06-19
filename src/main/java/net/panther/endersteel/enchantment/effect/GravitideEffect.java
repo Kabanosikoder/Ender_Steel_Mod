@@ -26,11 +26,10 @@ public record GravitideEffect() implements EnchantmentEntityEffect {
             double pullStrength = 0.6; 
             Vec3d pullVector = toPlayer.normalize().multiply(pullStrength);
             
-            // Cancel any existing velocity and apply pull
+            // Pull
             victim.setVelocity(pullVector);
             victim.velocityModified = true;
 
-            // Spawn particles at the victim's position
             world.spawnParticles(
                 ParticleTypes.PORTAL,
                 victim.getX(),

@@ -37,11 +37,6 @@ public abstract class ItemRendererMixin {
             return getModels().getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "void_mace")));
         }
 
-        // Ender Steel Scythe
-        if (stack.getItem() == ModItems.ENDER_STEEL_SCYTHE && (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED)) {
-            return getModels().getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "ender_steel_scythe_inventory")));
-        }
-
         return bakedModel;
     }
 
@@ -54,11 +49,6 @@ public abstract class ItemRendererMixin {
         // Void Mace
         if (stack.getItem() == ModItems.VOID_MACE) {
             return this.models.getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "void_mace_3d")));
-        }
-
-        // Ender Steel Scythe
-        if (stack.getItem() == ModItems.ENDER_STEEL_SCYTHE) {
-            return this.models.getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "ender_steel_scythe")));
         }
 
         return bakedModel;

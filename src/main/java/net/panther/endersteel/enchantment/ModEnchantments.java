@@ -110,7 +110,7 @@ public class ModEnchantments {
 
         // Repulsive Shriek - Chestplate only
         register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
-                         items.getOrThrow(ModItemTagProvider.REPULSIVE_SHRIEK_ENCHANTABLE),  // Changed from ARMOR_ENCHANTABLE cuz that was broken :skull:
+                         items.getOrThrow(ModItemTagProvider.REPULSIVE_SHRIEK_ENCHANTABLE),
                          2,
                          1,
                          Enchantment.leveledCost(10,12),

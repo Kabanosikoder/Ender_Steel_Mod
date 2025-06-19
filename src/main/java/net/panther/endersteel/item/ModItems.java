@@ -62,7 +62,7 @@ public class ModItems {
             
     public static final Item VOID_MACE = registerItem("void_mace",
             new VoidMaceItem(EndSteelToolMaterial.ENDER_STEEL, new Item.Settings()
-                    .maxDamage(3000)));
+                    .maxDamage(1500)));
 
     // Armor
     public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",

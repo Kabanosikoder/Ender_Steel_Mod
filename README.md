@@ -1,6 +1,6 @@
 # Ender Steel Mod
 
-- A Minecraft mod that adds Ender infused equipment with unique abilities and enchantments.
+- A Minecraft mod that adds Ender equipment with unique abilities and enchantments.
 - For 1.20.1 and 1.21.1 Fabric
 - 1.21.1 is the version with the lastest features, I will not be backporting to 1.20.1
 

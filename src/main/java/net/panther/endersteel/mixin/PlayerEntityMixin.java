@@ -23,12 +23,10 @@ public abstract class PlayerEntityMixin {
     private void onPlayerDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        // Don't handle damage if player is blocking with shield
         if (player.isBlocking()) {
             return;
         }
 
-        // Check for Repulsive Shriek enchantment
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (chestplate.getItem() instanceof EnderSteelArmorItem) {
             RegistryEntry<Enchantment> shriekEnchantment = player.getWorld()
@@ -40,13 +38,10 @@ public abstract class PlayerEntityMixin {
             if (shriekEnchantment != null) {
                 int shriekLevel = EnchantmentHelper.getLevel(shriekEnchantment, chestplate);
 
-                // If we have Repulsive Shriek, use it instead of teleporting
                 if (shriekLevel > 0 && source.getAttacker() != null) {
-                    // Get the evasion charges from the component
                     int evasionCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);
                     boolean isLastCharge = evasionCharges == 1;
 
-                    // Use a charge to repulse enemies
                     if (EnderSteelArmorEvents.useCharge(player)) {
                     RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
                         cir.setReturnValue(Boolean.FALSE);
@@ -57,7 +52,6 @@ public abstract class PlayerEntityMixin {
             }
         }
 
-        // No Repulsive Shriek, try normal evasion teleport
         if (EnderSteelArmorEvents.tryEvade(player, source)) {
             cir.setReturnValue(Boolean.FALSE);
             cir.cancel();

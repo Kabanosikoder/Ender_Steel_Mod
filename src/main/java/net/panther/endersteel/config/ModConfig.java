@@ -9,17 +9,17 @@ public class ModConfig {
     private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve("endersteel.properties").toFile();
     private static Properties properties;
 
-    // Armor Settings
+    // Armor
     public static double EVASION_CHANCE = 0.45;
     public static int MAX_EVASION_CHARGES = 5;
     public static int EVASION_COOLDOWN_SECONDS = 120;
 
-    // Enchantment Settings
+    // Enchantment
     public static int PHANTOM_HARVEST_HEAL_AMOUNT = 4;
     public static float REPULSIVE_SHRIEK_DAMAGE_REFLECTION = 0.5f;
     public static float REPULSIVE_SHRIEK_KNOCKBACK = 2.0f;
 
-    // Ore Generation Settings
+    // Ore Generation
     public static int ENDER_REMNANT_LARGE_VEIN_MIN_Y = 55;
     public static int ENDER_REMNANT_LARGE_VEIN_MAX_Y = 65;
     public static int ENDER_REMNANT_SMALL_VEIN_MIN_Y = 66;
@@ -41,11 +41,11 @@ public class ModConfig {
             } catch (IOException e) {
                 EnderSteel.LOGGER.error("Error loading Ender Steel config file", e);
                 EnderSteel.LOGGER.info("Creating new config with default values");
-                saveConfig(); // Create default config
+                saveConfig();
             }
         } else {
             EnderSteel.LOGGER.info("No config file found, creating new one with default values");
-            saveConfig(); // Create default config
+            saveConfig();
         }
 
         // Load values from properties
@@ -75,7 +75,6 @@ public class ModConfig {
             CONFIG_FILE.getParentFile().mkdirs();
             properties = new Properties();
             
-            // Save current values to properties with comments
             properties.setProperty("evasion_chance", String.valueOf(EVASION_CHANCE));
             properties.setProperty("max_evasion_charges", String.valueOf(MAX_EVASION_CHARGES));
             properties.setProperty("evasion_cooldown_seconds", String.valueOf(EVASION_COOLDOWN_SECONDS));
@@ -94,10 +93,8 @@ public class ModConfig {
             properties.setProperty("ender_remnant_small_vein_count", String.valueOf(ENDER_REMNANT_SMALL_VEIN_COUNT));
 
             try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
-                // Remove timestamp from properties
                 properties.store(writer, null);
 
-                // Write our custom header with spacing
                 try (FileWriter headerWriter = new FileWriter(CONFIG_FILE, false)) {
                     headerWriter.write("""
                     # Ender Steel Config

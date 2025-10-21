@@ -57,7 +57,6 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
                     Vec3d entityPos = entity.getPos();
                     Vec3d pushDirection = entityPos.subtract(playerPos).normalize();
 
-                    // Visual effects for each affected entity
                     for (double d = 0.5; d < entityPos.distanceTo(playerPos); d += 0.5) {
                         Vec3d particlePos = playerPos.add(pushDirection.multiply(d));
                         serverWorld.spawnParticles(
@@ -74,7 +73,6 @@ public record RepulsiveShriekEffect() implements EnchantmentEntityEffect {
                         }
                     }
 
-                    // Apply knockback
                     double knockbackMultiplier = isLastCharge ? 1.5 : 1.0;
                     entity.setVelocity(
                         pushDirection.x * ModConfig.REPULSIVE_SHRIEK_KNOCKBACK * knockbackMultiplier,

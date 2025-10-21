@@ -20,7 +20,7 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
     public static final MapCodec<EnderStreakEffect> CODEC = MapCodec.unit(EnderStreakEffect::new);
 
     private static final Map<UUID, StreakData> playerStreaks = new HashMap<>();
-    private static final int STREAK_TIMEOUT_TICKS = 60; // 3 seconds (1 tick = 1/20th of a second)
+    private static final int STREAK_TIMEOUT_TICKS = 60; // 3 seconds=
     
     private record StreakData(int streak, long lastHitTime) {}
 
@@ -32,7 +32,6 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
             long currentTime = world.getTime();
             StreakData currentStreak = playerStreaks.getOrDefault(playerId, new StreakData(0, currentTime));
             
-            // Check if streak timed out
             int newStreak;
             if (currentTime - currentStreak.lastHitTime() > STREAK_TIMEOUT_TICKS) {
                 newStreak = 1; // Reset streak
@@ -40,10 +39,8 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
                 newStreak = currentStreak.streak() + 1;
             }
             
-            // Update streak data
             playerStreaks.put(playerId, new StreakData(newStreak, currentTime));
             
-            // Calculate and apply bonus damage based on streak
             float damagePerStreak = 2;
             float bonusDamage = damagePerStreak * (newStreak - 1); // -1 so first hit has no bonus
             
@@ -51,7 +48,6 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
                 victim.damage(world.getDamageSources().playerAttack(player), bonusDamage);
             }
             
-            // Visual feedback - more particles with higher streaks
             int particleCount = Math.min(5 * newStreak, 30);
             world.spawnParticles(ParticleTypes.PORTAL, 
                 victim.getX(), victim.getY() + 1, victim.getZ(),

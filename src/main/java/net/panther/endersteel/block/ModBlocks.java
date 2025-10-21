@@ -28,12 +28,12 @@ public class ModBlocks {
         return Registry.register(Registries.BLOCK, Identifier.of(EnderSteel.MOD_ID, name), block);
     }
 
-    private static Item registerBlockItem(String name, Block block){
-        return Registry.register(Registries.ITEM, Identifier.of(EnderSteel.MOD_ID, name),
+    private static void registerBlockItem(String name, Block block){
+        Registry.register(Registries.ITEM, Identifier.of(EnderSteel.MOD_ID, name),
                 new BlockItem(block, new Item.Settings()));
     }
 
     public static void registerModBlocks(){
-        EnderSteel.LOGGER.info("Registering Mod Blocks for "+ EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering Mod Blocks for", EnderSteel.MOD_ID);
     }
 }

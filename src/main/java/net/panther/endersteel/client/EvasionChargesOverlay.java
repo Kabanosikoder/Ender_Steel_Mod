@@ -51,22 +51,21 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         int x = screenWidth / 2 - 91; // Same alignment as vanilla bars
         int y = screenHeight - 59;    // 4 pixels above armor bar
 
-        // Draw charge icons from left to right
+        // Draw charge icons
         for (int i = 0; i < MAX_CHARGES; i++) {
             int iconX = x + (i * (TEXTURE_SIZE + 1));
             Identifier texture = i < charges ? CHARGE_FULL : CHARGE_EMPTY;
             
-            // Draw the texture using vanilla-style parameters
             drawContext.drawTexture(
-                texture,         // texture to use
-                iconX,          // x position
-                y,              // y position
-                0,              // u offset in texture
-                0,              // v offset in texture
-                TEXTURE_SIZE,   // width to draw
-                TEXTURE_SIZE,   // height to draw
-                TEXTURE_SIZE,   // texture width
-                TEXTURE_SIZE    // texture height
+                texture,
+                iconX,
+                y,
+                0,
+                0,
+                TEXTURE_SIZE,
+                TEXTURE_SIZE,
+                TEXTURE_SIZE,
+                TEXTURE_SIZE
             );
         }
     }

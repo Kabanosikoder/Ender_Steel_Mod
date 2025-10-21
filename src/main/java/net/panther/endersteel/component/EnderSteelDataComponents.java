@@ -34,6 +34,5 @@ public class EnderSteelDataComponents {
     }
 
     public static void registerDataComponents() {
-        EnderSteel.LOGGER.info("Registering Data Components for " + EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering Data Components for ", EnderSteel.MOD_ID);};
     }
-}

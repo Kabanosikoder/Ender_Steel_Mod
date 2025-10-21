@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ModItems {
-    // Basic Items
     public static final Item ENDER_SCRAP = registerItem("ender_scrap",
             new Item(new Item.Settings()));
     public static final Item ENDER_STEEL_INGOT = registerItem("ender_steel_ingot",
@@ -87,6 +86,6 @@ public class ModItems {
     }
 
     public static void registerModItems() {
-        EnderSteel.LOGGER.info("Registering Mod Items for " + EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering Mod Items for " ,EnderSteel.MOD_ID);
     }
 }

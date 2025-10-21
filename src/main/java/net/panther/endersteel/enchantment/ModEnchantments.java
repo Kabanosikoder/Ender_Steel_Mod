@@ -36,7 +36,7 @@ public class ModEnchantments {
         var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);
         var items = registerable.getRegistryLookup(RegistryKeys.ITEM);
 
-        // Gazing Void - Scythe only
+        // Scythe only
         register(registerable, GAZING_VOID, Enchantment.builder(Enchantment.definition(
             items.getOrThrow(ModItemTagProvider.SCYTHE_ENCHANTABLE),
                 4,
@@ -51,7 +51,7 @@ public class ModEnchantments {
                         new GazingVoidEffect())
         );
 
-        // Void Strike - Ender Steel Sword only
+        // Ender Steel Sword only
         register(registerable, VOID_STRIKE, Enchantment.builder(Enchantment.definition(
             items.getOrThrow(ModItemTagProvider.ENDER_STEEL_SWORD_ENCHANTABLE),
             4,
@@ -65,7 +65,7 @@ public class ModEnchantments {
                     EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                     new VoidStrikeEffect()));
 
-        // Ender Streak - for Ender Steel Sword only
+        // Ender Steel Sword only
         register(registerable, ENDER_STREAK, Enchantment.builder(Enchantment.definition(
             items.getOrThrow(ModItemTagProvider.ENDER_STEEL_SWORD_ENCHANTABLE),
             3,
@@ -79,7 +79,7 @@ public class ModEnchantments {
                     EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                     new EnderStreakEffect()));
 
-        // Phantom Harvest - Scythe only
+        // Scythe only
         register(registerable, PHANTOM_HARVEST, Enchantment.builder(Enchantment.definition(
             items.getOrThrow(ModItemTagProvider.SCYTHE_ENCHANTABLE),
                 2,
@@ -93,7 +93,7 @@ public class ModEnchantments {
                         EnchantmentEffectTarget.ATTACKER, EnchantmentEffectTarget.VICTIM,
                         new PhantomHarvestEffect()));
 
-        // Gravitide - Scythe only
+        // Scythe only
         register(registerable, GRAVITIDE, Enchantment.builder(Enchantment.definition(
             items.getOrThrow(ModItemTagProvider.SCYTHE_ENCHANTABLE),
                 10,
@@ -108,7 +108,7 @@ public class ModEnchantments {
                         new GravitideEffect())
         );
 
-        // Repulsive Shriek - Chestplate only
+        // Chestplate only
         register(registerable, REPULSIVE_SHRIEK, Enchantment.builder(Enchantment.definition(
                          items.getOrThrow(ModItemTagProvider.REPULSIVE_SHRIEK_ENCHANTABLE),
                          2,

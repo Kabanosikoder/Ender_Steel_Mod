@@ -25,13 +25,11 @@ public class TeleportUtil {
      * @param radius The radius to teleport within
      * @return true if teleport was successful
      */
+
     public static boolean teleportRandomly(Entity entity, double radius) {
         return teleportRandomly(entity, radius, true);
     }
 
-    /**
-     * @param addGlowingEffect Whether to add a glowing effect after teleport
-     */
     public static boolean teleportRandomly(Entity entity, double radius, boolean addGlowingEffect) {
         if (entity == null || entity.getWorld().isClient) return false;
 

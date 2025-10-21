@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class EnderSteelSwordItem extends SwordItem {
     private static final int MAX_STORED_PEARLS = 10;
-    private static final float STREAK_BASE_CHANCE = 0.5f; // 50% base chance
+    private static final float STREAK_BASE_CHANCE = 0.5f;
     private static final Random random = new Random();
 
     public EnderSteelSwordItem(EndSteelToolMaterial enderSteel, Settings settings) {
@@ -131,16 +131,13 @@ public class EnderSteelSwordItem extends SwordItem {
     @Override
     public boolean postMine(ItemStack stack, World world, net.minecraft.block.BlockState state, net.minecraft.util.math.BlockPos pos, LivingEntity miner) {
         if (!world.isClient && miner instanceof PlayerEntity player) {
-            // Get the player's attack damage from their main hand item
+
             float attackDamage = (float)player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             
-            // Increase Scythe sweep dmg
             float sweepDamage = 2.0f + attackDamage * 0.75f;
             
-            // Increase sweep range
             double range = 1.5;
             
-            // Get all entities in the sweep area
             Vec3d posVec = player.getPos();
             List<LivingEntity> entities = world.getNonSpectatingEntities(
                 LivingEntity.class,
@@ -150,17 +147,14 @@ public class EnderSteelSwordItem extends SwordItem {
                 )
             );
 
-            // Apply sweep damage to all nearby entities
             for (LivingEntity target : entities) {
                 if (target != player && !player.isTeammate(target) && player.squaredDistanceTo(target) < range * range) {
                     
-                    // Apply damage with knockback
-                    target.takeKnockback(0.4f, 
+                    target.takeKnockback(0.4f,
                         MathHelper.sin(player.getYaw() * 0.017453292F), 
                         -MathHelper.cos(player.getYaw() * 0.017453292F));
                     target.damage(world.getDamageSources().playerAttack(player), sweepDamage);
                     
-                    // Add particle effects for visual feedback
                     ((ServerWorld) world).spawnParticles(
                         ParticleTypes.SWEEP_ATTACK,
                         target.getX(), target.getY() + target.getHeight() * 0.5, target.getZ(),
@@ -168,7 +162,6 @@ public class EnderSteelSwordItem extends SwordItem {
                 }
             }
             
-            // Play sweep sound
             world.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0F, 1.0F);
         }

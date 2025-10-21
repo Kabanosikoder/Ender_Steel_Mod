@@ -56,6 +56,6 @@ public class ModItemGroup {
                     }).build());
 
     public static void registerItemGroups() {
-        EnderSteel.LOGGER.info("Registering Item Groups for " + EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering Item Groups for ", EnderSteel.MOD_ID);
     }
 }

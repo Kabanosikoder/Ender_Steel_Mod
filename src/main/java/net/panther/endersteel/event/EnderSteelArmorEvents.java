@@ -13,7 +13,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.panther.endersteel.advancement.ModCriteria;
 import net.panther.endersteel.config.ModConfig;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
 import net.panther.endersteel.util.TeleportUtil;
@@ -75,7 +74,7 @@ public class EnderSteelArmorEvents {
                     if (cooldown == 1) {
                         armorItem.setCharges(chestplate, ModConfig.MAX_EVASION_CHARGES);
 
-                        float pitch = 1.5f; // High pitch for full recharge
+                        float pitch = 1.5f;
                         player.getWorld().playSound(
                             null,
                             player.getX(),
@@ -106,27 +105,22 @@ public class EnderSteelArmorEvents {
             return false;
         }
 
-        // Check if damage type is undodgeable
         if (source.getTypeRegistryEntry().getKey().isPresent() &&
             UNDODGEABLE_DAMAGE.contains(source.getTypeRegistryEntry().getKey().get())) {
             return false;
         }
 
-        // 40% chance to try evading for both abilities
         if (random.nextFloat() >= ModConfig.EVASION_CHANCE) {
             return false;
         }
 
-        // Check if we have charges
         int charges = armorItem.getCharges(chestplate);
         if (charges <= 0) {
             return false;
         }
 
-        // Decrement charges
         armorItem.setCharges(chestplate, charges - 1);
 
-        // Play sound effect
         player.getWorld().playSound(
             null,
             player.getX(),
@@ -138,7 +132,6 @@ public class EnderSteelArmorEvents {
             1.0f
         );
 
-        // Try to teleport
         if (!player.getWorld().isClient) {
             boolean teleported = TeleportUtil.teleportRandomly(player, 5.0);
         }
@@ -156,7 +149,6 @@ public class EnderSteelArmorEvents {
             return false;
         }
 
-        // Decrement charges
         armorItem.setCharges(chestplate, charges - 1);
         return true;
     }

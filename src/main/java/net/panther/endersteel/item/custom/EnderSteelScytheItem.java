@@ -4,8 +4,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -22,7 +20,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.panther.endersteel.datagen.EnchantmentGenerator;
-import net.panther.endersteel.effect.ModEffects;
 import net.panther.endersteel.item.EndSteelToolMaterial;
 import net.panther.endersteel.component.EnderSteelDataComponents;
 import net.panther.endersteel.config.ModConfig;
@@ -88,7 +85,7 @@ public class EnderSteelScytheItem extends SwordItem {
             }
 
             if (hasFullSet) {
-                // Add 1 charge on kill
+
                 ItemStack chestplate = player.getInventory().getArmorStack(2);
                 if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
                     int currentCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);

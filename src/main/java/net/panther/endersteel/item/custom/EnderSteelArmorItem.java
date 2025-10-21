@@ -23,7 +23,7 @@ public class EnderSteelArmorItem extends ArmorItem {
         if(!world.isClient()) {
             if(entity instanceof PlayerEntity player) {
                 if(hasFullSuitOfArmorOn(player) && hasCorrectArmorOn(player)) {
-                    // Initialize charges if needed
+
                     NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
                     if (!nbtComponent.contains(CHARGES_KEY)) {
                         NbtComponent.set(DataComponentTypes.CUSTOM_DATA, stack, nbt -> nbt.putInt(CHARGES_KEY, MAX_CHARGES));
@@ -55,7 +55,6 @@ public class EnderSteelArmorItem extends ArmorItem {
         return true;
     }
 
-    // Charge management methods
     public int getCharges(ItemStack stack) {
         NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
         return nbtComponent.contains(CHARGES_KEY) ? nbtComponent.getNbt().getInt(CHARGES_KEY) : 0;

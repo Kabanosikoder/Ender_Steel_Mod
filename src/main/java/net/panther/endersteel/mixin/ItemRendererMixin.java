@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+// Thank you random redditor for this blessed code
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
 
@@ -32,7 +33,7 @@ public abstract class ItemRendererMixin {
             argsOnly = true
     )
     public BakedModel renderItem(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack, @Local(argsOnly = true) ModelTransformationMode renderMode) {
-        // Void Mace
+        // Void Mace 2D
         if (stack.getItem() == ModItems.VOID_MACE && (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED)) {
             return getModels().getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "void_mace")));
         }
@@ -46,7 +47,7 @@ public abstract class ItemRendererMixin {
             ordinal = 1
     )
     public BakedModel getHeldItemModelMixin(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack) {
-        // Void Mace
+        // Void Mace 3D
         if (stack.getItem() == ModItems.VOID_MACE) {
             return this.models.getModelManager().getModel(ModelIdentifier.ofInventoryVariant(Identifier.of(EnderSteel.MOD_ID, "void_mace_3d")));
         }

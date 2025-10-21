@@ -23,14 +23,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class VoidMaceItem extends MaceItem {
-    private static final int DASH_COOLDOWN = 140; // 20 ticks = 1 second
+    private static final int DASH_COOLDOWN = 140;
     private static final float DASH_SPEED = 0.5f;
     private static final float DASH_RANGE = 3.75f;
     private static final float EFFECT_RADIUS = 6.0f;
 
-    private static final float PULL_RANGE = 20.0f; // Maximum range for pulling
-    private static final float PULL_STRENGTH = 1.25f; // Base strength of the pull
-    private static final int GROUND_DURATION = 60; // Base duration of grounding effect in ticks (3 seconds)
+    private static final float PULL_RANGE = 20.0f;
+    private static final float PULL_STRENGTH = 1.25f;
+    private static final int GROUND_DURATION = 60;
 
     private static final int MAX_SOCKETS = 4;
     private static final String EYE_TYPE = "eye";
@@ -55,7 +55,7 @@ public class VoidMaceItem extends MaceItem {
         if (socketType.isEmpty()) {
             tooltip.add(Text.translatable("tooltip.void_mace.unsocketed").formatted(Formatting.DARK_GRAY));
         } else {
-            String typeKey = "tooltip.void_mace.socket_type." + socketType;
+            String typeKey = "tooltip.void_mace.socket_type.socketType";
             tooltip.add(Text.translatable(typeKey, filledSockets).formatted(Formatting.DARK_PURPLE));
         }
     }
@@ -76,7 +76,6 @@ public class VoidMaceItem extends MaceItem {
             return TypedActionResult.pass(stack);
         }
 
-        // Existing socket/dash logic
         if (!world.isClient && hand == Hand.MAIN_HAND) {
             ItemStack offhandStack = user.getOffHandStack();
             if (offhandStack.isOf(Items.ENDER_EYE) || offhandStack.isOf(Items.ENDER_PEARL)) {
@@ -123,7 +122,6 @@ public class VoidMaceItem extends MaceItem {
 
         Vec3d look = player.getRotationVector().normalize();
 
-        // Dash velocity
         Vec3d velocity = look.multiply(DASH_SPEED * DASH_RANGE);
         player.setVelocity(velocity);
         player.velocityModified = true;
@@ -215,7 +213,6 @@ public class VoidMaceItem extends MaceItem {
         Vec3d lookVec = user.getRotationVec(1.0f);
         Vec3d endPos = startPos.add(lookVec.multiply(PULL_RANGE));
 
-        // Raycast
         HitResult hitResult = world.raycast(new RaycastContext(
             startPos, endPos,
             RaycastContext.ShapeType.COLLIDER,
@@ -223,7 +220,6 @@ public class VoidMaceItem extends MaceItem {
             user
         ));
 
-        // Get entities in a cone in front of the player
         Vec3d lookVecHor = new Vec3d(lookVec.x, 0, lookVec.z).normalize();
         double coneAngle = Math.toRadians(30); // 30 degree cone
 

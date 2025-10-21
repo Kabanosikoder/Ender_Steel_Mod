@@ -1,6 +1,5 @@
 package net.panther.endersteel.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
@@ -43,7 +42,7 @@ public enum EndSteelToolMaterial implements ToolMaterial {
         return this.attackDamage;
     }
 
-    public TagKey<Block> getInverseTag() {
+    public TagKey getInverseTag() {
         return this.inverseTag;
     }
 

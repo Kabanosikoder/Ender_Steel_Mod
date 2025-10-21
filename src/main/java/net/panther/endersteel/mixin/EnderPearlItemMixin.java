@@ -24,7 +24,6 @@ public abstract class EnderPearlItemMixin extends Item {
     private void preventPearlThrow(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack mainHand = user.getMainHandStack();
         
-        // Block if mace is in main hand
         if (mainHand.getItem() instanceof VoidMaceItem) {
             cir.setReturnValue(TypedActionResult.pass(user.getStackInHand(hand)));
         }
@@ -40,7 +39,6 @@ abstract class EnderEyeItemMixin {
         
         ItemStack mainHand = user.getMainHandStack();
         
-        // Block if mace is in main hand
         if (mainHand.getItem() instanceof VoidMaceItem) {
             cir.setReturnValue(TypedActionResult.pass(stack));
         }

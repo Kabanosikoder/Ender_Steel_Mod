@@ -24,7 +24,7 @@ public record PhantomHarvestEffect() implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (target instanceof LivingEntity victim && !victim.isAlive() && context.owner() instanceof PlayerEntity player) {
-            // Check if wearing full Ender Steel armor
+
             boolean hasFullSet = true;
             for (ItemStack armorPiece : player.getArmorItems()) {
                 if (!(armorPiece.getItem() instanceof EnderSteelArmorItem)) {
@@ -34,7 +34,7 @@ public record PhantomHarvestEffect() implements EnchantmentEntityEffect {
             }
 
             if (hasFullSet) {
-                // Get chestplate and add charge
+
                 ItemStack chestplate = player.getInventory().getArmorStack(2);
                 if (!chestplate.isEmpty() && chestplate.getItem() instanceof EnderSteelArmorItem) {
                     NbtComponent nbtComponent = chestplate.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);

@@ -35,7 +35,6 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                         FabricRecipeProvider.conditionsFromItem(Items.WHEAT))
                 .offerTo(exporter);
 
-        // Smithing Template Recipe
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.ENDER_STEEL_SCYTHE, 1)
                 .pattern("EEB")
                 .pattern(" S ")
@@ -47,7 +46,6 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                         FabricRecipeProvider.conditionsFromItem(ModItems.ENDER_SCRAP))
                 .offerTo(exporter);
 
-        // Smithing Template Duplication Recipe
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE, 2)
                 .pattern("EDE")
                 .pattern("ESE")
@@ -59,8 +57,7 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                         FabricRecipeProvider.conditionsFromItem(ModItems.ENDER_STEEL_UPGRADE_SMITHING_TEMPLATE))
                 .offerTo(exporter, Identifier.of("endersteel", "ender_steel_upgrade_smithing_template_duplication"));
 
-        // Smelting and Blasting Recipes
-        offerSmelting(exporter, 
+        offerSmelting(exporter,
             List.of(ModBlocks.ENDER_REMNANT),
             RecipeCategory.MISC,
             ModItems.ENDER_SCRAP,
@@ -92,7 +89,6 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
             100,
             "ender_steel_ingot");
 
-        // Ender Steel Block Crafting Recipe (9 ingots -> 1 block)
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.ENDER_STEEL_BLOCK, 1)
                 .pattern("###")
                 .pattern("###")
@@ -102,20 +98,17 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                         FabricRecipeProvider.conditionsFromItem(ModItems.ENDER_STEEL_INGOT))
                 .offerTo(exporter);
 
-        // Ender Steel Ingot Crafting Recipe (1 block -> 9 ingots)
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.ENDER_STEEL_INGOT, 9)
                 .input(ModBlocks.ENDER_STEEL_BLOCK)
                 .criterion(FabricRecipeProvider.hasItem(ModBlocks.ENDER_STEEL_BLOCK),
                         FabricRecipeProvider.conditionsFromItem(ModBlocks.ENDER_STEEL_BLOCK))
                 .offerTo(exporter, Identifier.of("endersteel", "ender_steel_ingot_from_block"));
 
-        // Armor Smithing Recipes
         generateSmithingRecipe(exporter, Items.NETHERITE_HELMET, ModItems.ENDER_STEEL_HELMET, "ender_steel_helmet");
         generateSmithingRecipe(exporter, Items.NETHERITE_CHESTPLATE, ModItems.ENDER_STEEL_CHESTPLATE, "ender_steel_chestplate");
         generateSmithingRecipe(exporter, Items.NETHERITE_LEGGINGS, ModItems.ENDER_STEEL_LEGGINGS, "ender_steel_leggings");
         generateSmithingRecipe(exporter, Items.NETHERITE_BOOTS, ModItems.ENDER_STEEL_BOOTS, "ender_steel_boots");
 
-        // Tool and Weapon Smithing Recipes
         generateSmithingRecipe(exporter, Items.NETHERITE_SWORD, ModItems.ENDER_STEEL_SWORD, "ender_steel_sword");
         generateSmithingRecipe(exporter, Items.NETHERITE_PICKAXE, ModItems.ENDER_STEEL_PICKAXE, "ender_steel_pickaxe");
         generateSmithingRecipe(exporter, Items.NETHERITE_AXE, ModItems.ENDER_STEEL_AXE, "ender_steel_axe");

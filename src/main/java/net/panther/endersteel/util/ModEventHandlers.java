@@ -35,9 +35,9 @@ public class ModEventHandlers {
             if (blockState.getBlock() instanceof EnderSteelStareBlock) {
                 blocksBeingLookedAt.add(blockPos);
 
-                int ticksRemaining = blockTickDelays.getOrDefault(blockPos, Integer.valueOf(0));
+                int ticksRemaining = blockTickDelays.getOrDefault(blockPos, 0);
                 if (ticksRemaining > 0) {
-                    blockTickDelays.put(blockPos, Integer.valueOf(ticksRemaining - 1));
+                    blockTickDelays.put(blockPos, ticksRemaining - 1);
                     return;
                 }
 
@@ -52,7 +52,7 @@ public class ModEventHandlers {
 
                 if (nextState != currentState) {
                     player.getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
-                    blockTickDelays.put(blockPos, Integer.valueOf(UPDATE_DELAY_TICKS)); // Set delay for next update
+                    blockTickDelays.put(blockPos, UPDATE_DELAY_TICKS); // Set delay for next update
                 }
             }
         }
@@ -83,9 +83,9 @@ public class ModEventHandlers {
         for (BlockPos blockPos : noLongerLookedAt) {
             blocksBeingLookedAt.remove(blockPos);
 
-            int ticksRemaining = blockTickDelays.getOrDefault(blockPos, Integer.valueOf(0));
+            int ticksRemaining = blockTickDelays.getOrDefault(blockPos, 0);
             if (ticksRemaining > 0) {
-                blockTickDelays.put(blockPos, Integer.valueOf(ticksRemaining - 1));
+                blockTickDelays.put(blockPos, ticksRemaining - 1);
                 continue; // Wait for delay before transitioning
             }
 
@@ -97,7 +97,7 @@ public class ModEventHandlers {
                 EnderSteelStareBlock.OpenState nextState = EnderSteelStareBlock.OpenState.CLOSED;
                 if (currentState != nextState) {
                     players.iterator().next().getWorld().setBlockState(blockPos, blockState.with(EnderSteelStareBlock.OPEN_STATE, nextState));
-                    blockTickDelays.put(blockPos, Integer.valueOf(UPDATE_DELAY_TICKS));
+                    blockTickDelays.put(blockPos, UPDATE_DELAY_TICKS);
                 }
             }
         }

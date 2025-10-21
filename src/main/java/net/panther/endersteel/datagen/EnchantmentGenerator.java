@@ -43,7 +43,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
         register(registerable, GAZING_VOID, Enchantment.builder(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        5, // Rarity
+                        5,
                         1,
                         Enchantment.leveledCost(5, 7), // Min Cost
                         Enchantment.leveledCost(25, 9), // Max Cost

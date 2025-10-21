@@ -31,10 +31,8 @@ public record GazingVoidEffect() implements EnchantmentEntityEffect {
             victim.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, duration, 1));
             victim.addStatusEffect(new StatusEffectInstance(ModEffects.GAZING_VOID, duration, 0));
             
-            // Deactivate after successful hit
             EnderSteelScytheItem.setVoidGazeActive(context.stack(), false);
             
-            // Play sound effect
             world.playSound(null, target.getX(), target.getY(), target.getZ(),
                 SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.PLAYERS, 1.0F, 0.5F);
         }

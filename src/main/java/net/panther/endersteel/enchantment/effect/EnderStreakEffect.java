@@ -45,7 +45,7 @@ public record EnderStreakEffect() implements EnchantmentEntityEffect {
             float bonusDamage = damagePerStreak * (newStreak - 1); // -1 so first hit has no bonus
             
             if (bonusDamage > 0) {
-                victim.damage(world.getDamageSources().playerAttack(player), bonusDamage);
+                victim.damage(world, world.getDamageSources().playerAttack(player), bonusDamage);
             }
             
             int particleCount = Math.min(5 * newStreak, 30);

@@ -61,7 +61,7 @@ public class VoidMaceItem extends MaceItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
         if (user.isSneaking() && hand == Hand.MAIN_HAND) {
@@ -71,9 +71,9 @@ public class VoidMaceItem extends MaceItem {
                     pullAndGroundEntities(user, stack);
                 }
                 user.getItemCooldownManager().set(this, 60); // 3 second cooldown
-                return TypedActionResult.success(stack);
+                return ActionResult.SUCCESS;
             }
-            return TypedActionResult.pass(stack);
+            return ActionResult.PASS;
         }
 
         if (!world.isClient && hand == Hand.MAIN_HAND) {
@@ -89,7 +89,7 @@ public class VoidMaceItem extends MaceItem {
                         SoundCategory.PLAYERS,
                         1.0f, 1.0f);
                 }
-                return TypedActionResult.success(stack);
+                return ActionResult.SUCCESS;
             }
         }
 
@@ -110,7 +110,7 @@ public class VoidMaceItem extends MaceItem {
                     1.25f,
                     0.25f
                 );
-                return TypedActionResult.success(stack);
+                return ActionResult.SUCCESS;
             }
         }
 

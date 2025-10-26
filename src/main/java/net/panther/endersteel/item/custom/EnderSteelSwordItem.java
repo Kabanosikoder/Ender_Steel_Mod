@@ -14,7 +14,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -32,8 +32,8 @@ public class EnderSteelSwordItem extends SwordItem {
     private static final float STREAK_BASE_CHANCE = 0.5f;
     private static final Random random = new Random();
 
-    public EnderSteelSwordItem(EndSteelToolMaterial enderSteel, Settings settings) {
-        super(EndSteelToolMaterial.ENDER_STEEL, settings);
+    public EnderSteelSwordItem(EndSteelToolMaterial enderSteel,float attackDamage, float attackSpeed, Settings settings) {
+        super(EndSteelToolMaterial.ENDER_STEEL, attackDamage, attackSpeed, settings);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class EnderSteelSwordItem extends SwordItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         ItemStack offhandStack = player.getOffHandStack();
 
@@ -61,10 +61,10 @@ public class EnderSteelSwordItem extends SwordItem {
                     player.sendMessage(Text.translatable("item.endersteel.ender_steel_sword.pearls_stored",
                             storedPearls + 1, MAX_STORED_PEARLS).formatted(Formatting.DARK_PURPLE), true);
                 }
-                return TypedActionResult.success(stack);
+                return ActionResult.SUCCESS;
             }
         }
-        return TypedActionResult.pass(stack);
+        return ActionResult.PASS;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class EnderSteelSwordItem extends SwordItem {
                         float bonusDamage = currentStreak * 0.5f * streakLevel;
 
                         if (bonusDamage > 0) {
-                            target.damage(target.getDamageSources().magic(), bonusDamage);
+                            target.damage((ServerWorld) world, target.getDamageSources().magic(), bonusDamage);
                             world.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
                                     SoundEvents.ENTITY_ENDERMAN_HURT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         }
@@ -132,7 +132,7 @@ public class EnderSteelSwordItem extends SwordItem {
     public boolean postMine(ItemStack stack, World world, net.minecraft.block.BlockState state, net.minecraft.util.math.BlockPos pos, LivingEntity miner) {
         if (!world.isClient && miner instanceof PlayerEntity player) {
 
-            float attackDamage = (float)player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            float attackDamage = (float)player.getAttributeValue(EntityAttributes.ATTACK_DAMAGE);
             
             float sweepDamage = 2.0f + attackDamage * 0.75f;
             
@@ -153,7 +153,7 @@ public class EnderSteelSwordItem extends SwordItem {
                     target.takeKnockback(0.4f,
                         MathHelper.sin(player.getYaw() * 0.017453292F), 
                         -MathHelper.cos(player.getYaw() * 0.017453292F));
-                    target.damage(world.getDamageSources().playerAttack(player), sweepDamage);
+                    target.damage((ServerWorld) world, world.getDamageSources().playerAttack(player), sweepDamage);
                     
                     ((ServerWorld) world).spawnParticles(
                         ParticleTypes.SWEEP_ATTACK,

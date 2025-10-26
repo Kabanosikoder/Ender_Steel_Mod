@@ -3,12 +3,15 @@ package net.panther.endersteel.client;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.EnderSteel;
 import net.panther.endersteel.item.custom.EnderSteelArmorItem;
+
+import java.util.function.Function;
 
 public class EvasionChargesOverlay implements HudRenderCallback {
     private static final Identifier CHARGE_EMPTY =  Identifier.of(EnderSteel.MOD_ID, "textures/item/ender_steel_armor_empty.png");
@@ -55,17 +58,16 @@ public class EvasionChargesOverlay implements HudRenderCallback {
         for (int i = 0; i < MAX_CHARGES; i++) {
             int iconX = x + (i * (TEXTURE_SIZE + 1));
             Identifier texture = i < charges ? CHARGE_FULL : CHARGE_EMPTY;
+            Function<Identifier, RenderLayer> renderLayer = RenderLayer::getGuiTextured;
             
-            drawContext.drawTexture(
+            drawContext.drawGuiTexture(
+                renderLayer,
                 texture,
                 iconX,
                 y,
-                0,
-                0,
-                TEXTURE_SIZE,
-                TEXTURE_SIZE,
-                TEXTURE_SIZE,
-                TEXTURE_SIZE
+                0, 0,
+                TEXTURE_SIZE, TEXTURE_SIZE,
+                TEXTURE_SIZE, TEXTURE_SIZE
             );
         }
     }

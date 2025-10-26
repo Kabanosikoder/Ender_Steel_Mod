@@ -5,8 +5,9 @@ import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.equipment.ArmorMaterial;
+import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.World;
 
@@ -14,7 +15,7 @@ public class EnderSteelArmorItem extends ArmorItem {
     private static final String CHARGES_KEY = "evasion_charges";
     private static final int MAX_CHARGES = 5;
 
-    public EnderSteelArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
+    public EnderSteelArmorItem(RegistryEntry<ArmorMaterial> material, EquipmentType type, Settings settings) {
         super(material, type, settings);
     }
 

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.panther.endersteel.enchantment.ModEnchantments;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -14,7 +15,7 @@ public class ModRegistryDataGenerator extends FabricDynamicRegistryProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-        entries.addAll(registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT));
+        entries.addAll(registries.getOrThrow(RegistryKeys.ENCHANTMENT));
     }
 
     @Override

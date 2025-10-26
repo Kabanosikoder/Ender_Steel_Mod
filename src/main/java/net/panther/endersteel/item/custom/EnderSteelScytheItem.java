@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -16,7 +17,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.panther.endersteel.datagen.EnchantmentGenerator;
@@ -31,20 +32,20 @@ public class EnderSteelScytheItem extends SwordItem {
     private Entity lastKilledEntity = null;
 
     public EnderSteelScytheItem(EndSteelToolMaterial enderSteel, Settings settings) {
-        super(EndSteelToolMaterial.ENDER_STEEL, settings);
+        super((ToolMaterial) EndSteelToolMaterial.ENDER_STEEL, 6F, -2.75F, settings);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
 
         if (world == null) {
-            return TypedActionResult.pass(stack);
+            return ActionResult.PASS;
         }
 
         RegistryEntry<Enchantment> gazingVoid = EnchantmentGenerator.getGazingVoid(world);
         if (gazingVoid == null || EnchantmentHelper.getLevel(gazingVoid, stack) <= 0) {
-            return TypedActionResult.pass(stack);
+            return ActionResult.PASS;
         }
 
         if (!player.getItemCooldownManager().isCoolingDown(this)) {
@@ -56,12 +57,12 @@ public class EnderSteelScytheItem extends SwordItem {
             player.sendMessage(Text.literal("Void Gaze activated!").formatted(Formatting.DARK_PURPLE), true);
             player.getItemCooldownManager().set(this, ABILITY_COOLDOWN);
 
-            return TypedActionResult.success(stack);
+            return ActionResult.SUCCESS;
         } else {
             player.sendMessage(Text.literal("Ability is on cooldown!").formatted(Formatting.RED), true);
         }
 
-        return TypedActionResult.pass(stack);
+        return ActionResult.PASS;
     }
 
     @Override

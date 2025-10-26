@@ -19,18 +19,12 @@ import net.panther.endersteel.enchantment.effect.RepulsiveShriekEffect;
 import net.panther.endersteel.enchantment.effect.VoidStrikeEffect;
 
 public class ModEnchantments {
-    public static final RegistryKey<Enchantment> GAZING_VOID =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "gazing_void"));
-    public static final RegistryKey<Enchantment> VOID_STRIKE =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "void_strike"));
-    public static final RegistryKey<Enchantment> ENDER_STREAK =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "ender_streak"));
-    public static final RegistryKey<Enchantment> PHANTOM_HARVEST =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "phantom_harvest"));
-    public static final RegistryKey<Enchantment> REPULSIVE_SHRIEK =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "repulsive_shriek"));
-    public static final RegistryKey<Enchantment> GRAVITIDE =
-            RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "gravitide"));
+    public static final RegistryKey<Enchantment> GAZING_VOID = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "gazing_void"));
+    public static final RegistryKey<Enchantment> VOID_STRIKE = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "void_strike"));
+    public static final RegistryKey<Enchantment> ENDER_STREAK = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "ender_streak"));
+    public static final RegistryKey<Enchantment> PHANTOM_HARVEST = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "phantom_harvest"));
+    public static final RegistryKey<Enchantment> REPULSIVE_SHRIEK = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "repulsive_shriek"));
+    public static final RegistryKey<Enchantment> GRAVITIDE = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(EnderSteel.MOD_ID, "gravitide"));
 
     public static void bootstrap(Registerable<Enchantment> registerable) {
         var enchantments = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT);

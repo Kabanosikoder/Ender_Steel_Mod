@@ -37,7 +37,7 @@ public class ModEffects {
         }
 
         @Override
-        public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+        public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
             if (!entity.getWorld().isClient && entity.getWorld() instanceof ServerWorld serverWorld) {
                 double shakeX = (random.nextDouble() - 1) * 0.2;
                 double shakeZ = (random.nextDouble() - 1) * 0.2;

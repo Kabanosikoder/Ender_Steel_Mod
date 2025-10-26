@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class TeleportUtil {
@@ -31,95 +33,99 @@ public class TeleportUtil {
     }
 
     public static boolean teleportRandomly(Entity entity, double radius, boolean addGlowingEffect) {
-        if (entity == null || entity.getWorld().isClient) return false;
+        if (entity == null || entity.getWorld().isClient()) return false;
 
         World world = entity.getWorld();
         int attempts = 0;
         int maxAttempts = 10;
 
-        // Distance checks
         double startX = entity.getX();
         double startZ = entity.getZ();
 
+        // no relative flags; absolute teleport
+        final Set<PositionFlag> flags = Collections.emptySet();
+
         while (attempts++ < maxAttempts) {
-            double theta = random.nextDouble() * 2 * Math.PI;
+            double theta = random.nextDouble() * Math.PI * 2.0;
             double dx = radius * Math.cos(theta);
             double dz = radius * Math.sin(theta);
 
             double newX = startX + dx;
             double newZ = startZ + dz;
 
-            // Try to find a valid position, starting at current Y and searching up first
             BlockPos.Mutable checkPos = new BlockPos.Mutable(
-                    (int)Math.floor(newX),
-                    (int)Math.floor(entity.getY()),
-                    (int)Math.floor(newZ)
+                    (int) Math.floor(newX),
+                    (int) Math.floor(entity.getY()),
+                    (int) Math.floor(newZ)
             );
 
-            // First try going up aggressively
             boolean foundSpot = false;
+
+            // Try going up first
             for (int y = 0; y <= MAX_VERTICAL_SEARCH * 2; y++) {
                 if (isValidTeleportSpot(world, checkPos.setY(checkPos.getY() + y))) {
                     double finalX = checkPos.getX() + 0.5;
                     double finalZ = checkPos.getZ() + 0.5;
-                    double distSq = (finalX - startX) * (finalX - startX) +
-                            (finalZ - startZ) * (finalZ - startZ);
 
+                    double distSq = (finalX - startX) * (finalX - startX)
+                            + (finalZ - startZ) * (finalZ - startZ);
                     if (distSq <= radius * radius) {
-                        Vec3d pos = new Vec3d(finalX, checkPos.getY(), finalZ);
                         if (world instanceof ServerWorld serverWorld) {
-                            entity.teleport(serverWorld, finalX, checkPos.getY(), finalZ, Set.of(), entity.getYaw(), entity.getPitch());
+                            entity.teleport(
+                                    serverWorld,
+                                    finalX, checkPos.getY(), finalZ,
+                                    flags,
+                                    entity.getYaw(), entity.getPitch(),
+                                    false // resetCamera
+                            );
                         }
                         if (addGlowingEffect && entity instanceof LivingEntity living) {
                             living.addStatusEffect(new StatusEffectInstance(
-                                    StatusEffects.GLOWING,
-                                    60,
-                                    0,
-                                    false,
-                                    false,
-                                    false
+                                    StatusEffects.GLOWING, 60, 0, false, false, false
                             ));
                         }
                         playTeleportEffects(entity);
                         return true;
                     }
+                    foundSpot = true;
+                    break;
                 }
             }
 
-            // Only if it can't go up, try going down a shorter distance
+            // Try downwards
             if (!foundSpot) {
-                checkPos.setY((int)Math.floor(entity.getY()));
-                for (int y = 1; y <= MAX_VERTICAL_SEARCH / 2; y++) {  // Half the downward search range
+                checkPos.setY((int) Math.floor(entity.getY()));
+                for (int y = 1; y <= MAX_VERTICAL_SEARCH / 2; y++) {
                     if (isValidTeleportSpot(world, checkPos.setY(checkPos.getY() - y))) {
                         double finalX = checkPos.getX() + 0.5;
                         double finalZ = checkPos.getZ() + 0.5;
-                        double distSq = (finalX - startX) * (finalX - startX) +
-                                (finalZ - startZ) * (finalZ - startZ);
 
+                        double distSq = (finalX - startX) * (finalX - startX)
+                                + (finalZ - startZ) * (finalZ - startZ);
                         if (distSq <= radius * radius) {
-                            Vec3d pos = new Vec3d(finalX, checkPos.getY(), finalZ);
                             if (world instanceof ServerWorld serverWorld) {
-                                entity.teleport(serverWorld, finalX, checkPos.getY(), finalZ, Set.of(), entity.getYaw(), entity.getPitch());
+                                entity.teleport(
+                                        serverWorld,
+                                        finalX, checkPos.getY(), finalZ, flags,
+                                        entity.getYaw(), entity.getPitch(),
+                                        false
+                                );
                             }
                             if (addGlowingEffect && entity instanceof LivingEntity living) {
                                 living.addStatusEffect(new StatusEffectInstance(
-                                        StatusEffects.GLOWING,
-                                        60,
-                                        0,
-                                        false,
-                                        false,
-                                        false
+                                        StatusEffects.GLOWING, 60, 0, false, false, false
                                 ));
                             }
                             playTeleportEffects(entity);
                             return true;
                         }
+                        break;
                     }
                 }
             }
         }
 
-        return false; // If it couldn't find a valid spot after max attempts
+        return false;
     }
 
     /**

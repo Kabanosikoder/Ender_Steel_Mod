@@ -24,19 +24,17 @@ public abstract class EnderSteelArmorMixin {
     @Inject(method = "inventoryTick", at = @At("HEAD"))
     private void onInventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
         if ((Object) this instanceof EnderSteelArmorItem armorItem && entity instanceof PlayerEntity player && !world.isClient) {
-            // Only process chestplate
+            // Only chestplate
             if (slot != 38) { // 38 is the Chestplate slot in inventory
                 return;
             }
 
             NbtCompound nbt = (NbtCompound) stack.getComponents();
 
-            // Initialize charges if not set
             if (!nbt.contains(EVASION_CHARGES_KEY)) {
                 nbt.putInt(EVASION_CHARGES_KEY, ModConfig.MAX_EVASION_CHARGES);
             }
 
-            // Cooldown
             int cooldown = nbt.getInt(EVASION_COOLDOWN_KEY);
             if (cooldown > 0) {
                 nbt.putInt(EVASION_COOLDOWN_KEY, cooldown - 1);

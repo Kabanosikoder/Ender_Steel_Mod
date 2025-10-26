@@ -5,8 +5,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.Registries;                    // <-- use static registry
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.panther.endersteel.component.EnderSteelDataComponents;
 import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.enchantment.effect.RepulsiveShriekEffect;
@@ -19,21 +20,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
+
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
-    private void onPlayerDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void onPlayerDamage(ServerWorld world, DamageSource source, float amount,
+                                CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        if (player.isBlocking()) {
-            return;
-        }
+        if (player.isBlocking()) return;
 
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (chestplate.getItem() instanceof EnderSteelArmorItem) {
-            RegistryEntry<Enchantment> shriekEnchantment = player.getWorld()
-                .getRegistryManager()
-                .get(RegistryKeys.ENCHANTMENT)
-                .getEntry(ModEnchantments.REPULSIVE_SHRIEK)
-                .orElse(null);
+            // Get the RegistryEntry<Enchantment> from the static registry
+            RegistryEntry<Enchantment> shriekEnchantment =
+                    Registries.E.getEntry(ModEnchantments.REPULSIVE_SHRIEK).orElse(null);
 
             if (shriekEnchantment != null) {
                 int shriekLevel = EnchantmentHelper.getLevel(shriekEnchantment, chestplate);
@@ -43,17 +42,17 @@ public abstract class PlayerEntityMixin {
                     boolean isLastCharge = evasionCharges == 1;
 
                     if (EnderSteelArmorEvents.useCharge(player)) {
-                    RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
-                        cir.setReturnValue(Boolean.FALSE);
+                        RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
+                        cir.setReturnValue(false);
                         cir.cancel();
+                        return;
                     }
-                    return;
                 }
             }
         }
 
         if (EnderSteelArmorEvents.tryEvade(player, source)) {
-            cir.setReturnValue(Boolean.FALSE);
+            cir.setReturnValue(false);
             cir.cancel();
         }
     }

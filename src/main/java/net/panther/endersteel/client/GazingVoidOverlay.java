@@ -3,10 +3,13 @@ package net.panther.endersteel.client;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.panther.endersteel.effect.ModEffects;
+
+import java.util.function.Function;
 
 public class GazingVoidOverlay implements HudRenderCallback {
     private static final Identifier EYE_TEXTURE = Identifier.of("endersteel", "textures/gui/gazing_void.png");
@@ -33,9 +36,12 @@ public class GazingVoidOverlay implements HudRenderCallback {
             matrices.scale(pulse, pulse, 1f);
             matrices.translate(-width / 2f, -height / 2f, 0);
 
+            Function<Identifier, RenderLayer> renderLayer = RenderLayer::getGuiTextured;
+
             // Draw Eye
             drawContext.drawTexture(
-                    EYE_TEXTURE,
+                    renderLayer
+                    ,EYE_TEXTURE,
                     x, y, 0, 0,
                     size, size,
                     size, size

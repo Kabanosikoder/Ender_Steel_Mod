@@ -74,20 +74,6 @@ public class EnderSteelStareBlock extends Block {
         return state.get(OPEN_STATE) == OpenState.FULLY_OPEN ? 15 : 0;
     }
 
-    @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!world.isClient) {
-            boolean hasAdjacentRedstone = hasAdjacentRedstoneBlock(world, pos);
-            OpenState currentState = state.get(OPEN_STATE);
-            
-            if (hasAdjacentRedstone && currentState == OpenState.CLOSED) {
-                world.setBlockState(pos, state.with(OPEN_STATE, OpenState.FULLY_OPEN));
-            } else if (!hasAdjacentRedstone && currentState == OpenState.FULLY_OPEN && !blocksBeingLookedAt.contains(pos)) {
-                world.setBlockState(pos, state.with(OPEN_STATE, OpenState.CLOSED));
-            }
-        }
-    }
-
     private static boolean hasAdjacentRedstoneBlock(World world, BlockPos pos) {
         for (Direction direction : Direction.values()) {
             BlockState neighborState = world.getBlockState(pos.offset(direction));

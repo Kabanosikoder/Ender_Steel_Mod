@@ -2,7 +2,6 @@ package net.panther.endersteel.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -46,10 +45,10 @@ public class ModItemGroup {
                         entries.add(ModBlocks.ENDER_REMNANT);
 
                         // Add enchanted books
-                        var enchantments = displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).orElseThrow();
+                        var enchantments = displayContext.lookup().getOptional(RegistryKeys.ENCHANTMENT).orElseThrow();
                         enchantments.streamEntries().forEach(enchantmentEntry -> {
                             if (enchantmentEntry.getKey().orElseThrow().getValue().getNamespace().equals(EnderSteel.MOD_ID)) {
-                                entries.add(EnchantedBookItem.forEnchantment(
+                                entries.add(EnchantedBookItem.forEnchantment( // idk how to fix this shit
                                     new EnchantmentLevelEntry(enchantmentEntry, 1)));
                             }
                         });

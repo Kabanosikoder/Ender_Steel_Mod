@@ -1,10 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "redstone",
   "key": {
-    "#": {
-      "item": "endersteel:ender_steel_ingot"
-    }
+    "#": "endersteel:ender_steel_ingot"
   },
   "pattern": [
     "###",

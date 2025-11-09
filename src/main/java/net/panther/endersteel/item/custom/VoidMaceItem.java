@@ -35,11 +35,9 @@ public class VoidMaceItem extends MaceItem {
     private static final int MAX_SOCKETS = 4;
     private static final String EYE_TYPE = "eye";
     private static final String PEARL_TYPE = "pearl";
-    private final ToolMaterial material;
 
     public VoidMaceItem(ToolMaterial material, Settings settings) {
         super(settings.attributeModifiers(MaceItem.createAttributeModifiers()));
-        this.material = material;
     }
 
     @Override
@@ -61,7 +59,7 @@ public class VoidMaceItem extends MaceItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
         if (user.isSneaking() && hand == Hand.MAIN_HAND) {
@@ -70,7 +68,7 @@ public class VoidMaceItem extends MaceItem {
                 if (!world.isClient()) {
                     pullAndGroundEntities(user, stack);
                 }
-                user.getItemCooldownManager().set(this, 60); // 3 second cooldown
+                user.getItemCooldownManager().set(stack, 60); // 3 second cooldown
                 return ActionResult.SUCCESS;
             }
             return ActionResult.PASS;
@@ -118,7 +116,7 @@ public class VoidMaceItem extends MaceItem {
     }
 
     private void performDash(PlayerEntity player, ItemStack stack) {
-        if (player.getItemCooldownManager().isCoolingDown(this)) return;
+        if (player.getItemCooldownManager().isCoolingDown(stack)) return;
 
         Vec3d look = player.getRotationVector().normalize();
 
@@ -137,7 +135,7 @@ public class VoidMaceItem extends MaceItem {
             0.25f
         );
 
-        player.getItemCooldownManager().set(this, DASH_COOLDOWN);
+        player.getItemCooldownManager().set(stack, DASH_COOLDOWN);
 
         if (!player.getWorld().isClient) {
             spawnDashParticles(player.getWorld(), player.getPos(), look);
@@ -282,23 +280,8 @@ public class VoidMaceItem extends MaceItem {
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return this.material.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
-    }
-
-    @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 1000;
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public int getEnchantability() {
-        return this.material.getEnchantability();
     }
 
     public static int getFilledSockets(ItemStack stack) {
@@ -335,4 +318,5 @@ public class VoidMaceItem extends MaceItem {
         }
         return true;
     }
+
 }

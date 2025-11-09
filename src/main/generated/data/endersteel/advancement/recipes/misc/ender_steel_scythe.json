@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ender_scrap": {
+    "has_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "endersteel:ender_scrap"
+            "items": "endersteel:ender_steel_ingot"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ender_scrap"
+      "has_ingot"
     ]
   ],
   "rewards": {

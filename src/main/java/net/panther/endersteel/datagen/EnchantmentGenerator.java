@@ -16,6 +16,7 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.panther.endersteel.EnderSteel;
+import net.panther.endersteel.enchantment.ModEnchantments;
 import net.panther.endersteel.enchantment.effect.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -109,23 +110,32 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                         new RepulsiveShriekEffect()));
     }
 
+
     public static RegistryEntry<Enchantment> getGazingVoid(World world) {
         return world.getRegistryManager()
-                .get(RegistryKeys.ENCHANTMENT)
-                .getEntry(GAZING_VOID)
+                .getOrThrow(RegistryKeys.ENCHANTMENT)
+                .getOptional(ModEnchantments.GAZING_VOID)
                 .orElse(null);
     }
+
     public static RegistryEntry<Enchantment> getVoidStrike(World world) {
-        return world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(VOID_STRIKE).orElseThrow();
+        return world.getRegistryManager()
+                .getOrThrow(RegistryKeys.ENCHANTMENT)
+                .getOrThrow(ModEnchantments.VOID_STRIKE);
     }
 
     public static RegistryEntry<Enchantment> getEnderStreak(World world) {
-        return world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(ENDER_STREAK).orElseThrow();
+        return world.getRegistryManager()
+                .getOrThrow(RegistryKeys.ENCHANTMENT)
+                .getOrThrow(ModEnchantments.ENDER_STREAK);
     }
 
     public static RegistryEntry<Enchantment> getPhantomHarvest(World world) {
-        return world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(PHANTOM_HARVEST).orElseThrow();
+        return world.getRegistryManager()
+                .getOrThrow(RegistryKeys.ENCHANTMENT)
+                .getOrThrow(ModEnchantments.PHANTOM_HARVEST);
     }
+
 
     public static void register(Registerable<Enchantment> registry, RegistryKey<Enchantment> key, Enchantment.Builder builder) {
         registry.register(key, builder.build(key.getValue()));

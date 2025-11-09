@@ -21,7 +21,7 @@ public class ModEffects {
 
     public static void registerModEffects() {
         Registry.register(Registries.STATUS_EFFECT, GAZING_VOID_KEY, GAZING_VOID.value());
-        EnderSteel.LOGGER.info("Registering status effects for ", EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering status effects for {}", EnderSteel.MOD_ID);
     }
 
     private static class GazingVoidEffect extends StatusEffect {

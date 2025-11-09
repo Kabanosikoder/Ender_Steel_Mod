@@ -33,10 +33,9 @@ public class ModItems {
 
     public static final Item ENDER_STEEL_SHOVEL = registerItem("ender_steel_shovel",
             setting -> new ShovelItem(EndSteelToolMaterial.ENDER_STEEL, 0.5f, -2.8f, setting));
-            
+
     public static final Item VOID_MACE = registerItem("void_mace",
-            setting -> new VoidMaceItem(EndSteelToolMaterial.ENDER_STEEL, setting
-                    .maxDamage(1500)));
+            setting -> new VoidMaceItem(EndSteelToolMaterial.ENDER_STEEL, setting.maxDamage(1500)));
 
     // Armor
     public static final Item ENDER_STEEL_HELMET = registerItem("ender_steel_helmet",

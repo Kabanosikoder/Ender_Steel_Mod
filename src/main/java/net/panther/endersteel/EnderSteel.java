@@ -22,7 +22,6 @@ public class EnderSteel implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        // Load config first
         ModConfig.loadConfig();
 
         ModItemGroup.registerItemGroups();
@@ -39,7 +38,7 @@ public class EnderSteel implements ModInitializer {
 
         ModEffects.registerModEffects();
 
-        ModCriteria.register();
+        ModCriteria.register(); // not in use
 
         ModFeatures.registerFeatures();
 
@@ -47,6 +46,6 @@ public class EnderSteel implements ModInitializer {
 
         ModEnchantmentEffects.registerModEnchantmentEffects();
 
-        LOGGER.info("Hey goobers :3" ,MOD_ID);
+        LOGGER.info("Hey goobers :3 {}" ,MOD_ID);
     }
 }

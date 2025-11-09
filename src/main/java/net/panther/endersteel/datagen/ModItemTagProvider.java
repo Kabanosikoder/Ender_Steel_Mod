@@ -13,11 +13,18 @@ import net.panther.endersteel.item.ModItems;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public static final TagKey<Item> SCYTHE_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "enchantable/scythe"));
-    public static final TagKey<Item> SWORD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "enchantable/sword"));
-    public static final TagKey<Item> ENDER_STEEL_SWORD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "enchantable/ender_steel_sword"));
-    public static final TagKey<Item> REPULSIVE_SHRIEK_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("endersteel", "enchantable/repulsive_shriek"));
-    public static final TagKey<Item> MACE_ITEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("minecraft", "mace"));
+    public static final TagKey<Item> SCYTHE_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM,
+            Identifier.of("endersteel", "enchantable/scythe"));
+    public static final TagKey<Item> SWORD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM,
+            Identifier.of("endersteel", "enchantable/sword"));
+    public static final TagKey<Item> ENDER_STEEL_SWORD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM,
+            Identifier.of("endersteel", "enchantable/ender_steel_sword"));
+    public static final TagKey<Item> REPULSIVE_SHRIEK_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM,
+            Identifier.of("endersteel", "enchantable/repulsive_shriek"));
+    public static final TagKey<Item> MACE_ITEMS = TagKey.of(RegistryKeys.ITEM,
+            Identifier.of("minecraft", "mace"));
+    public static final TagKey<Item> ENDER_STEEL_UPGRADABLE = TagKey.of((RegistryKeys.ITEM),
+            Identifier.of("endersteel","upgradeable/ender_steel_upgradable"));
 
     public ModItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
         super(output, completableFuture);
@@ -94,7 +101,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 
         getOrCreateTagBuilder(MACE_ITEMS)
                 .add(ModItems.VOID_MACE);
-        
+
+
         // Add to mace and weapon enchantment categories
         getOrCreateTagBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("minecraft", "enchantable/mace")))
                 .add(ModItems.VOID_MACE);

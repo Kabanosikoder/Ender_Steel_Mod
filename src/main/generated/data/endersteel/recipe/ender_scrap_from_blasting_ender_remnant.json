@@ -4,9 +4,7 @@
   "cookingtime": 100,
   "experience": 8.0,
   "group": "ender_scrap",
-  "ingredient": {
-    "item": "endersteel:ender_remnant"
-  },
+  "ingredient": "endersteel:ender_remnant",
   "result": {
     "id": "endersteel:ender_scrap"
   }

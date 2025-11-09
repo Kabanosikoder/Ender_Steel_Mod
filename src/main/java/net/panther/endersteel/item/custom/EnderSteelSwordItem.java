@@ -6,6 +6,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -32,7 +33,7 @@ public class EnderSteelSwordItem extends SwordItem {
     private static final float STREAK_BASE_CHANCE = 0.5f;
     private static final Random random = new Random();
 
-    public EnderSteelSwordItem(EndSteelToolMaterial enderSteel,float attackDamage, float attackSpeed, Settings settings) {
+    public EnderSteelSwordItem(ToolMaterial enderSteel, float attackDamage, float attackSpeed, Settings settings) {
         super(EndSteelToolMaterial.ENDER_STEEL, attackDamage, attackSpeed, settings);
     }
 
@@ -44,7 +45,7 @@ public class EnderSteelSwordItem extends SwordItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         ItemStack offhandStack = player.getOffHandStack();
 

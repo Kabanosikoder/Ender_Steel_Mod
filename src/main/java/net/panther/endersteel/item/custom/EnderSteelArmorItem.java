@@ -8,14 +8,13 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.World;
 
 public class EnderSteelArmorItem extends ArmorItem {
     private static final String CHARGES_KEY = "evasion_charges";
     private static final int MAX_CHARGES = 5;
 
-    public EnderSteelArmorItem(RegistryEntry<ArmorMaterial> material, EquipmentType type, Settings settings) {
+    public EnderSteelArmorItem(ArmorMaterial material, EquipmentType type, Settings settings) {
         super(material, type, settings);
     }
 
@@ -65,10 +64,5 @@ public class EnderSteelArmorItem extends ArmorItem {
         NbtComponent.set(DataComponentTypes.CUSTOM_DATA, stack, nbt -> 
             nbt.putInt(CHARGES_KEY, Math.max(0, Math.min(charges, MAX_CHARGES)))
         );
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
     }
 }

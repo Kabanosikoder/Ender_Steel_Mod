@@ -1,7 +1,9 @@
 {
 	"required": true,
+	"minVersion": "0.8",
 	"package": "net.panther.endersteel.mixin",
 	"compatibilityLevel": "JAVA_21",
+	"refmap": "ender-steel-refmap.json",
 	"mixins": [
 		"ExampleMixin",
 		"EnderSteelArmorMixin",

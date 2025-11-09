@@ -110,8 +110,8 @@ public class EnderSteelStareBlock extends Block {
 
                     staringTicks.computeIfAbsent(blockPos, k -> new HashMap<>());
                     Map<ServerPlayerEntity, Integer> playerTicks = staringTicks.get(blockPos);
-                    int currentTicks = playerTicks.getOrDefault(player, Integer.valueOf(0)) + 1;
-                    playerTicks.put(player, Integer.valueOf(currentTicks));
+                    int currentTicks = playerTicks.getOrDefault(player, 0) + 1;
+                    playerTicks.put(player, currentTicks);
 
                     EnderSteelStareBlock.OpenState currentState = blockState.get(EnderSteelStareBlock.OPEN_STATE);
                     EnderSteelStareBlock.OpenState nextState;

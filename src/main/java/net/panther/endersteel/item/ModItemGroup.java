@@ -44,17 +44,9 @@ public class ModItemGroup {
                         entries.add(ModBlocks.ENDER_STEEL_BLOCK);
                         entries.add(ModBlocks.ENDER_REMNANT);
 
-                        // Add enchanted books
-                        var enchantments = displayContext.lookup().getOptional(RegistryKeys.ENCHANTMENT).orElseThrow();
-                        enchantments.streamEntries().forEach(enchantmentEntry -> {
-                            if (enchantmentEntry.getKey().orElseThrow().getValue().getNamespace().equals(EnderSteel.MOD_ID)) {
-                                entries.add(EnchantedBookItem.forEnchantment( // idk how to fix this shit
-                                    new EnchantmentLevelEntry(enchantmentEntry, 1)));
-                            }
-                        });
                     }).build());
 
     public static void registerItemGroups() {
-        EnderSteel.LOGGER.info("Registering Item Groups for ", EnderSteel.MOD_ID);
+        EnderSteel.LOGGER.info("Registering Item Groups for {}", EnderSteel.MOD_ID);
     }
 }

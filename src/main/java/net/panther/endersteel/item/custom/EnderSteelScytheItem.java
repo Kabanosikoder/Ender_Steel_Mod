@@ -31,12 +31,12 @@ public class EnderSteelScytheItem extends SwordItem {
     private static final int ABILITY_COOLDOWN = 300;
     private Entity lastKilledEntity = null;
 
-    public EnderSteelScytheItem(EndSteelToolMaterial enderSteel, Settings settings) {
-        super((ToolMaterial) EndSteelToolMaterial.ENDER_STEEL, 6F, -2.75F, settings);
+    public EnderSteelScytheItem(ToolMaterial enderSteel, Settings settings) {
+        super(EndSteelToolMaterial.ENDER_STEEL, 6F, -2.75F, settings);
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
 
         if (world == null) {
@@ -48,14 +48,14 @@ public class EnderSteelScytheItem extends SwordItem {
             return ActionResult.PASS;
         }
 
-        if (!player.getItemCooldownManager().isCoolingDown(this)) {
+        if (!player.getItemCooldownManager().isCoolingDown(stack)) {
             setVoidGazeActive(stack, true);
 
             world.playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
 
             player.sendMessage(Text.literal("Void Gaze activated!").formatted(Formatting.DARK_PURPLE), true);
-            player.getItemCooldownManager().set(this, ABILITY_COOLDOWN);
+            player.getItemCooldownManager().set(stack, ABILITY_COOLDOWN);
 
             return ActionResult.SUCCESS;
         } else {
@@ -142,11 +142,6 @@ public class EnderSteelScytheItem extends SwordItem {
         return super.postHit(stack, target, attacker);
     }
 
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
-    }
-
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         if (stack.getHolder() instanceof Entity entity) {
             World world = entity.getWorld();
@@ -166,4 +161,6 @@ public class EnderSteelScytheItem extends SwordItem {
     public static void setVoidGazeActive(ItemStack stack, boolean active) {
         stack.set(EnderSteelDataComponents.VOID_GAZE_ACTIVE, active);
     }
+
+
 }

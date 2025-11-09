@@ -7,7 +7,7 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ModelTransformationMode; // <-- keep this per your mappings
+import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.panther.endersteel.EnderSteel;
@@ -22,37 +22,44 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemRenderer.class)
+
+// This shit is so beyond me, all this spaghetti to render a 3D item in hand and a 2D item in inventory...
+// Thanks to a random reddit user it can be done :D
 public abstract class ItemRendererMixin {
     @Shadow @Final private ItemModels models;
 
     @Unique private static final ThreadLocal<ModelTransformationMode> ENDERSTEEL$MODE = new ThreadLocal<>();
 
-    // Capture the current mode at the start of renderItem
-    @Inject(method = "renderItem*", at = @At("HEAD"))
-    private void endersteel$captureMode(ItemStack stack,
-                                        ModelTransformationMode mode,
-                                        boolean leftHanded,
-                                        MatrixStack matrices,
-                                        VertexConsumerProvider consumers,
-                                        int light, int overlay, int seed,
+    // HEAD: capture mode
+    @Inject(
+            method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
+            at = @At("HEAD")
+    )
+    private void endersteel$captureMode(ItemStack stack, ModelTransformationMode mode, boolean leftHanded,
+                                        MatrixStack matrices, VertexConsumerProvider consumers,
+                                        int light, int overlay, BakedModel model,
                                         CallbackInfo ci) {
         ENDERSTEEL$MODE.set(mode);
     }
 
-    // Clear it afterwards to avoid leaking between calls
-    @Inject(method = "renderItem*", at = @At("RETURN"))
-    private void endersteel$clearMode(ItemStack stack,
-                                      ModelTransformationMode mode,
-                                      boolean leftHanded,
-                                      MatrixStack matrices,
-                                      VertexConsumerProvider consumers,
-                                      int light, int overlay, int seed,
+    // RETURN: clear
+    @Inject(
+            method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
+            at = @At("RETURN")
+    )
+    private void endersteel$clearMode(ItemStack stack, ModelTransformationMode mode, boolean leftHanded,
+                                      MatrixStack matrices, VertexConsumerProvider consumers,
+                                      int light, int overlay, BakedModel model,
                                       CallbackInfo ci) {
         ENDERSTEEL$MODE.remove();
     }
 
-    // Swap the baked model based on the captured mode
-    @Inject(method = "getModel*", at = @At("HEAD"), cancellable = true)
+    // getModel
+    @Inject(
+            method = "getModel(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)Lnet/minecraft/client/render/model/BakedModel;",
+            at = @At("HEAD"),
+            cancellable = true
+    )
     private void endersteel$swapModel(ItemStack stack, World world, LivingEntity entity, int seed,
                                       CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() != ModItems.VOID_MACE) return;
@@ -68,4 +75,5 @@ public abstract class ItemRendererMixin {
 
         cir.setReturnValue(this.models.getModel(id));
     }
+
 }

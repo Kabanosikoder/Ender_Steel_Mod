@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 4.0,
   "group": "ender_steel_ingot",
-  "ingredient": {
-    "item": "endersteel:ender_scrap"
-  },
+  "ingredient": "endersteel:ender_scrap",
   "result": {
     "id": "endersteel:ender_steel_ingot"
   }

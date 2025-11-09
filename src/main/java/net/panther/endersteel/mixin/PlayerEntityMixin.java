@@ -5,7 +5,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;                    // <-- use static registry
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.panther.endersteel.component.EnderSteelDataComponents;
@@ -30,13 +30,15 @@ public abstract class PlayerEntityMixin {
 
         ItemStack chestplate = player.getInventory().getArmorStack(2);
         if (chestplate.getItem() instanceof EnderSteelArmorItem) {
-            // Get the RegistryEntry<Enchantment> from the static registry
             RegistryEntry<Enchantment> shriekEnchantment =
-                    Registries.E.getEntry(ModEnchantments.REPULSIVE_SHRIEK).orElse(null);
+                    player.getWorld()
+                            .getRegistryManager()
+                            .getOrThrow(RegistryKeys.ENCHANTMENT)
+                            .getOptional(ModEnchantments.REPULSIVE_SHRIEK)
+                            .orElse(null);
 
             if (shriekEnchantment != null) {
                 int shriekLevel = EnchantmentHelper.getLevel(shriekEnchantment, chestplate);
-
                 if (shriekLevel > 0 && source.getAttacker() != null) {
                     int evasionCharges = chestplate.getOrDefault(EnderSteelDataComponents.EVASION_CHARGES, 0);
                     boolean isLastCharge = evasionCharges == 1;
@@ -45,15 +47,9 @@ public abstract class PlayerEntityMixin {
                         RepulsiveShriekEffect.onPlayerDamaged(player, source.getAttacker(), amount, isLastCharge);
                         cir.setReturnValue(false);
                         cir.cancel();
-                        return;
                     }
                 }
             }
-        }
-
-        if (EnderSteelArmorEvents.tryEvade(player, source)) {
-            cir.setReturnValue(false);
-            cir.cancel();
         }
     }
 }
